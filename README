@@ -48,7 +48,8 @@ CONSTRUCTOR
     "new( [ -profile => $FILE, -severity => $N, -theme => $string, -include
     => \@PATTERNS, -exclude => \@PATTERNS, -top => $N, -only => $B,
     -profile-strictness => $PROFILE_STRICTNESS_{WARN|FATAL|QUIET}, -force =>
-    $B, -verbose => $N ], -color => $B, -criticism-fatal => $B)"
+    $B, -verbose => $N ], -color => $B, -pager => $string, -criticism-fatal
+    => $B)"
     "new()"
         Returns a reference to a new Perl::Critic object. Most arguments are
         just passed directly into Perl::Critic::Config, but I have described
@@ -99,7 +100,7 @@ CONSTRUCTOR
         "POLICY THEMES" section for more information about themes.
 
         -include is a reference to a list of string @PATTERNS. Policy
-        modules that match at least one "m/$PATTERN/imx" will always be
+        modules that match at least one "m/$PATTERN/ixms" will always be
         loaded, irrespective of all other settings. For example:
 
           my $critic = Perl::Critic->new(-include => ['layout'] -severity => 4);
@@ -112,8 +113,8 @@ CONSTRUCTOR
         "-include" when a Policy matches both patterns.
 
         -exclude is a reference to a list of string @PATTERNS. Policy
-        modules that match at least one "m/$PATTERN/imx" will not be loaded,
-        irrespective of all other settings. For example:
+        modules that match at least one "m/$PATTERN/ixms" will not be
+        loaded, irrespective of all other settings. For example:
 
           my $critic = Perl::Critic->new(-exclude => ['strict'] -severity => 1);
 
@@ -126,7 +127,7 @@ CONSTRUCTOR
         both patterns.
 
         -single-policy is a string "PATTERN". Only one policy that matches
-        "m/$PATTERN/imx" will be used. Policies that do not match will be
+        "m/$PATTERN/ixms" will be used. Policies that do not match will be
         excluded. This option has precedence over the "-severity", "-theme",
         "-include", "-exclude", and "-only" options. You can set the default
         value for this option in your .perlcriticrc file.
@@ -171,8 +172,8 @@ CONSTRUCTOR
         of format specifications. You can set the default value for this
         option in your .perlcriticrc file.
 
-        -color is not used by Perl::Critic but is provided for the benefit
-        of perlcritic.
+        -color and -pager are not used by Perl::Critic but is provided for
+        the benefit of perlcritic.
 
         -criticism-fatal is not used by Perl::Critic but is provided for the
         benefit of criticism.
@@ -272,6 +273,7 @@ CONFIGURATION
         exclude   = Variables  Modules::RequirePackage    #Space-delimited list
         criticism-fatal = 1                               #Zero or One
         color     = 1                                     #Zero or One
+        pager     = less                                  #pager to pipe output to
 
     The remainder of the configuration file is a series of blocks like this:
 
@@ -383,7 +385,7 @@ THE POLICIES
     are described briefly in the companion document
     Perl::Critic::PolicySummary and in more detail in the individual modules
     themselves. Say ""perlcritic -doc PATTERN"" to see the perldoc for all
-    Policy modules that match the regex "m/PATTERN/imx"
+    Policy modules that match the regex "m/PATTERN/ixms"
 
     There are a number of distributions of additional policies on CPAN. If
     Perl::Critic doesn't contain a policy that you want, some one may have

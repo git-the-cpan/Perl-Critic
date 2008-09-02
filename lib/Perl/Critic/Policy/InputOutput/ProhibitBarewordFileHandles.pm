@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/InputOutput/ProhibitBarewordFileHandles.pm $
-#     $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/lib/Perl/Critic/Policy/InputOutput/ProhibitBarewordFileHandles.pm $
+#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 package Perl::Critic::Policy::InputOutput::ProhibitBarewordFileHandles;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification :ppi };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ sub violates {
     return if !$first_token;
 
     if ( $first_token->isa('PPI::Token::Word') ) {
-        if ( ($first_token ne 'my') && ($first_token !~ m/^STD(?:IN|OUT|ERR)$/mx ) ) {
+        if ( ($first_token ne 'my') && ($first_token !~ m/^STD(?:IN|OUT|ERR)$/xms ) ) {
             return $self->violation( $DESC, $EXPL, $elem );
         }
     }

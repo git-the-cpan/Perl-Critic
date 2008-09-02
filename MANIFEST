@@ -1,6 +1,7 @@
 bin/perlcritic
 Build.PL
 Changes
+Debian_CPANTS.txt
 examples/generatestats
 examples/loadanalysisdb
 examples/perlcriticrc
@@ -157,6 +158,7 @@ lib/Perl/Critic/Policy/RegularExpressions/ProhibitSingleCharAlternation.pm
 lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm
 lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusualDelimiters.pm
 lib/Perl/Critic/Policy/RegularExpressions/RequireBracesForMultiline.pm
+lib/Perl/Critic/Policy/RegularExpressions/RequireDotMatchAnything.pm
 lib/Perl/Critic/Policy/RegularExpressions/RequireExtendedFormatting.pm
 lib/Perl/Critic/Policy/RegularExpressions/RequireLineBoundaryMatching.pm
 lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm
@@ -233,8 +235,6 @@ lib/Perl/Critic/Violation.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
-META.yml
-README
 t/00_modules.t
 t/01_bad_perlcriticrc
 t/01_config.t
@@ -350,6 +350,7 @@ t/RegularExpressions/ProhibitSingleCharAlternation.run
 t/RegularExpressions/ProhibitUnusedCapture.run
 t/RegularExpressions/ProhibitUnusualDelimiters.run
 t/RegularExpressions/RequireBracesForMultiline.run
+t/RegularExpressions/RequireDotMatchAnything.run
 t/RegularExpressions/RequireExtendedFormatting.run
 t/RegularExpressions/RequireLineBoundaryMatching.run
 t/Subroutines/ProhibitAmpersandSigils.run
@@ -412,3 +413,5 @@ xt/author/93_version.t
 xt/author/94_includes.t
 xt/author/95_kwalitee.t
 xt/author/generate_without_optional_dependencies_wrappers.PL
+README
+META.yml

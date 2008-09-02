@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/InputOutput/ProhibitTwoArgOpen.pm $
-#     $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/lib/Perl/Critic/Policy/InputOutput/ProhibitTwoArgOpen.pm $
+#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 package Perl::Critic::Policy::InputOutput::ProhibitTwoArgOpen;
@@ -18,11 +18,11 @@ use version;
 use Perl::Critic::Utils qw{ :severities :classification :ppi };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $STDIO_HANDLES_RX => qr/\b STD (?: IN | OUT | ERR \b)/mx;
+Readonly::Scalar my $STDIO_HANDLES_RX => qr/\b STD (?: IN | OUT | ERR \b)/xms;
 Readonly::Scalar my $DESC => q{Two-argument "open" used};
 Readonly::Scalar my $EXPL => [ 207 ];
 

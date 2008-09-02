@@ -90,7 +90,7 @@ if ( ($VERSION) = q<$Revision: 2595 $> =~ m/(\d+)/mx ) {}
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
 #     $Date: 2008-07-20 18:39:11 -0700 (Sun, 20 Jul 2008) $
 #   $Author: clonezone $
 # $Revision: 2595 $

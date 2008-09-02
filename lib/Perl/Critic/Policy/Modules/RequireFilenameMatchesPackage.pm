@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/Modules/RequireFilenameMatchesPackage.pm $
-#     $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/lib/Perl/Critic/Policy/Modules/RequireFilenameMatchesPackage.pm $
+#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireFilenameMatchesPackage;
@@ -17,7 +17,7 @@ use File::Spec;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ sub violates {
     # 'lib/Foo/Bar.pm' -> ('lib', 'Foo', 'Bar')
     my @path = File::Spec->splitpath($filename);
     $filename = $path[2];
-    $filename =~ s/[.]\w+\z//mx;
+    $filename =~ s/[.]\w+\z//xms;
     my @path_parts = grep {$_ ne q{}} File::Spec->splitdir($path[1]), $filename;
 
     # 'Foo::Bar' -> ('Foo', 'Bar')
@@ -50,7 +50,7 @@ sub violates {
     return if !$pkg_node;
     my $pkg = $pkg_node->namespace;
     return if $pkg eq 'main';
-    my @pkg_parts = split m/(?:\'|::)/mx, $pkg;
+    my @pkg_parts = split m/(?:\'|::)/xms, $pkg;
 
     # To succeed, at least the lastmost must match
     # Beyond that, the search terminates if a dirname is an impossible package name
@@ -64,7 +64,7 @@ sub violates {
         }
 
         # if it's a path that's not a possible package (like 'Foo-Bar-1.00'), that's OK
-        last if ($path_part =~ m/\W/mx);
+        last if ($path_part =~ m/\W/xms);
 
         # Mismatched name
         return $self->violation( $DESC, $EXPL, $pkg_node );

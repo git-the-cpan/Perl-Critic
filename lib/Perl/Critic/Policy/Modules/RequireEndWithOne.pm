@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/Modules/RequireEndWithOne.pm $
-#     $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/lib/Perl/Critic/Policy/Modules/RequireEndWithOne.pm $
+#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireEndWithOne;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ sub violates {
     my $match = $significant[-1];
     return if !$match;
     return if ((ref $match) eq 'PPI::Statement' &&
-               $match =~  m{\A 1 \s* ; \z}mx );
+               $match =~  m{\A 1 \s* ; \z}xms );
 
     # Must be a violation...
     return $self->violation( $DESC, $EXPL, $match );

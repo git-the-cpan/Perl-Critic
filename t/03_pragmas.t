@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/03_pragmas.t $
-#    $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/03_pragmas.t $
+#    $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 use 5.006001;
@@ -19,7 +19,7 @@ use Perl::Critic::TestUtils qw(critique);
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
@@ -28,11 +28,11 @@ Perl::Critic::TestUtils::block_perlcriticrc();
 # Configure Critic not to load certain policies.  This
 # just makes it a little easier to create test cases
 my $profile = {
-    '-CodeLayout::RequireTidyCode'                      => {},
-    '-Documentation::PodSpelling'                       => {},
-    '-ErrorHandling::RequireCheckingReturnValueOfEval'  => {},
-    '-Miscellanea::RequireRcsKeywords'                  => {},
-    '-ValuesAndExpressions::ProhibitMagicNumbers'       => {},
+    '-CodeLayout::RequireTidyCode'                               => {},
+    '-Documentation::PodSpelling'                                => {},
+    '-ErrorHandling::RequireCheckingReturnValueOfEval'           => {},
+    '-Miscellanea::RequireRcsKeywords'                           => {},
+    '-ValuesAndExpressions::ProhibitMagicNumbers'                => {},
 };
 
 my $code = undef;

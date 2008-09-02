@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/UserProfile.pm $
-#     $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/lib/Perl/Critic/UserProfile.pm $
+#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 package Perl::Critic::UserProfile;
@@ -23,7 +23,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Exception::Configuration::Generic qw{ throw_generic };
 use Perl::Critic::PolicyConfig;
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ sub listed_policies {
     my @normalized_policy_names = ();
 
     for my $policy_name ( sort keys %{$self->{_profile}} ) {
-        $policy_name =~ s/\A - //mxo; #Chomp leading "-"
+        $policy_name =~ s/\A - //xmso; #Chomp leading "-"
         my $policy_long_name = policy_long_name( $policy_name );
         push @normalized_policy_names, $policy_long_name;
     }

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
-#     $Date: 2008-07-22 06:47:03 -0700 (Tue, 22 Jul 2008) $
-#   $Author: clonezone $
-# $Revision: 2609 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
+#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#   $Author: thaljef $
+# $Revision: 2715 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars;
@@ -17,7 +17,7 @@ use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.090';
+our $VERSION = '1.091';
 
 #-----------------------------------------------------------------------------
 
@@ -77,8 +77,8 @@ sub violates {
 sub _needs_interpolation {
     my ($string) = @_;
 
-    return $string =~ m{ [\$\@] \S+ }mxo             #Contains a $ or @
-        || $string =~ m{ \\[tnrfae0xcNLuLUEQ] }mxo;  #Contains metachars
+    return $string =~ m{ [\$\@] \S+ }xmso             #Contains a $ or @
+        || $string =~ m{ \\[tnrfae0xcNLuLUEQ] }xmso;  #Contains metachars
 }
 
 #-----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ sub _needs_interpolation {
 sub _looks_like_email_address {
     my ($string) = @_;
 
-    return $string =~ m{\A [^\@\s]+ \@ [\w\-.]+ \z}mxo;
+    return $string =~ m{\A [^\@\s]+ \@ [\w\-.]+ \z}xmso;
 }
 
 #-----------------------------------------------------------------------------

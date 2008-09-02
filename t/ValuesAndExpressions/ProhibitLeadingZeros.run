@@ -152,7 +152,7 @@ umask ( 002 );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/ValuesAndExpressions/ProhibitLeadingZeros.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/ValuesAndExpressions/ProhibitLeadingZeros.run $
 #     $Date: 2008-06-22 16:23:43 -0700 (Sun, 22 Jun 2008) $
 #   $Author: clonezone $
 # $Revision: 2475 $

@@ -1,6 +1,6 @@
 #!perl
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/Variables/RequireLocalizedPunctuationVars.run.PL $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/Variables/RequireLocalizedPunctuationVars.run.PL $
 #     $Date: 2008-07-21 14:36:04 -0700 (Mon, 21 Jul 2008) $
 #   $Author: clonezone $
 # $Revision: 2602 $
