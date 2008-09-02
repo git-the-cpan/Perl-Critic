@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/xt/author/generate_without_optional_dependencies_wrappers.PL $
-#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/xt/author/generate_without_optional_dependencies_wrappers.PL $
+#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
 #   $Author: thaljef $
-# $Revision: 2715 $
+# $Revision: 2721 $
 ##############################################################################
 
 use 5.006001;
@@ -22,7 +22,7 @@ use Perl::Critic::BuildUtilities qw{ recommended_module_versions };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.091';
+our $VERSION = '1.092';
 
 #-----------------------------------------------------------------------------
 

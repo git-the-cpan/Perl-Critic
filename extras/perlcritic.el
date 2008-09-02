@@ -1,7 +1,7 @@
 ;;; perlcritic.el --- minor mode for Perl::Critic integration
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/extras/perlcritic.el $
+;;;      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/extras/perlcritic.el $
 ;;;     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
 ;;;   $Author: clonezone $
 ;;; $Revision: 2187 $

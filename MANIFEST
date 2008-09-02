@@ -1,7 +1,6 @@
 bin/perlcritic
 Build.PL
 Changes
-Debian_CPANTS.txt
 examples/generatestats
 examples/loadanalysisdb
 examples/perlcriticrc

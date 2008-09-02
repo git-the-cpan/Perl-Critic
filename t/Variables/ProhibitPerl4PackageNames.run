@@ -243,7 +243,7 @@ $foo = \&';
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/Variables/ProhibitPerl4PackageNames.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/Variables/ProhibitPerl4PackageNames.run $
 #     $Date: 2008-05-20 20:43:14 -0700 (Tue, 20 May 2008) $
 #   $Author: clonezone $
 # $Revision: 2391 $

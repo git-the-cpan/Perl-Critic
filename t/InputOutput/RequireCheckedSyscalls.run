@@ -312,7 +312,7 @@ foo() or die;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/InputOutput/RequireCheckedSyscalls.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/InputOutput/RequireCheckedSyscalls.run $
 #     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
 # $Revision: 2187 $

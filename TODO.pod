@@ -8,14 +8,13 @@
 
 Perl::Critic::TODO - Things for Perl::Critic developers to do
 
-
 =head1 SOURCE
 
     #######################################################################
-    #      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/TODO.pod $
-    #     $Date: 2008-08-26 20:24:17 -0700 (Tue, 26 Aug 2008) $
+    #      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/TODO.pod $
+    #     $Date: 2008-09-02 09:03:18 -0700 (Tue, 02 Sep 2008) $
     #   $Author: thaljef $
-    # $Revision: 2706 $
+    # $Revision: 2719 $
     #######################################################################
 
 
@@ -542,7 +541,7 @@ Question: Why?
 
 Answer: Readability, mostly.  Performance, maybe.
 
-=item Refactor guts of perlcritic into a module (Perl::Critic::App ??)
+=item * Refactor guts of perlcritic into a module (Perl::Critic::App ??)
 
 Because it is getting unwieldy in there.
 

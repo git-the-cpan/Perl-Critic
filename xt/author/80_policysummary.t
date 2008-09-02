@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/xt/author/80_policysummary.t $
-#     $Date: 2008-09-01 21:36:59 -0700 (Mon, 01 Sep 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/xt/author/80_policysummary.t $
+#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
 #   $Author: thaljef $
-# $Revision: 2715 $
+# $Revision: 2721 $
 ##############################################################################
 
 use strict;
@@ -23,7 +23,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.091';
+our $VERSION = '1.092';
 
 #-----------------------------------------------------------------------------
 

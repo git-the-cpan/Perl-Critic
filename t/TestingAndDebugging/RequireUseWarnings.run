@@ -180,7 +180,7 @@ $foo = $bar;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/TestingAndDebugging/RequireUseWarnings.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/TestingAndDebugging/RequireUseWarnings.run $
 #     $Date: 2008-06-18 14:19:46 -0700 (Wed, 18 Jun 2008) $
 #   $Author: clonezone $
 # $Revision: 2459 $

@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/extras/KomodoIntegration.pod $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/extras/KomodoIntegration.pod $
 #     $Date: 2008-06-22 11:08:37 -0700 (Sun, 22 Jun 2008) $
 #   $Author: clonezone $
 # $Revision: 2467 $

@@ -386,7 +386,7 @@ eval "something_else" && die;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/ErrorHandling/RequireCheckingReturnValueOfEval.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/ErrorHandling/RequireCheckingReturnValueOfEval.run $
 #     $Date: 2008-07-27 19:39:04 -0700 (Sun, 27 Jul 2008) $
 #   $Author: chrisdolan $
 # $Revision: 2625 $

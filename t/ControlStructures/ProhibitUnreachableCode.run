@@ -184,7 +184,7 @@ say 'hello';
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/ControlStructures/ProhibitUnreachableCode.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/ControlStructures/ProhibitUnreachableCode.run $
 #     $Date: 2008-05-21 12:50:31 -0700 (Wed, 21 May 2008) $
 #   $Author: clonezone $
 # $Revision: 2397 $

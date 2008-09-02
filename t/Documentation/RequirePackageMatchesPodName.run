@@ -246,7 +246,7 @@ Blah...
 =cut
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/Documentation/RequirePackageMatchesPodName.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/Documentation/RequirePackageMatchesPodName.run $
 #     $Date: 2008-06-05 20:24:36 -0700 (Thu, 05 Jun 2008) $
 #   $Author: chrisdolan $
 # $Revision: 2414 $

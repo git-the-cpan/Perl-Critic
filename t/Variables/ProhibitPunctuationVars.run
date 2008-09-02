@@ -56,7 +56,7 @@ print qr<$+>;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/Variables/ProhibitPunctuationVars.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/Variables/ProhibitPunctuationVars.run $
 #     $Date: 2008-05-17 10:25:37 -0700 (Sat, 17 May 2008) $
 #   $Author: clonezone $
 # $Revision: 2345 $

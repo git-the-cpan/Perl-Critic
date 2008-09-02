@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/RegularExpressions/ProhibitEscapedMetacharacters.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/RegularExpressions/ProhibitEscapedMetacharacters.run $
 #     $Date: 2008-09-01 20:36:18 -0700 (Mon, 01 Sep 2008) $
 #   $Author: thaljef $
 # $Revision: 2712 $

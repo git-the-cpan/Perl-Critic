@@ -145,7 +145,7 @@ $foo = $bar;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.091/t/TestingAndDebugging/RequireUseStrict.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/TestingAndDebugging/RequireUseStrict.run $
 #     $Date: 2008-04-13 19:16:24 -0700 (Sun, 13 Apr 2008) $
 #   $Author: clonezone $
 # $Revision: 2242 $
