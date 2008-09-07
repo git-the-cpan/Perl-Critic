@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/99_pod_coverage.t $
-#    $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
-#   $Author: thaljef $
-# $Revision: 2721 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/99_pod_coverage.t $
+#    $Date: 2008-09-07 04:22:09 -0500 (Sun, 07 Sep 2008) $
+#   $Author: clonezone $
+# $Revision: 2726 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 #-----------------------------------------------------------------------------
 
@@ -57,6 +57,7 @@ sub get_trusted_methods {
     return qw(
         new
         initialize_if_enabled
+        is_document_exempt
         violates
         applies_to
         default_themes

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
-#   $Author: thaljef $
-# $Revision: 2721 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
+#     $Date: 2008-09-07 05:00:19 -0500 (Sun, 07 Sep 2008) $
+#   $Author: clonezone $
+# $Revision: 2729 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars;
@@ -17,7 +17,7 @@ use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 #-----------------------------------------------------------------------------
 
@@ -109,6 +109,8 @@ __END__
 
 =pod
 
+=for stopwords RCS
+
 =head1 NAME
 
 Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars - Warns that you might have used single quotes when you really wanted double-quotes.
@@ -132,7 +134,20 @@ indicate that the string should be interpolated.
 
 =head1 CONFIGURATION
 
-This Policy is not configurable except for the standard options.
+The C<rcs_keywords> option allows you to stop this policy from complaining
+about things that look like RCS variables, for example, in deriving values for
+C<$VERSION> variables.
+
+For example, if you've got code like
+
+    our ($VERSION) = (q<$Revision: 2729 $> =~ m/(\d+)/mx);
+
+You can specify
+
+    [ValuesAndExpressions::RequireInterpolationOfMetachars]
+    rcs_keywords = Revision
+
+in your F<.perlcriticrc> to provide an exemption.
 
 
 =head1 NOTES

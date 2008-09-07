@@ -1,6 +1,6 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/RegularExpressions/RequireBracesForMultiline.run $
-#     $Date: 2008-04-12 12:38:38 -0700 (Sat, 12 Apr 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/RegularExpressions/RequireBracesForMultiline.run $
+#     $Date: 2008-04-12 14:38:38 -0500 (Sat, 12 Apr 2008) $
 #   $Author: clonezone $
 # $Revision: 2218 $
 ##############################################################################

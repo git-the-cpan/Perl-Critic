@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/lib/Perl/Critic.pm $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
-#   $Author: thaljef $
-# $Revision: 2721 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic.pm $
+#     $Date: 2008-09-07 03:59:38 -0500 (Sun, 07 Sep 2008) $
+#   $Author: clonezone $
+# $Revision: 2725 $
 ##############################################################################
 
 package Perl::Critic;
@@ -32,7 +32,7 @@ use Perl::Critic::Utils qw{ :characters };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -187,15 +187,17 @@ sub _is_ppi_doc {
 #-----------------------------------------------------------------------------
 
 sub _critique {
-
     my ($policy, $doc, $is_line_disabled) = @_;
-    my @violations = ();
+
+    return if $policy->is_document_exempt($doc);
+
     my $maximum_violations = $policy->get_maximum_violations_per_document();
 
     if (defined $maximum_violations && $maximum_violations == 0) {
         return;
     }
 
+    my @violations = ();
     my $policy_name = $policy->get_long_name();
 
   TYPE:

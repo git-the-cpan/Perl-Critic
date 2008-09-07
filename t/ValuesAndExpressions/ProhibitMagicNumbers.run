@@ -786,7 +786,7 @@ our $VERSION = "INSERT";
 our $VERSION = $SomeOtherModule::VERSION;
 our $VERSION = $VERSION = (qw($Revision: 2293 $))[1];
 our $VERSION = $local_variable;
-our $VERSION = '$Date: 2008-05-04 10:18:31 -0700 (Sun, 04 May 2008) $'; $VERSION =~ s|^\$Date:\s*([0-9]{4})/([0-9]{2})/([0-9]{2})\s.*|\1.\2.\3| ;
+our $VERSION = '$Date: 2008-05-04 12:18:31 -0500 (Sun, 04 May 2008) $'; $VERSION =~ s|^\$Date:\s*([0-9]{4})/([0-9]{2})/([0-9]{2})\s.*|\1.\2.\3| ;
 our $VERSION = '$Revision: 2293 $' =~ /\$Revision:\s+([^\s]+)/;
 our $VERSION = '$Revision: 2293 $';
 our $VERSION = '-123 blah';
@@ -826,7 +826,7 @@ our $VERSION = do { (my $v = q%version: 123 %) =~ s/.*://; sprintf("%d.%d", spli
 our $VERSION = do { q $Revision: 2293 $ =~ /(\d+)/; sprintf "%4.2f", $1 / 100 };
 our $VERSION = do { q$Revision: 2293 $ =~ /Revision: (\d+)/; sprintf "1.%d", $1; };
 our $VERSION = do { require mod_perl2; $mod_perl2::VERSION };
-our $VERSION = do {(q$URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/ValuesAndExpressions/ProhibitMagicNumbers.run $=~ m$.*/(?:tags|branches)/([^/ \t]+)$)[0] || "0.0"};
+our $VERSION = do {(q$URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/ValuesAndExpressions/ProhibitMagicNumbers.run $=~ m$.*/(?:tags|branches)/([^/ \t]+)$)[0] || "0.0"};
 our $VERSION = eval { require version; version::qv((qw$Revision: 2293 $)[1] / 1000) };
 our $VERSION = q$0.04$;
 our $VERSION = q$Revision: 2293 $;
@@ -919,8 +919,8 @@ use version; our $VERSION = version->new('1.23');
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/ValuesAndExpressions/ProhibitMagicNumbers.run $
-#     $Date: 2008-05-04 10:18:31 -0700 (Sun, 04 May 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/ValuesAndExpressions/ProhibitMagicNumbers.run $
+#     $Date: 2008-05-04 12:18:31 -0500 (Sun, 04 May 2008) $
 #   $Author: clonezone $
 # $Revision: 2293 $
 ##############################################################################

@@ -1,6 +1,6 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/Build.PL $
-#     $Date: 2008-08-20 17:42:15 -0700 (Wed, 20 Aug 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/Build.PL $
+#     $Date: 2008-08-20 19:42:15 -0500 (Wed, 20 Aug 2008) $
 #   $Author: thaljef $
 # $Revision: 2687 $
 ########################################################################

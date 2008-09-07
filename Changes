@@ -1,3 +1,15 @@
+[1.093_001] Released on 2008-09-07
+
+    New Developer Features:
+    * Perl::Critic::Policy::is_document_exempt() is checked prior to scanning
+      and thus can speed things up.
+
+    Bug Fixes:
+    * Miscellanea::RequireRcsKeywords couldn't find keywords after __END__
+      that didn't look like part of POD.
+    * Modules::RequireFilenameMatchesPackage would incorrectly complain about
+      programs.  Yet more greatness contributed by Schwern.  RT #39024.
+
 [1.092] Released on 2008-09-02
 
     Bug Fixes:
@@ -1343,10 +1355,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/Changes $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
-#   $Author: thaljef $
-# $Revision: 2721 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/Changes $
+#     $Date: 2008-09-07 04:53:56 -0500 (Sun, 07 Sep 2008) $
+#   $Author: clonezone $
+# $Revision: 2728 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

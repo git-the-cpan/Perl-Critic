@@ -1,6 +1,6 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/lib/Perl/Critic/TestUtils.pm $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/TestUtils.pm $
+#     $Date: 2008-09-02 11:43:48 -0500 (Tue, 02 Sep 2008) $
 #   $Author: thaljef $
 # $Revision: 2721 $
 ##############################################################################
@@ -29,7 +29,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ &throw_internal };
 use Perl::Critic::Utils qw{ :severities :data_conversion policy_long_name };
 use Perl::Critic::PolicyFactory (-test => 1);
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 Readonly::Array our @EXPORT_OK => qw(
     pcritique pcritique_with_violations

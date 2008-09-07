@@ -1,8 +1,8 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/t/20_policy_requireconsistentnewlines.t $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/t/20_policy_requireconsistentnewlines.t $
+#     $Date: 2008-09-02 11:43:48 -0500 (Tue, 02 Sep 2008) $
 #   $Author: thaljef $
 # $Revision: 2721 $
 ##############################################################################
@@ -19,7 +19,7 @@ use Test::More tests => 29;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 #-----------------------------------------------------------------------------
 

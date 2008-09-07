@@ -1,6 +1,6 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitNoWarnings.pm $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitNoWarnings.pm $
+#     $Date: 2008-09-02 11:43:48 -0500 (Tue, 02 Sep 2008) $
 #   $Author: thaljef $
 # $Revision: 2721 $
 ##############################################################################
@@ -17,7 +17,7 @@ use List::MoreUtils qw(all);
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 #-----------------------------------------------------------------------------
 

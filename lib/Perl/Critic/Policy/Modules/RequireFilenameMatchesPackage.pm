@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.092/lib/Perl/Critic/Policy/Modules/RequireFilenameMatchesPackage.pm $
-#     $Date: 2008-09-02 09:43:48 -0700 (Tue, 02 Sep 2008) $
-#   $Author: thaljef $
-# $Revision: 2721 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/Perl-Critic/lib/Perl/Critic/Policy/Modules/RequireFilenameMatchesPackage.pm $
+#     $Date: 2008-09-07 04:32:30 -0500 (Sun, 07 Sep 2008) $
+#   $Author: clonezone $
+# $Revision: 2727 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireFilenameMatchesPackage;
@@ -14,10 +14,10 @@ use Readonly;
 
 use File::Spec;
 
-use Perl::Critic::Utils qw{ :severities };
+use Perl::Critic::Utils qw{ :severities is_script };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.092';
+our $VERSION = '1.093_01';
 
 #-----------------------------------------------------------------------------
 
@@ -32,6 +32,12 @@ sub default_themes       { return qw(core bugs)     }
 sub applies_to           { return 'PPI::Document'   }
 
 #-----------------------------------------------------------------------------
+
+sub is_document_exempt {
+    my ( $self, $document ) = @_;
+
+    return is_script($document);   # Must be a library or module.
+}
 
 sub violates {
     my ($self, $elem, $doc) = @_;
