@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Miscellanea/ProhibitFormats.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::Miscellanea::ProhibitFormats;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ sub applies_to           { return 'PPI::Token::Word'         }
 
 sub violates {
     my ( $self, $elem, undef ) = @_;
-    return if $elem ne 'format';
+    return if $elem->content() ne 'format';
     return if ! is_function_call( $elem );
     return $self->violation( $DESC, $EXPL, $elem );
 }

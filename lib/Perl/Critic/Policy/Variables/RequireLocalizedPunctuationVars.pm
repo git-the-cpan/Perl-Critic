@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/RequireLocalizedPunctuationVars.pm $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::RequireLocalizedPunctuationVars;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification $EMPTY hashify};
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ sub applies_to           { return 'PPI::Token::Operator'     }
 sub violates {
     my ( $self, $elem, undef ) = @_;
 
-    return if $elem ne q{=};
+    return if $elem->content() ne q{=};
 
     my $destination = $elem->sprevious_sibling;
     return if !$destination;  # huh? assignment in void context??
@@ -76,7 +76,7 @@ sub _is_non_local_magic_dest {
         if
                 $modifier
             &&  $modifier->isa('PPI::Token::Word')
-            &&  ($modifier eq 'local' || $modifier eq 'my');
+            &&  ($modifier->content() eq 'local' || $modifier->content() eq 'my');
 
     # Implementation note: Can't rely on PPI::Token::Magic,
     # unfortunately, because we need English too

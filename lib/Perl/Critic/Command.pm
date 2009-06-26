@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Command.pm $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Command;
@@ -27,7 +27,7 @@ use Perl::Critic::Violation qw<>;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -129,14 +129,15 @@ sub _parse_command_line {
 
 sub _dispatch_special_requests {
     my (%opts) = @_;
-    if ( $opts{-help}            ) { pod2usage( -verbose => 0 )   }  #Exits
-    if ( $opts{-options}         ) { pod2usage( -verbose => 1 )   }  #Exits
-    if ( $opts{-man}             ) { pod2usage( -verbose => 2 )   }  #Exits
-    if ( $opts{-version}         ) { _display_version()           }  #Exits
-    if ( $opts{-list}            ) { _render_policy_listing()     }  #Exits
-    if ( $opts{'-list-themes'}   ) { _render_theme_listing()      }  #Exits
-    if ( $opts{'-profile-proto'} ) { _render_profile_prototype()  }  #Exits
-    if ( $opts{-doc}             ) { _render_policy_docs( %opts ) }  #Exits
+    if ( $opts{-help}            ) { pod2usage( -verbose => 0 )    }  #Exits
+    if ( $opts{-options}         ) { pod2usage( -verbose => 1 )    }  #Exits
+    if ( $opts{-man}             ) { pod2usage( -verbose => 2 )    }  #Exits
+    if ( $opts{-version}         ) { _display_version()            }  #Exits
+    if ( $opts{-list}            ) { _render_all_policy_listing()  }  #Exits
+    if ( $opts{'-list-used'}     ) { _render_policy_listing(%opts) }  #Exits
+    if ( $opts{'-list-themes'}   ) { _render_theme_listing()       }  #Exits
+    if ( $opts{'-profile-proto'} ) { _render_profile_prototype()   }  #Exits
+    if ( $opts{-doc}             ) { _render_policy_docs( %opts )  }  #Exits
     return 1;
 }
 
@@ -283,8 +284,18 @@ sub _critique {
 sub _render_report {
     my ( $file, $opts_ref, @violations ) = @_;
 
-    # Only report the number of violations, if asked.
+    # Only report the files, if asked.
     my $number_of_violations = scalar @violations;
+    if ( $opts_ref->{'-files-with-violations'} ||
+        $opts_ref->{'-files-without-violations'} ) {
+        not ref $file
+            and $opts_ref->{$number_of_violations ? '-files-with-violations' :
+            '-files-without-violations'}
+            and _out "$file\n";
+        return $number_of_violations;
+    }
+
+    # Only report the number of violations, if asked.
     if( $opts_ref->{-count} ){
         ref $file || _out "$file: ";
         _out "$number_of_violations\n";
@@ -349,12 +360,28 @@ sub _report_statistics {
     my $subroutines = _commaify($statistics->subs());
     my $statements = _commaify($statistics->statements_other_than_subs());
     my $lines = _commaify($statistics->lines());
-    my $width = max map { length } $files, $subroutines, $statements, $lines;
+    my $width = max map { length } $files, $subroutines, $statements;
 
     _out sprintf "%*s %s.\n", $width, $files, 'files';
     _out sprintf "%*s %s.\n", $width, $subroutines, 'subroutines/methods';
     _out sprintf "%*s %s.\n", $width, $statements, 'statements';
-    _out sprintf "%*s %s.\n", $width, $lines, 'lines';
+
+    my $lines_of_blank = _commaify( $statistics->lines_of_blank() );
+    my $lines_of_comment = _commaify( $statistics->lines_of_comment() );
+    my $lines_of_data = _commaify( $statistics->lines_of_data() );
+    my $lines_of_perl = _commaify( $statistics->lines_of_perl() );
+    my $lines_of_pod = _commaify( $statistics->lines_of_pod() );
+
+    $width =
+        max map { length }
+            $lines_of_blank, $lines_of_comment, $lines_of_data,
+            $lines_of_perl,  $lines_of_pod;
+    _out sprintf "\n%s %s:\n",            $lines, 'lines, consisting of';
+    _out sprintf "    %*s %s.\n", $width, $lines_of_blank, 'blank lines';
+    _out sprintf "    %*s %s.\n", $width, $lines_of_comment, 'comment lines';
+    _out sprintf "    %*s %s.\n", $width, $lines_of_data, 'data lines';
+    _out sprintf "    %*s %s.\n", $width, $lines_of_perl, 'lines of Perl code';
+    _out sprintf "    %*s %s.\n", $width, $lines_of_pod, 'lines of POD';
 
     my $average_sub_mccabe = $statistics->average_sub_mccabe();
     if (defined $average_sub_mccabe) {
@@ -461,6 +488,7 @@ sub _get_option_specification {
         help|?|H
         include=s@
         list
+        list-used
         list-themes
         man
         color|colour!
@@ -485,6 +513,8 @@ sub _get_option_specification {
         color-severity-medium|colour-severity-medium|color-severity-3|colour-severity-3=s
         color-severity-low|colour-severity-low|color-severity-2|colour-severity-2=s
         color-severity-lowest|colour-severity-lowest|color-severity-1|colour-severity-1=s
+        files-with-violations|l
+        files-without-violations|L
     );
 }
 
@@ -538,12 +568,20 @@ sub _at_tty {
 
 #-----------------------------------------------------------------------------
 
+sub _render_all_policy_listing {
+    # Force P-C parameters, to catch all Policies on this site
+    my %pc_params = (-profile => $EMPTY, -severity => $SEVERITY_LOWEST);
+    return _render_policy_listing( %pc_params );
+}
+
+#-----------------------------------------------------------------------------
+
 sub _render_policy_listing {
+    my %pc_params = @_;
 
     require Perl::Critic::PolicyListing;
     require Perl::Critic;
 
-    my %pc_params = (-profile => $EMPTY, -severity => $SEVERITY_LOWEST);
     my @policies = Perl::Critic->new( %pc_params )->policies();
     my $listing = Perl::Critic::PolicyListing->new( -policies => \@policies );
     _out $listing;

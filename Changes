@@ -1,3 +1,39 @@
+[1.xxx] Released on 2009-xx-xx
+
+    New Policies:
+      Objects::ProhibitIndirectSyntax
+      ValuesAndExpressions::ProhibitComplexVersion
+      ValuesAndExpressions::RequireConstantVersion
+
+    New Features:
+    * Perlcritic will list the names of files with violations if given the
+      --files-with-violations option, or the names of files without
+      violations if given the --files-without-violations options. These
+      have synonyms -l and -L respectively.
+    * Perlcritic has a new --list-used option, which lists the Policies
+      that will be enforced, given the current configuration.  This is
+      useful if you've written a complex command-line or modified your
+      .perlcriticrc file and you want to see which Policies *would*
+      be used with the current configuration, if you were actually going
+      to critque a file with it.
+
+    Policy Changes:
+    * Variables::ProhibitPunctuationVars gained the ability to look inside
+      interpolated strings.  Doing this correctly is challenging and things
+      may not work out right; how the policy does this can be controlled via
+      the new "string_mode" option.  Contributed by Edgar Whipple
+      <perlmonk at misterwhipple dot com>.
+    * NamingConventions::Capitalization now allows fully qualified subroutine
+      declarations ( e.g. "sub Foo::Bar::baz {...}" ).  However, the
+      non-package part of the subroutine name must still conform to whatever
+      capitalization rule you have chosen.
+
+    Other News: 
+    * Komodo version 5.1.1 now has built-in support for Perl-Critic, 
+      if you have the Perl::Critic and criticism modules installed.
+      Both should be available through the ActiveState Perl Package
+      Manager ppm(1).
+
 [1.098] Released on 2009-03-07
 
     Some Exciting News:
@@ -1571,9 +1607,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2009-03-07 09:04:14 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:57:01 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3230 $
+# $Revision: 3361 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

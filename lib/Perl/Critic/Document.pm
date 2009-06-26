@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Document.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:57:01 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3361 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -21,20 +21,20 @@ use Scalar::Util qw< blessed weaken >;
 use version;
 
 use Perl::Critic::Annotation;
-use Perl::Critic::Exception::Parse qw{ throw_parse };
+use Perl::Critic::Exception::Parse qw< throw_parse >;
+use Perl::Critic::Utils qw < :characters >;
+
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
 our $AUTOLOAD;
-sub AUTOLOAD {  ## no critic (ProhibitAutoloading,ArgUnpacking)
+sub AUTOLOAD {  ## no critic (ProhibitAutoloading, ArgUnpacking)
     my ( $function_name ) = $AUTOLOAD =~ m/ ([^:\']+) \z /xms;
-    return if $function_name eq 'DESTROY';
-    my $self = shift;
-    return $self->{_doc}->$function_name(@_);
+    return shift->{_doc}->$function_name(@_);
 }
 
 #-----------------------------------------------------------------------------
@@ -102,70 +102,6 @@ sub isa {
 
 #-----------------------------------------------------------------------------
 
-sub find {
-    my ($self, $wanted, @more_args) = @_;
-
-    # This method can only find elements by their class names.  For
-    # other types of searches, delegate to the PPI::Document
-    if ( ( ref $wanted ) || !$wanted || $wanted !~ m/ \A PPI:: /xms ) {
-        return $self->{_doc}->find($wanted, @more_args);
-    }
-
-    # Build the class cache if it doesn't exist.  This happens at most
-    # once per Perl::Critic::Document instance.  %elements of will be
-    # populated as a side-effect of calling the $finder_sub coderef
-    # that is produced by the caching_finder() closure.
-    if ( !$self->{_elements_of} ) {
-
-        my %cache = ( 'PPI::Document' => [ $self ] );
-
-        # The cache refers to $self, and $self refers to the cache.  This
-        # creates a circular reference that leaks memory (i.e.  $self is not
-        # destroyed until execution is complete).  By weakening the reference,
-        # we allow perl to collect the garbage properly.
-        weaken( $cache{'PPI::Document'}->[0] );
-
-        my $finder_coderef = _caching_finder( \%cache );
-        $self->{_doc}->find( $finder_coderef );
-        $self->{_elements_of} = \%cache;
-    }
-
-    # find() must return false-but-defined on fail
-    return $self->{_elements_of}->{$wanted} || q{};
-}
-
-#-----------------------------------------------------------------------------
-
-sub find_first {
-    my ($self, $wanted, @more_args) = @_;
-
-    # This method can only find elements by their class names.  For
-    # other types of searches, delegate to the PPI::Document
-    if ( ( ref $wanted ) || !$wanted || $wanted !~ m/ \A PPI:: /xms ) {
-        return $self->{_doc}->find_first($wanted, @more_args);
-    }
-
-    my $result = $self->find($wanted);
-    return $result ? $result->[0] : $result;
-}
-
-#-----------------------------------------------------------------------------
-
-sub find_any {
-    my ($self, $wanted, @more_args) = @_;
-
-    # This method can only find elements by their class names.  For
-    # other types of searches, delegate to the PPI::Document
-    if ( ( ref $wanted ) || !$wanted || $wanted !~ m/ \A PPI:: /xms ) {
-        return $self->{_doc}->find_any($wanted, @more_args);
-    }
-
-    my $result = $self->find($wanted);
-    return $result ? 1 : $result;
-}
-
-#-----------------------------------------------------------------------------
-
 sub filename {
     my ($self) = @_;
     my $doc = $self->{_doc};
@@ -181,7 +117,7 @@ sub highest_explicit_perl_version {
         $self->{_highest_explicit_perl_version};
 
     if ( not exists $self->{_highest_explicit_perl_version} ) {
-        my $includes = $self->find( \&_is_a_version_statement );
+        my $includes = $self->_find_perl_version_includes();
 
         if ($includes) {
             # Note: this doesn't use List::Util::max() because that function
@@ -294,47 +230,14 @@ sub suppressed_violations {
 #-----------------------------------------------------------------------------
 # PRIVATE functions & methods
 
-sub _is_a_version_statement {
-    my (undef, $element) = @_;
+sub _find_perl_version_includes {
+    my ($self) = @_;
 
-    return 0 if not $element->isa('PPI::Statement::Include');
-    return 1 if $element->version();
-    return 0;
-}
-
-#-----------------------------------------------------------------------------
-
-sub _caching_finder {
-
-    my $cache_ref = shift;  # These vars will persist for the life
-    my %isa_cache = ();     # of the code ref that this sub returns
-
-
-    # Gather up all the PPI elements and sort by @ISA.  Note: if any
-    # instances used multiple inheritance, this implementation would
-    # lead to multiple copies of $element in the $elements_of lists.
-    # However, PPI::* doesn't do multiple inheritance, so we are safe
-
-    return sub {
-        my (undef, $element) = @_;
-        my $classes = $isa_cache{ref $element};
-        if ( !$classes ) {
-            $classes = [ ref $element ];
-            # Use a C-style loop because we append to the classes array inside
-            for ( my $i = 0; $i < @{$classes}; $i++ ) { ## no critic(ProhibitCStyleForLoops)
-                no strict 'refs';                       ## no critic(ProhibitNoStrict)
-                push @{$classes}, @{"$classes->[$i]::ISA"};
-                $cache_ref->{$classes->[$i]} ||= [];
-            }
-            $isa_cache{$classes->[0]} = $classes;
-        }
-
-        for my $class ( @{$classes} ) {
-            push @{$cache_ref->{$class}}, $element;
-        }
-
-        return 0; # 0 tells find() to keep traversing, but not to store this $element
-    };
+    # This takes advantage of our find() method, which is
+    # optimized to search for elements based on their class.
+    my $includes = $self->find('PPI::Statement::Include') || [];
+    my @version_includes = grep { $_->version() } @{$includes};
+    return @version_includes ? \@version_includes : $EMPTY;
 }
 
 #-----------------------------------------------------------------------------

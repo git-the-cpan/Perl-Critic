@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitPostfixControls.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitPostfixControls;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ sub violates {
     return if $stmnt->isa('PPI::Statement::Compound');
 
     # Handle special cases
-    if ( $elem eq 'if' ) {
+    if ( $elem->content() eq 'if' ) {
         # Postfix 'if' allowed with loop breaks, or other
         # flow-controls like 'die', 'warn', and 'croak'
         return if $stmnt->isa('PPI::Statement::Break');

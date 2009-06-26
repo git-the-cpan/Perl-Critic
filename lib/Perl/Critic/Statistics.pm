@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Statistics.pm $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Statistics;
@@ -17,7 +17,7 @@ use Perl::Critic::Utils::McCabe qw{ calculate_mccabe_of_sub };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -30,6 +30,11 @@ sub new {
     $self->{_subs} = 0;
     $self->{_statements} = 0;
     $self->{_lines} = 0;
+    $self->{_lines_of_blank} = 0;
+    $self->{_lines_of_comment} = 0;
+    $self->{_lines_of_data} = 0;
+    $self->{_lines_of_perl} = 0;
+    $self->{_lines_of_pod} = 0;
     $self->{_violations_by_policy} = {};
     $self->{_violations_by_severity} = {};
     $self->{_total_violations} = 0;
@@ -59,6 +64,28 @@ sub accumulate {
     my @lines = split /$INPUT_RECORD_SEPARATOR/, $doc->serialize();
     ## use critic
     $self->{_lines} += scalar @lines;
+    {
+        my ( $in_data, $in_pod );
+        foreach ( @lines ) {
+            if ( q{=} eq substr $_, 0, 1 ) {    ## no critic (ProhibitCascadingIfElse)
+                $in_pod = not m/ \A \s* =cut \b /smx;
+                $self->{_lines_of_pod}++;
+            } elsif ( $in_pod ) {
+                $self->{_lines_of_pod}++;
+            } elsif ( q{__END__} eq $_ || q{__DATA__} eq $_ ) {
+                $in_data = 1;
+                $self->{_lines_of_perl}++;
+            } elsif ( $in_data ) {
+                $self->{_lines_of_data}++;
+            } elsif ( m/ \A \s* \# /smx ) {
+                $self->{_lines_of_comment}++;
+            } elsif ( m/ \A \s* \z /smx ) {
+                $self->{_lines_of_blank}++;
+            } else {
+                $self->{_lines_of_perl}++;
+            }
+        }
+    }
 
     foreach my $violation ( @{ $violations } ) {
         $self->{_violations_by_severity}->{ $violation->severity() }++;
@@ -99,6 +126,46 @@ sub lines {
     my ( $self ) = @_;
 
     return $self->{_lines};
+}
+
+#-----------------------------------------------------------------------------
+
+sub lines_of_blank {
+    my ( $self ) = @_;
+
+    return $self->{_lines_of_blank};
+}
+
+#-----------------------------------------------------------------------------
+
+sub lines_of_comment {
+    my ( $self ) = @_;
+
+    return $self->{_lines_of_comment};
+}
+
+#-----------------------------------------------------------------------------
+
+sub lines_of_data {
+    my ( $self ) = @_;
+
+    return $self->{_lines_of_data};
+}
+
+#-----------------------------------------------------------------------------
+
+sub lines_of_perl {
+    my ( $self ) = @_;
+
+    return $self->{_lines_of_perl};
+}
+
+#-----------------------------------------------------------------------------
+
+sub lines_of_pod {
+    my ( $self ) = @_;
+
+    return $self->{_lines_of_pod};
 }
 
 #-----------------------------------------------------------------------------
@@ -246,6 +313,37 @@ The total number of statements analyzed by this Critic.
 =item C<lines()>
 
 The total number of lines of code analyzed by this Critic.
+
+
+=item C<lines_of_blank()>
+
+The total number of blank lines analyzed by this Critic. This includes only
+blank lines in code, not POD or data.
+
+
+=item C<lines_of_comment()>
+
+The total number of comment lines analyzed by this Critic. This includes only
+lines whose first non-whitespace character is C<#>.
+
+
+=item C<lines_of_data()>
+
+The total number of lines of data section analyzed by this Critic, not
+counting the C<__END__> or C<__DATA__> line. POD in a data section is counted
+as POD, not data.
+
+
+=item C<lines_of_perl()>
+
+The total number of lines of Perl code analyzed by this Critic. Perl appearing
+in the data section is not counted.
+
+
+=item C<lines_of_pod()>
+
+The total number of lines of POD analyzed by this Critic. Pod occurring in a
+data section is counted as POD, not as data.
 
 
 =item C<violations_by_severity()>

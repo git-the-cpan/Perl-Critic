@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/05_utils.t $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 ## There's too much use of source code in strings.
@@ -20,6 +20,7 @@ use Carp qw< confess >;
 use File::Temp qw< >;
 use PPI::Document qw< >;
 use PPI::Document::File qw< >;
+use Perl::Critic::Document qw< >;
 
 use Perl::Critic::PolicyFactory;
 use Perl::Critic::TestUtils qw(bundled_policy_names);
@@ -28,7 +29,7 @@ use Test::More tests => 125;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -90,10 +91,10 @@ sub test_export {
 #-----------------------------------------------------------------------------
 
 sub count_matches { my $val = shift; return defined $val ? scalar @{$val} : 0; }
-sub make_doc { my $code = shift; return PPI::Document->new( ref $code ? $code : \$code); }
+sub make_doc { my $code = shift; return Perl::Critic::Document->new( ref $code ? $code : \$code); }
 
 sub test_find_keywords {
-    my $doc = PPI::Document->new(); #Empty doc
+    my $doc = PPI::Document->new(); # Empty doc.
     is( count_matches( find_keywords($doc, 'return') ), 0, 'find_keywords, no doc' );
 
     my $code = 'return;';
@@ -119,7 +120,7 @@ sub test_find_keywords {
 
 sub test_is_hash_key {
     my $code = 'sub foo { return $h1{bar}, $h2->{baz}, $h3->{ nuts() } }';
-    my $doc = PPI::Document->new(\$code);
+    my $doc = make_doc( $code );
     my @words = @{$doc->find('PPI::Token::Word')};
     my @expect = (
         ['sub', undef],
@@ -133,7 +134,7 @@ sub test_is_hash_key {
 
     for my $i (0 .. $#expect) {
         is($words[$i], $expect[$i][0], 'is_hash_key word');
-        is(is_hash_key($words[$i]), $expect[$i][1], 'is_hash_key boolean');
+        is( !!is_hash_key($words[$i]), !!$expect[$i][1], 'is_hash_key boolean' );
     }
 
     return;
@@ -156,14 +157,12 @@ sub test_is_script {
     );
 
     for my $code (@good) {
-        my $doc = PPI::Document->new(\$code) or confess;
-        $doc->index_locations();
+        my $doc = make_doc( $code ) or confess;
         ok(is_script($doc), 'is_script, true');
     }
 
     for my $code (@bad) {
-        my $doc = PPI::Document->new(\$code) or confess;
-        $doc->index_locations();
+        my $doc = make_doc( $code ) or confess;
         ok(!is_script($doc), 'is_script, false');
     }
 
@@ -184,7 +183,6 @@ sub test_is_script_with_PL_files { ## no critic (NamingConventions::Capitalizati
     close $temp_file or confess "Couldn't close $temp_file: $OS_ERROR";
 
     my $doc = PPI::Document::File->new($temp_file->filename());
-    $doc->index_locations();
     ok(is_script($doc), 'is_script, false for .PL files');
 
     return;
@@ -193,18 +191,18 @@ sub test_is_script_with_PL_files { ## no critic (NamingConventions::Capitalizati
 #-----------------------------------------------------------------------------
 
 sub test_is_perl_builtin {
-    is(   is_perl_builtin('print'),  1, 'Is perl builtin function'     );
-    isnt( is_perl_builtin('foobar'), 1, 'Is not perl builtin function' );
+    ok(  is_perl_builtin('print'),  'Is perl builtin function'     );
+    ok( !is_perl_builtin('foobar'), 'Is not perl builtin function' );
 
     my $code = 'sub print {}';
     my $doc = make_doc( $code );
     my $sub = $doc->find_first('Statement::Sub');
-    is( is_perl_builtin($sub), 1, 'Is perl builtin function (PPI)' );
+    ok( is_perl_builtin($sub), 'Is perl builtin function (PPI)' );
 
     $code = 'sub foobar {}';
     $doc = make_doc( $code );
     $sub = $doc->find_first('Statement::Sub');
-    isnt( is_perl_builtin($sub), 1, 'Is not perl builtin function (PPI)' );
+    ok( !is_perl_builtin($sub), 'Is not perl builtin function (PPI)' );
 
     return;
 }
@@ -212,24 +210,24 @@ sub test_is_perl_builtin {
 #-----------------------------------------------------------------------------
 
 sub test_is_perl_global {
-    is(   is_perl_global('$OSNAME'),  1, '$OSNAME is a perl global var'     );
-    is(   is_perl_global('*STDOUT'),  1, '*STDOUT is a perl global var'     );
-    isnt( is_perl_global('%FOOBAR'),  1, '%FOOBAR is a not perl global var' );
+    ok(  is_perl_global('$OSNAME'), '$OSNAME is a perl global var'     );
+    ok(  is_perl_global('*STDOUT'), '*STDOUT is a perl global var'     );
+    ok( !is_perl_global('%FOOBAR'), '%FOOBAR is a not perl global var' );
 
     my $code = '$OSNAME';
     my $doc  = make_doc($code);
     my $var  = $doc->find_first('Token::Symbol');
-    is( is_perl_global($var), 1, '$OSNAME is perl a global var (PPI)' );
+    ok( is_perl_global($var), '$OSNAME is perl a global var (PPI)' );
 
     $code = '*STDOUT';
     $doc  = make_doc($code);
     $var  = $doc->find_first('Token::Symbol');
-    is( is_perl_global($var), 1, '*STDOUT is perl a global var (PPI)' );
+    ok( is_perl_global($var), '*STDOUT is perl a global var (PPI)' );
 
     $code = '%FOOBAR';
     $doc  = make_doc($code);
     $var  = $doc->find_first('Token::Symbol');
-    isnt( is_perl_global($var), 1, '%FOOBAR is not a perl global var (PPI)' );
+    ok( !is_perl_global($var), '%FOOBAR is not a perl global var (PPI)' );
 
     $code = q[$\\];
     $doc  = make_doc($code);
@@ -263,12 +261,12 @@ sub test_is_subroutine_name {
     my $code = 'sub foo {}';
     my $doc  = make_doc( $code );
     my $word = $doc->find_first( sub { $_[1] eq 'foo' } );
-    is( is_subroutine_name( $word ), 1, 'Is a subroutine name');
+    ok( is_subroutine_name( $word ), 'Is a subroutine name');
 
     $code = '$bar = foo()';
     $doc  = make_doc( $code );
     $word = $doc->find_first( sub { $_[1] eq 'foo' } );
-    isnt( is_subroutine_name( $word ), 1, 'Is not a subroutine name');
+    ok( !is_subroutine_name( $word ), 'Is not a subroutine name');
 
     return;
 }
@@ -325,7 +323,7 @@ sub test_is_perl_and_shebang_line {
 
         ok( Perl::Critic::Utils::_is_perl($filename), qq{Is perl: '$shebang'} );
 
-        my $document = PPI::Document->new(\$shebang);
+        my $document = make_doc( $shebang );
         is(
             Perl::Critic::Utils::shebang_line($document),
             $shebang,
@@ -349,7 +347,7 @@ sub test_is_perl_and_shebang_line {
 
         ok( ! Perl::Critic::Utils::_is_perl($filename), qq{Is not perl: '$shebang'} );
 
-        my $document = PPI::Document->new(\$shebang);
+        my $document = make_doc( $shebang );
         is(
             Perl::Critic::Utils::shebang_line($document),
             ($shebang eq 'shazbot' ? undef : $shebang),
@@ -386,7 +384,7 @@ sub test_first_arg {
     for (my $i = 0; $i < @tests; $i += 2) { ## no critic (ProhibitCStyleForLoops)
         my $code = $tests[$i];
         my $expect = $tests[$i+1];
-        my $doc = PPI::Document->new(\$code);
+        my $doc = make_doc( $code );
         my $got = first_arg($doc->first_token());
         is($got ? "$got" : undef, $expect, 'first_arg - '.$code);
     }
@@ -420,7 +418,7 @@ sub test_parse_arg_list {
     foreach my $test (@tests) {
         my ($code, $expected) = @{ $test };
 
-        my $document = PPI::Document->new( \$code );
+        my $document = make_doc( $code );
         my @got = parse_arg_list( $document->first_token() );
         is_deeply( \@got, $expected, "parse_arg_list: $code" );
     }
@@ -432,7 +430,7 @@ sub test_parse_arg_list {
 
 sub test_is_function_call {
     my $code = 'sub foo{}';
-    my $doc = PPI::Document->new( \$code );
+    my $doc = make_doc( $code );
     my $words = $doc->find('PPI::Token::Word');
     is(scalar @{$words}, 2, 'count PPI::Token::Words');
     is((scalar grep {is_function_call($_)} @{$words}), 0, 'is_function_call');

@@ -1,0 +1,72 @@
+## name basic passes
+## failures 0
+## cut
+
+Foo->new;
+Foo->new();
+Foo->new( bar => 'baz' );
+
+$foo->new;
+
+{$foo}->new;
+
+#-----------------------------------------------------------------------------
+
+## name basic failures
+## failures 5
+## cut
+
+new Foo;
+new Foo();
+new Foo( bar => 'baz' );
+
+new $foo;
+
+new {$foo};
+
+#-----------------------------------------------------------------------------
+
+## name unchecked indirect objects
+## failures 0
+## cut
+
+create Foo;
+create Foo();
+create Foo( bar => 'baz' );
+
+create $foo;
+
+create {$foo};
+
+#-----------------------------------------------------------------------------
+
+## name checked indirect objects
+## parms { forbid => 'create' }
+## failures 5
+## cut
+
+create Foo;
+create Foo();
+create Foo( bar => 'baz' );
+
+create $foo;
+
+create {$foo};
+
+#-----------------------------------------------------------------------------
+
+##############################################################################
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Objects/ProhibitIndirectSyntax.run $
+#     $Date: 2009-03-18 14:15:07 -0500 (Wed, 18 Mar 2009) $
+#   $Author: wyant $
+# $Revision: 3241 $
+##############################################################################
+
+# Local Variables:
+#   mode: cperl
+#   cperl-indent-level: 4
+#   fill-column: 78
+#   indent-tabs-mode: nil
+#   c-indentation-style: bsd
+# End:
+# ex: set ts=8 sts=4 sw=4 tw=78 ft=perl expandtab shiftround :

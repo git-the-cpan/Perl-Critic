@@ -2,9 +2,9 @@
 
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/08_document.t $
-#    $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#    $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 use 5.006001;
@@ -17,20 +17,17 @@ use version;
 
 use Perl::Critic::Utils::DataConversion qw< dor >;
 
-use Test::More tests => 27;
+use Test::More tests => 24;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
 use_ok('Perl::Critic::Document');
 can_ok('Perl::Critic::Document', 'new');
 can_ok('Perl::Critic::Document', 'filename');
-can_ok('Perl::Critic::Document', 'find');
-can_ok('Perl::Critic::Document', 'find_first');
-can_ok('Perl::Critic::Document', 'find_any');
 can_ok('Perl::Critic::Document', 'highest_explicit_perl_version');
 can_ok('Perl::Critic::Document', 'ppi_document');
 

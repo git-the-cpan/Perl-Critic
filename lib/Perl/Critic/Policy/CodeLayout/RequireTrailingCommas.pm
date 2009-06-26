@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/CodeLayout/RequireTrailingCommas.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::CodeLayout::RequireTrailingCommas;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :characters :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -48,11 +48,11 @@ sub violates {
     # This means list element, not PPI element.
     my @children = $expr->schildren();
     return if 1 >= grep {    $_->isa('PPI::Token::Operator')
-                          && $_ eq $COMMA } @children;
+                          && $_->content() eq $COMMA } @children;
 
     # Is the final element a comma?
     my $final = $children[-1];
-    if ( ! ($final->isa('PPI::Token::Operator') && $final eq $COMMA) ) {
+    if ( ! ($final->isa('PPI::Token::Operator') && $final->content() eq $COMMA) ) {
         return $self->violation( $DESC, $EXPL, $elem );
     }
 

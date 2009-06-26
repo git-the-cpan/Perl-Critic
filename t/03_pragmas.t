@@ -2,9 +2,9 @@
 
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/03_pragmas.t $
-#    $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#    $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 use 5.006001;
@@ -19,7 +19,7 @@ use Perl::Critic::TestUtils qw(critique);
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'}
     ),
     0,
-    'inline no-critic'
+    'inline no-critic disables violations'
 );
 
 #-----------------------------------------------------------------------------
@@ -290,7 +290,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     5,
-    'inline no-critic',
+    q<inline no-critic doesn't block later violations>,
 );
 
 #-----------------------------------------------------------------------------

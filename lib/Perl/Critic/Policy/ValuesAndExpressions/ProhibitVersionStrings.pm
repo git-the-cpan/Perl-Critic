@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitVersionStrings.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitVersionStrings;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -40,17 +40,43 @@ sub violates {
         )
         and $elem->module ne 'lib'
     ) {
-        # This is a pretty crude way to verify that a version string is
-        # being used.  But there are several permutations of the syntax
-        # for C<use> and C<require>.  Also PPI doesn't parses strings
-        # like "5.6.1" as an integer that is being concatenated to a
-        # float.  I'm not sure if this should be reported as a bug.
 
-        if ( $elem =~ m{ \b v? \d+ [.] \d+ [.] \d+ \b }xms ) {
-            return $self->violation( $DESC, $EXPL, $elem );
-        }
+        # RT 44986 appears to require us to bite the bullet. So instead of
+        # just a regular expression on the content of the element:
+
+        # Check the second element, to see if it is a version string. If it
+        # is, we have a violation. If it is any other sort of number, we
+        # return with no violation.
+        my $check = $elem->schild( 1 ) or return;
+        _is_version_string( $check )
+            and return $self->violation( $DESC, $EXPL, $elem );
+        $check->isa( 'PPI::Token::Number' ) and return;
+
+        # Check the third element. If it is a version string, return a
+        # violation.
+        $check = $check->snext_sibling();
+        _is_version_string( $check )
+            and return $self->violation( $DESC, $EXPL, $elem );
+
     }
     return;    #ok!
+}
+
+# TODO: Remove this when a released PPI properly supports version numbers (the
+# current dev releases do support it).
+sub _is_version_string {
+    my ( $elem ) = @_;
+
+    $elem or return;
+    $elem->isa( 'PPI::Token::Number::Version' ) and return 1;
+
+    # We could just return here, but PPI mis-parses v-strings with an actual
+    # 'v' in front. So:
+    $elem->isa( 'PPI::Token::Word' ) or return;
+    $elem->content() =~ m/ \A v \d+ \z /smx or return;
+    my $next = $elem->next_sibling()    # not snext, to disallow white space.
+        or return;
+    return $next->isa( 'PPI::Token::Number' );
 }
 
 1;

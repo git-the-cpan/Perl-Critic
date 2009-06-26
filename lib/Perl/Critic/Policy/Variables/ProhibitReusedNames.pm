@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/ProhibitReusedNames.pm $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::ProhibitReusedNames;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ sub applies_to           { return 'PPI::Statement::Variable' }
 
 sub violates {
     my ( $self, $elem, undef ) = @_;
-    return if 'local' eq $elem->type;
+    return if 'local' eq $elem->type();
 
     my $allow = $self->{_allow};
     my @names = grep { not $allow->{$_} } $elem->variables();

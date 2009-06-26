@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/RequireNegativeIndices.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::RequireNegativeIndices;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -95,8 +95,8 @@ sub _cast {
     # return (varname, isref=0|1, isindex=0|1) if this could be a violation
     my ( $expr ) = @_;
     my $cast = shift @{$expr};
-    if ( $cast eq q{$#} || $cast eq q{@} ) { ## no critic(RequireInterpolationOfMetachars)
-        my $isindex = $cast eq q{$#} ? 1 : 0;  ## no critic(RequireInterpolationOfMetachars)
+    if ( $cast->content() eq q{$#} || $cast->content() eq q{@} ) { ## no critic(RequireInterpolationOfMetachars)
+        my $isindex = $cast->content() eq q{$#} ? 1 : 0;  ## no critic(RequireInterpolationOfMetachars)
         my $arrvar = shift @{$expr};
         if ($arrvar->isa('PPI::Structure::Block')) {
             # look for [$#{$arr} ...] or [@{$arr} ...]
@@ -174,7 +174,7 @@ sub _is_dereferencer { # must return 0 or 1, not undef
     my $elem = shift;
 
     return 0 if !$elem;
-    return 1 if $elem->isa('PPI::Token::Operator') && $elem eq '->';
+    return 1 if $elem->isa('PPI::Token::Operator') && $elem->content() eq '->';
     return 1 if $elem->isa('PPI::Token::Cast');
     return 0;
 }

@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Carp qw< confess >;
 use Carp qw< confess >;
 use Fatal qw< open close >;
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 
 
@@ -144,6 +144,10 @@ $Foo = 42;
 ## cut
 
 Readonly::Scalar my $CONSTANT = 23;
+use constant FOO => 42;
+use constant { BAR => 3, BAZ => 7 };
+use constant 1.16 FOO => 42;
+use constant 1.16 { BAR => 3, BAZ => 7 };
 
 #-----------------------------------------------------------------------------
 
@@ -405,6 +409,16 @@ sub $subroutine_name {
 sub bLaHlAhLaH {
     # Blah blah blah
 }
+
+#-----------------------------------------------------------------------------
+
+## name Subroutine named "Foo::Bar::$subroutine_name" vs the "$capitalization_scheme" capitalization scheme.
+## parms { subroutines => '$capitalization_scheme' }
+## failures $failures
+## cut
+
+sub Foo::Bar::$subroutine_name;
+
 END_SUBROUTINE_TEST
 
     return;
@@ -606,32 +620,6 @@ foreach our \$$variable_name (\@_) {
 
 #-----------------------------------------------------------------------------
 
-## name Localized variable as foreach loop variable named "$variable_name" vs the "$capitalization_scheme" capitalization scheme.
-## failures $failures
-## parms { global_variables => '$capitalization_scheme' }
-## cut
-
-foreach local \$$variable_name (\@_) {
-    say \$$variable_name;
-}
-
-#-----------------------------------------------------------------------------
-
-## name Localized builtin variable as foreach loop variable vs the "$capitalization_scheme" capitalization scheme.
-## failures 0
-## parms { global_variables => '$capitalization_scheme' }
-## cut
-
-foreach local \$@ (\@_) {
-    say \$@;
-}
-
-foreach local \$EVAL_ERROR (\@_) {
-    say \$EVAL_ERROR;
-}
-
-#-----------------------------------------------------------------------------
-
 ## name Localized builtin variable
 ## failures 0
 ## cut
@@ -646,17 +634,6 @@ local \$\@;
 
 # \$\\ was missing from the built in global exceptions
 local \$\\;
-
-#-----------------------------------------------------------------------------
-
-## name Localized variable in another package as foreach loop variable vs the "$capitalization_scheme" capitalization scheme.
-## failures 0
-## parms { global_variables => '$capitalization_scheme' }
-## cut
-
-foreach local \$Foo::Bar (\@_) {
-    say \$Foo::Bar;
-}
 END_FOREACH_LOOP_VARIABLE_TESTS
 
     return;
@@ -861,9 +838,9 @@ our @THING;
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 # Local Variables:

@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/RequireFinalReturn.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::RequireFinalReturn;
@@ -16,7 +16,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ sub _is_compound_return {
     my $begin = $final->schild(0);
     return if !$begin; #fail
     if (!($begin->isa('PPI::Token::Word') &&
-          ($begin eq 'if' || $begin eq 'unless'))) {
+          ($begin->content() eq 'if' || $begin->content() eq 'unless'))) {
         return; #fail
     }
 
@@ -147,7 +147,7 @@ sub _is_return_or_goto_stmnt {
     my ( $self, $stmnt ) = @_;
     return if not $stmnt->isa('PPI::Statement::Break');
     my $first_token = $stmnt->schild(0) || return;
-    return $first_token eq 'return' || $first_token eq 'goto';
+    return $first_token->content() eq 'return' || $first_token->content() eq 'goto';
 }
 
 #-----------------------------------------------------------------------------

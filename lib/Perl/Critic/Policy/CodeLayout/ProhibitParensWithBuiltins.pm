@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/CodeLayout/ProhibitParensWithBuiltins.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::CodeLayout::ProhibitParensWithBuiltins;
@@ -12,12 +12,16 @@ use strict;
 use warnings;
 use Readonly;
 
+use List::MoreUtils qw{any};
+
 use Perl::Critic::Utils qw{
     :booleans :severities :data_conversion :classification :language
 };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+#-----------------------------------------------------------------------------
+
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -76,7 +80,8 @@ sub violates {
     if ( $sibling->isa('PPI::Structure::List') ) {
         my $elem_after_parens = $sibling->snext_sibling();
 
-        return if _is_named_unary_exemption($elem, $elem_after_parens);
+        return if _is_named_unary_with_operator_inside_parens_exemption($elem, $sibling);
+        return if _is_named_unary_with_operator_following_parens_exemption($elem, $elem_after_parens);
         return if _is_precedence_exemption($elem_after_parens);
         return if _is_equals_exemption($sibling);
         return if _is_sort_exemption($elem, $sibling);
@@ -88,12 +93,11 @@ sub violates {
 }
 
 #-----------------------------------------------------------------------------
-
 # EXCEPTION 1: If the function is a named unary and there is an
 # operator with higher precedence right after the parentheses.
 # Example: int( 1.5 ) + 0.5;
 
-sub _is_named_unary_exemption {
+sub _is_named_unary_with_operator_following_parens_exemption {
     my ($elem, $elem_after_parens) = @_;
 
     if ( _is_named_unary( $elem ) && $elem_after_parens ){
@@ -112,7 +116,6 @@ sub _is_named_unary {
 }
 
 #-----------------------------------------------------------------------------
-
 # EXCEPTION 2, If there is an operator immediately after the
 # parentheses, and that operator has precedence greater than
 # or equal to a comma.
@@ -130,6 +133,7 @@ sub _is_precedence_exemption {
     return $FALSE;
 }
 
+#-----------------------------------------------------------------------------
 # EXCEPTION 3: If the first operator within the parentheses is '='
 # Example: chomp( my $foo = <STDIN> );
 
@@ -137,19 +141,20 @@ sub _is_equals_exemption {
     my ($sibling) = @_;
 
     if ( my $first_op = $sibling->find_first('PPI::Token::Operator') ){
-        return $TRUE if $first_op eq q{=};
+        return $TRUE if $first_op->content() eq q{=};
     }
 
     return $FALSE;
 }
 
+#-----------------------------------------------------------------------------
 # EXCEPTION 4: sort with default comparator but a function for the list data
 # Example: sort(foo(@x))
 
 sub _is_sort_exemption {
     my ($elem, $sibling) = @_;
 
-    if ( $elem eq 'sort' ) {
+    if ( $elem->content() eq 'sort' ) {
         my $first_arg = $sibling->schild(0);
         if ( $first_arg && $first_arg->isa('PPI::Statement::Expression') ) {
             $first_arg = $first_arg->schild(0);
@@ -163,11 +168,27 @@ sub _is_sort_exemption {
     return $FALSE;
 }
 
+#-----------------------------------------------------------------------------
+# EXCEPTION 5: If the function is a named unary and there is an operator
+# inside the parentheses.
+# Example: length($foo || $bar);
+
+sub _is_named_unary_with_operator_inside_parens_exemption {
+    my ($elem, $parens) = @_;
+    return _is_named_unary($elem) &&  _contains_operators($parens);
+}
+
+sub _contains_operators {
+    my ($parens) = @_;
+    return $TRUE if $parens->find_first('PPI::Token::Operator');
+    return $FALSE;
+}
+
+#-----------------------------------------------------------------------------
 1;
 
 __END__
 
-#-----------------------------------------------------------------------------
 
 =pod
 

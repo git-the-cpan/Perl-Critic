@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/BuiltinFunctions/RequireBlockGrep.pm $
-#     $Date: 2009-03-07 08:55:25 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3228 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::BuiltinFunctions::RequireBlockGrep;
@@ -19,7 +19,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification :ppi };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ sub applies_to           { return 'PPI::Token::Word'  }
 sub violates {
     my ( $self, $elem, undef ) = @_;
 
-    return if $elem ne 'grep';
+    return if $elem->content() ne 'grep';
     return if ! is_function_call($elem);
 
     my $arg = first_arg($elem);
@@ -89,6 +89,48 @@ This Policy is not configurable except for the standard options.
 L<Perl::Critic::Policy::BuiltinFunctions::ProhibitStringyEval|Perl::Critic::Policy::BuiltinFunctions::ProhibitStringyEval>
 
 L<Perl::Critic::Policy::BuiltinFunctions::RequireBlockMap|Perl::Critic::Policy::BuiltinFunctions::RequireBlockMap>
+
+
+=head1 METADATA
+
+=head2 Explanation
+
+=head3 First Edition of Perl Best Practices
+
+=over
+
+=item Pages
+
+169
+
+
+=item Chapter/Section
+
+8/13
+
+
+=back
+
+
+=head2 Description
+
+Expression form of "grep"
+
+
+=head2 Default Severity
+
+High
+
+
+=head2 Default Themes
+
+core bugs pbp
+
+
+=head2 Applies To
+
+L<PPI::Token::Word>
+
 
 =head1 AUTHOR
 

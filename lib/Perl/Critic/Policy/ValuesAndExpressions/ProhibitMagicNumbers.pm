@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMagicNumbers.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers;
@@ -17,7 +17,7 @@ use Perl::Critic::Utils qw{ :booleans :characters :severities :data_conversion }
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #----------------------------------------------------------------------------
 
@@ -373,14 +373,14 @@ sub _element_is_in_a_constant_subroutine {
     my $following = $elem->snext_sibling();
     if ($following) {
         return 0 if not $following->isa('PPI::Token::Structure');
-        return 0 if not $following->content() eq $SCOLON;
+        return 0 if $following->content() ne $SCOLON;
         return 0 if $following->snext_sibling();
     }
 
     my $preceding = $elem->sprevious_sibling();
     if ($preceding) {
         return 0 if not $preceding->isa('PPI::Token::Word');
-        return 0 if not $preceding->content() eq 'return';
+        return 0 if $preceding->content() ne 'return';
         return 0 if $preceding->sprevious_sibling();
     }
 

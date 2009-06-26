@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseStrict.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities $EMPTY };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ sub violates {
     my $strict_line  = $strict_stmnt ? $strict_stmnt->location()->[0] : undef;
 
     # Find all statements that aren't 'use', 'require', or 'package'
-    my $stmnts_ref = $doc->find( \&_isnt_include_or_package );
+    my $stmnts_ref = $self->_find_isnt_include_or_package($doc);
     return if not $stmnts_ref;
 
     # If the 'use strict' statement is not defined, or the other
@@ -72,6 +72,8 @@ sub violates {
     }
     return @viols;
 }
+
+#-----------------------------------------------------------------------------
 
 sub _generate_is_use_strict {
     my ($self) = @_;
@@ -97,10 +99,22 @@ sub _generate_is_use_strict {
     };
 }
 
-sub _isnt_include_or_package {
-    my (undef, $elem) = @_;
+#-----------------------------------------------------------------------------
+# Here, we're using the fact that Perl::Critic::Document::find() is optimized
+# to search for elements based on their type.  This is faster than using the
+# native PPI::Node::find() method with a custom callback function.
 
-    return 0 if ! $elem->isa('PPI::Statement');
+sub _find_isnt_include_or_package {
+    my ($self, $doc) = @_;
+    my $all_statements = $doc->find('PPI::Statement') or return;
+    my @wanted_statements = grep { _statement_isnt_include_or_package($_) } @{$all_statements};
+    return @wanted_statements ? \@wanted_statements : ();
+}
+
+#-----------------------------------------------------------------------------
+
+sub _statement_isnt_include_or_package {
+    my ($elem) = @_;
     return 0 if $elem->isa('PPI::Statement::Package');
     return 0 if $elem->isa('PPI::Statement::Include');
     return 1;

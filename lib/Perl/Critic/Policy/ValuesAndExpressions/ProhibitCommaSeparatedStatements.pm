@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitCommaSeparatedStatements.pm $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitCommaSeparatedStatements;
@@ -18,7 +18,7 @@ use Perl::Critic::Utils::PPI qw{ is_ppi_statement_subclass };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -117,7 +117,8 @@ sub _is_direct_part_of_map_or_grep_block {
     return if not $block_prior_sibling;
     return if not $block_prior_sibling->isa('PPI::Token::Word');
 
-    return $block_prior_sibling eq 'map' || $block_prior_sibling eq 'grep';
+    return $block_prior_sibling->content() eq 'map'
+        || $block_prior_sibling->content() eq 'grep';
 }
 
 sub _is_last_statement_in_a_block {

@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/05_utils_ppi.t $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 use 5.006001;
@@ -13,11 +13,11 @@ use warnings;
 
 use Readonly;
 
-use Test::More tests => 81;
+use Test::More tests => 83;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -61,6 +61,8 @@ can_ok('main', 'is_ppi_generic_statement');
 can_ok('main', 'is_ppi_statement_subclass');
 can_ok('main', 'is_subroutine_declaration');
 can_ok('main', 'is_in_subroutine');
+can_ok('main', 'class_ancestry');
+
 
 #-----------------------------------------------------------------------------
 #  is_ppi_expression_or_generic_statement tests
@@ -370,6 +372,21 @@ can_ok('main', 'is_in_subroutine');
         0,
     );
     ## use critic
+}
+
+#-----------------------------------------------------------------------------
+# test class_ancestry
+
+{
+
+    no warnings qw(once redefine);  ## no critic (ProhibitNoWarnings);
+
+    local @FOO::ISA = qw(BASE);
+    local @FOO::BAR::ISA = qw(FOO);
+    local *CORE::GLOBAL::require = sub { return 1 };
+    my $got_ancestry = class_ancestry('FOO::BAR');
+    my $expected_ancestry = [ qw( FOO::BAR FOO BASE ) ];
+    is_deeply($got_ancestry, $expected_ancestry, 'class_ancestry()');
 }
 
 #-----------------------------------------------------------------------------

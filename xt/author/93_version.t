@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/93_version.t $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 use strict;
@@ -19,7 +19,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ sub check_version {
     # only look at perl scripts, not sh scripts
     return if (m{blib/script/}xms && $content !~ m/\A \#![^\r\n]+?perl/xms);
 
-    my @version_lines = $content =~ m/ ( [^\n]* \$VERSION [^\n]* ) /gxms;
+    my @version_lines = $content =~ m/ ( [^\n]* \$VERSION\b [^\n]* ) /gxms;
     # Special cases for printing/documenting version numbers
     @version_lines = grep {! m/(?:\\|\"|\'|C<|v)\$VERSION/xms} @version_lines;
     @version_lines = grep {! m/^\s*\#/xms} @version_lines;

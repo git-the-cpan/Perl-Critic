@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Miscellanea/RequireRcsKeywords.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::Miscellanea::RequireRcsKeywords;
@@ -20,7 +20,7 @@ use Perl::Critic::Utils qw{
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ sub violates {
     my ( $self, $elem, $doc ) = @_;
     my @viols = ();
 
-    my $nodes = $doc->find( \&_wanted );
+    my $nodes = $self->_find_wanted_nodes($doc);
     for my $keywordset_ref ( @{ $self->{_keyword_sets} } ) {
         if ( not $nodes ) {
             my $desc = 'RCS keywords '
@@ -112,15 +112,13 @@ sub violates {
     return @viols;
 }
 
-sub _wanted {
-    my ( undef, $elem ) = @_;
+#-----------------------------------------------------------------------------
 
-    return
-            $elem->isa('PPI::Token::Pod')
-        ||  $elem->isa('PPI::Token::Comment')
-        ||  $elem->isa('PPI::Token::Quote::Single')
-        ||  $elem->isa('PPI::Token::Quote::Literal')
-        ||  $elem->isa('PPI::Token::End');
+sub _find_wanted_nodes {
+    my ( $self, $doc ) = @_;
+    my @wanted_types = qw(Pod Comment Quote::Single Quote::Literal End);
+    my @found =  map { @{ $doc->find("PPI::Token::$_") || [] } } @wanted_types;
+    return @found ? \@found : $EMPTY;  # Behave like PPI::Node::find()
 }
 
 1;
@@ -152,13 +150,13 @@ file helps the reader know where the file comes from, in case he or
 she needs to modify it.  This Policy scans your file for comments that
 look like this:
 
-    # $Revision: 3227 $
+    # $Revision: 3360 $
     # $Source: /myproject/lib/foo.pm $
 
 A common practice is to use the C<Revision> keyword to automatically
 define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 3227 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 3360 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION

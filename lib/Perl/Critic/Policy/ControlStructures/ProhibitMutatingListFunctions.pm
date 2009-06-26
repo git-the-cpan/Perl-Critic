@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitMutatingListFunctions.pm $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitMutatingListFunctions;
@@ -17,10 +17,13 @@ use List::MoreUtils qw( none any );
 use Perl::Critic::Utils qw{
     :booleans :characters :severities :data_conversion :classification :ppi
 };
+use Perl::Critic::Utils::PPIRegexp qw{
+    get_match_string get_substitute_string get_modifiers
+};
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -47,7 +50,7 @@ sub _is_topic {
     my $elem = shift;
     return defined $elem
         && $elem->isa('PPI::Token::Magic')
-            && $elem eq q{$_}; ##no critic (InterpolationOfMetachars)
+            && $elem->content() eq q{$_}; ##no critic (InterpolationOfMetachars)
 }
 
 
@@ -153,6 +156,21 @@ sub _is_topic_mutating_regex {
     return if ! ( $elem->isa('PPI::Token::Regexp::Substitute')
                   || $elem->isa('PPI::Token::Regexp::Transliterate') );
 
+    # Exempt PPI::Token::Regexp::Transliterate objects IF the replacement
+    # string is empty AND neither the /d or /s flags are specified, OR the
+    # replacement string equals the match string AND neither the /c or /s
+    # flags are specified. RT 44515.
+    if ( $elem->isa( 'PPI::Token::Regexp::Transliterate') ) {
+        my $subs = get_substitute_string( $elem );
+        if ( $EMPTY eq $subs ) {
+            my %mods = get_modifiers( $elem );
+            $mods{d} or $mods{s} or return;
+        } elsif ( get_match_string( $elem ) eq $subs ) {
+            my %mods = get_modifiers( $elem );
+            $mods{c} or $mods{s} or return;
+        }
+    }
+
     # If the previous sibling does not exist, then
     # the regex implicitly binds to $_
     my $prevsib = $elem->sprevious_sibling;
@@ -174,7 +192,7 @@ sub _is_topic_mutating_func {
     my $elem = shift;
     return if not $elem->isa('PPI::Token::Word');
     my @mutator_funcs = qw(chop chomp undef);
-    return if not any { $elem eq $_ } @mutator_funcs;
+    return if not any { $elem->content() eq $_ } @mutator_funcs;
     return if not is_function_call( $elem );
 
     # If these functions have no argument,
@@ -182,7 +200,7 @@ sub _is_topic_mutating_func {
     my $first_arg = first_arg( $elem );
     if (not defined $first_arg) {
         # undef does not default to $_, unlike the others
-        return if $elem eq 'undef';
+        return if $elem->content() eq 'undef';
         return 1;
     }
     return _is_topic( $first_arg );
@@ -194,7 +212,7 @@ Readonly::Scalar my $MUTATING_SUBSTR_ARG_COUNT => 4;
 
 sub _is_topic_mutating_substr {
     my $elem = shift;
-    return if $elem ne 'substr';
+    return if $elem->content() ne 'substr';
     return if not is_function_call( $elem );
 
     # check and see if the first arg is $_

@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ErrorHandling/RequireCarping.pm $
-#     $Date: 2009-03-07 08:51:16 -0600 (Sat, 07 Mar 2009) $
+#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3227 $
+# $Revision: 3360 $
 ##############################################################################
 
 package Perl::Critic::Policy::ErrorHandling::RequireCarping;
@@ -18,7 +18,7 @@ use Perl::Critic::Utils qw{
 use Perl::Critic::Utils::PPI qw{ is_ppi_expression_or_generic_statement };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.098';
+our $VERSION = '1.099_001';
 
 #-----------------------------------------------------------------------------
 
@@ -47,10 +47,10 @@ sub violates {
     my ( $self, $elem, undef ) = @_;
 
     my $alternative;
-    if ( $elem eq 'warn' ) {
+    if ( $elem->content() eq 'warn' ) {
         $alternative = 'carp';
     }
-    elsif ( $elem eq 'die' ) {
+    elsif ( $elem->content() eq 'die' ) {
         $alternative = 'croak';
     }
     else {
