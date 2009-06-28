@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/PolicyParameter.pm $
-#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
+#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3360 $
+# $Revision: 3373 $
 ##############################################################################
 
 package Perl::Critic::PolicyParameter;
@@ -30,7 +30,7 @@ use Perl::Critic::PolicyParameter::Behavior::StringList;
 use Perl::Critic::Utils qw{ :characters &interpolate };
 use Perl::Critic::Utils::DataConversion qw{ &defined_or_empty };
 
-our $VERSION = '1.099_001';
+our $VERSION = '1.099_002';
 
 Readonly::Scalar our $NO_DESCRIPTION_AVAILABLE => 'No description available.';
 

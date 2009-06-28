@@ -228,6 +228,12 @@ lib/Perl/Critic/PolicyParameter/Behavior/Integer.pm
 lib/Perl/Critic/PolicyParameter/Behavior/String.pm
 lib/Perl/Critic/PolicyParameter/Behavior/StringList.pm
 lib/Perl/Critic/PolicySummary.pod.PL
+lib/Perl/Critic/PPIx/Optimized.pm
+lib/Perl/Critic/PPIx/Optimized/Caches.pm
+lib/Perl/Critic/PPIx/Optimized/Document.pm
+lib/Perl/Critic/PPIx/Optimized/Element.pm
+lib/Perl/Critic/PPIx/Optimized/Node.pm
+lib/Perl/Critic/PPIx/Optimized/Structure.pm
 lib/Perl/Critic/ProfilePrototype.pm
 lib/Perl/Critic/Statistics.pm
 lib/Perl/Critic/TestUtils.pm
@@ -279,6 +285,7 @@ t/14_policy_parameter_behavior_string.t
 t/14_policy_parameters.t
 t/15_statistics.t
 t/16_roundtrip_defaults.t
+t/17_optimizations.t
 t/20_policies.t
 t/20_policy_pod_spelling.d/stop-words.txt
 t/20_policy_pod_spelling.t

@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
+#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3360 $
+# $Revision: 3373 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -13,7 +13,7 @@ use warnings;
 
 use English q<-no_match_vars>;
 
-our $VERSION = '1.099_001';
+our $VERSION = '1.099_002';
 
 use base qw{ Exporter };
 
@@ -50,12 +50,12 @@ sub required_module_versions {
         'List::MoreUtils'           => 0,
         'List::Util'                => 0,
         'Module::Pluggable'         => 3.1,
-        'PPI'                       => 1.203,
-        'PPI::Document'             => 1.203,
-        'PPI::Document::File'       => 1.203,
-        'PPI::Node'                 => 1.203,
-        'PPI::Token::Quote::Single' => 1.203,
-        'PPI::Token::Whitespace'    => 1.203,
+        'PPI'                       => '== 1.203',
+        'PPI::Document'             => '== 1.203',
+        'PPI::Document::File'       => '== 1.203',
+        'PPI::Node'                 => '== 1.203',
+        'PPI::Token::Quote::Single' => '== 1.203',
+        'PPI::Token::Whitespace'    => '== 1.203',
         'Pod::PlainText'            => 0,
         'Pod::Select'               => 0,
         'Pod::Usage'                => 0,

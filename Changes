@@ -1,4 +1,14 @@
-[1.xxx] Released on 2009-xx-xx
+[1.099_002] Released on 2009-06-27
+
+    Performance Improvements:
+    * We've been able to get a 30% improvement in the performance by
+      adding caching to some methods in PPI.  Your actual performance
+      gains may differ, depending on your configuration.  In general,
+      you'll notice a bigger speedup if you use a lot of Policies and
+      your source files are really large.  This code is highly experimental
+      and may be abandoned in the next release.
+
+[1.099_001] Released on 2009-06-25
 
     New Policies:
       Objects::ProhibitIndirectSyntax
@@ -28,8 +38,8 @@
       non-package part of the subroutine name must still conform to whatever
       capitalization rule you have chosen.
 
-    Other News: 
-    * Komodo version 5.1.1 now has built-in support for Perl-Critic, 
+    Other News:
+    * Komodo version 5.1.1 now has built-in support for Perl-Critic,
       if you have the Perl::Critic and criticism modules installed.
       Both should be available through the ActiveState Perl Package
       Manager ppm(1).
@@ -1607,9 +1617,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2009-06-25 18:57:01 -0400 (Thu, 25 Jun 2009) $
+#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3361 $
+# $Revision: 3373 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

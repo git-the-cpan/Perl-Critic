@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Document.pm $
-#     $Date: 2009-06-25 18:57:01 -0400 (Thu, 25 Jun 2009) $
+#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3361 $
+# $Revision: 3373 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -23,11 +23,12 @@ use version;
 use Perl::Critic::Annotation;
 use Perl::Critic::Exception::Parse qw< throw_parse >;
 use Perl::Critic::Utils qw < :characters >;
+use Perl::Critic::PPIx::Optimized;
 
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.099_001';
+our $VERSION = '1.099_002';
 
 #-----------------------------------------------------------------------------
 
@@ -35,6 +36,13 @@ our $AUTOLOAD;
 sub AUTOLOAD {  ## no critic (ProhibitAutoloading, ArgUnpacking)
     my ( $function_name ) = $AUTOLOAD =~ m/ ([^:\']+) \z /xms;
     return shift->{_doc}->$function_name(@_);
+}
+
+#-----------------------------------------------------------------------------
+
+sub DESTROY {
+    Perl::Critic::PPIx::Optimized::flush_caches();
+    return;
 }
 
 #-----------------------------------------------------------------------------

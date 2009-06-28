@@ -1,9 +1,9 @@
 #!perl  ## no critic (PodSpelling)
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/PolicySummary.pod.PL $
-#     $Date: 2009-06-25 18:47:12 -0400 (Thu, 25 Jun 2009) $
+#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
 #   $Author: clonezone $
-# $Revision: 3360 $
+# $Revision: 3373 $
 ##############################################################################
 
 # TODO: The "no critic" above is due to PodSpelling not being able to tell
@@ -30,7 +30,7 @@ use Perl::Critic::Utils::POD qw< get_module_abstract_from_file >;
 
 use Exception::Class ();  # Must be after P::C::Exception::*
 
-our $VERSION = '1.099_001';
+our $VERSION = '1.099_002';
 
 
 print "\n\nGenerating Perl::Critic::PolicySummary.\n";
@@ -118,7 +118,7 @@ print {$pod_file} <<'END_FOOTER';
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.099_001.
+This is part of L<Perl::Critic|Perl::Critic> version 1.099_002.
 
 
 =head1 AUTHOR
