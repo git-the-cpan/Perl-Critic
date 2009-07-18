@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/RequireNegativeIndices.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/Variables/RequireNegativeIndices.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::RequireNegativeIndices;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -95,8 +95,8 @@ sub _cast {
     # return (varname, isref=0|1, isindex=0|1) if this could be a violation
     my ( $expr ) = @_;
     my $cast = shift @{$expr};
-    if ( $cast->content() eq q{$#} || $cast->content() eq q{@} ) { ## no critic(RequireInterpolationOfMetachars)
-        my $isindex = $cast->content() eq q{$#} ? 1 : 0;  ## no critic(RequireInterpolationOfMetachars)
+    if ( $cast eq q{$#} || $cast eq q{@} ) { ## no critic(RequireInterpolationOfMetachars)
+        my $isindex = $cast eq q{$#} ? 1 : 0;  ## no critic(RequireInterpolationOfMetachars)
         my $arrvar = shift @{$expr};
         if ($arrvar->isa('PPI::Structure::Block')) {
             # look for [$#{$arr} ...] or [@{$arr} ...]
@@ -174,7 +174,7 @@ sub _is_dereferencer { # must return 0 or 1, not undef
     my $elem = shift;
 
     return 0 if !$elem;
-    return 1 if $elem->isa('PPI::Token::Operator') && $elem->content() eq '->';
+    return 1 if $elem->isa('PPI::Token::Operator') && $elem eq '->';
     return 1 if $elem->isa('PPI::Token::Cast');
     return 0;
 }

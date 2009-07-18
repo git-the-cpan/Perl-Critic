@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Modules/ProhibitAutomaticExportation.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/Modules/ProhibitAutomaticExportation.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::ProhibitAutomaticExportation;
@@ -16,7 +16,7 @@ use Perl::Critic::Utils qw{ :severities };
 use List::MoreUtils qw(any);
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -119,9 +119,9 @@ and let the caller choose exactly which symbols to export.
     package Foo;
 
     use base qw(Exporter);
-    our @EXPORT      = qw(foo $bar @baz);                  # not ok
-    our @EXPORT_OK   = qw(foo $bar @baz);                  # ok
-    our %EXPORT_TAGS = ( all => [ qw(foo $bar @baz) ] );   # ok
+    our @EXPORT      = qw(&foo &bar);                  # not ok
+    our @EXPORT_OK   = qw(&foo &bar);                  # ok
+    our %EXPORT_TAGS = ( all => [ qw(&foo &bar) ] );   # ok
 
 
 =head1 CONFIGURATION

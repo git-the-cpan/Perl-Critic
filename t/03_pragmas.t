@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/03_pragmas.t $
-#    $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/03_pragmas.t $
+#    $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 use 5.006001;
@@ -19,7 +19,7 @@ use Perl::Critic::TestUtils qw(critique);
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'}
     ),
     0,
-    'inline no-critic disables violations'
+    'inline no-critic'
 );
 
 #-----------------------------------------------------------------------------
@@ -290,7 +290,7 @@ is(
         {-profile => $profile, -severity => 1, -theme => 'core'},
     ),
     5,
-    q<inline no-critic doesn't block later violations>,
+    'inline no-critic',
 );
 
 #-----------------------------------------------------------------------------

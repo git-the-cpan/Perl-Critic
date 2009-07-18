@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitCommaSeparatedStatements.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitCommaSeparatedStatements.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitCommaSeparatedStatements;
@@ -18,7 +18,7 @@ use Perl::Critic::Utils::PPI qw{ is_ppi_statement_subclass };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -117,8 +117,7 @@ sub _is_direct_part_of_map_or_grep_block {
     return if not $block_prior_sibling;
     return if not $block_prior_sibling->isa('PPI::Token::Word');
 
-    return $block_prior_sibling->content() eq 'map'
-        || $block_prior_sibling->content() eq 'grep';
+    return $block_prior_sibling eq 'map' || $block_prior_sibling eq 'grep';
 }
 
 sub _is_last_statement_in_a_block {

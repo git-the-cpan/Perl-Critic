@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitUnusedCapture;
@@ -21,11 +21,9 @@ use Perl::Critic::Utils qw{ :booleans :severities split_nodes_on_comma };
 use Perl::Critic::Utils::PPIRegexp qw{ parse_regexp get_match_string get_substitute_string get_modifiers };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
-
-Readonly::Scalar my $WHILE => q{while};
 
 Readonly::Scalar my $DESC => q{Only use a capturing group if you plan to use the captured value};
 Readonly::Scalar my $EXPL => [252];
@@ -83,8 +81,7 @@ sub violates {
     return if none {! defined $_} @captures;
 
     my %modifiers = get_modifiers($elem);
-    if ($modifiers{g}
-            and not _check_if_in_while_condition_or_block( $elem ) ) {
+    if ($modifiers{g}) {
         $ncaptures = $NUM_CAPTURES_FOR_GLOBAL;
         $#captures = $ncaptures - 1;
     }
@@ -105,8 +102,8 @@ sub _enough_assignments {
     while (1) {
         return if !$psib;
         if ($psib->isa('PPI::Token::Operator')) {
-            last SIBLING if q{=} eq $psib->content();
-            return if q{!~} eq $psib->content();
+            last SIBLING if q{=} eq $psib;
+            return if q{!~} eq $psib;
         }
         $psib = $psib->sprevious_sibling;
     }
@@ -171,13 +168,13 @@ sub _symbol_is_slurpy {
 sub _has_array_sigil {
     my ($elem) = @_;  # Works on PPI::Token::Symbol and ::Cast
 
-    return q{@} eq substr $elem->content(), 0, 1;
+    return q{@} eq substr $elem->content, 0, 1;
 }
 
 sub _has_hash_sigil {
     my ($elem) = @_;  # Works on PPI::Token::Symbol and ::Cast
 
-    return q{%} eq substr $elem->content(), 0, 1;
+    return q{%} eq substr $elem->content, 0, 1;
 }
 
 sub _block_is_slurpy {
@@ -189,14 +186,14 @@ sub _block_is_slurpy {
 
 sub _is_preceded_by_array_or_hash_cast {
     my ($elem) = @_;
-    my $psib = $elem->sprevious_sibling();
+    my $psib = $elem->sprevious_sibling;
     my $cast;
     while ($psib && $psib->isa('PPI::Token::Cast')) {
         $cast = $psib;
-        $psib = $psib->sprevious_sibling();
+        $psib = $psib->sprevious_sibling;
     }
     return if !$cast;
-    my $sigil = substr $cast->content(), 0, 1;
+    my $sigil = substr $cast->content, 0, 1;
     return q{@} eq $sigil || q{%} eq $sigil;
 }
 
@@ -208,16 +205,16 @@ sub _is_in_slurpy_array_context {
 
     # look backward for explict regex operator
     my $psib = $elem->sprevious_sibling;
-    if ($psib && $psib->content() eq q{=~}) {
+    if ($psib && $psib eq q{=~}) {
         # Track back through value
         $psib = _skip_lhs($psib);
     }
 
     if (!$psib) {
-        my $parent = $elem->parent();
+        my $parent = $elem->parent;
         return if !$parent;
         if ($parent->isa('PPI::Statement')) {
-            $parent = $parent->parent();
+            $parent = $parent->parent;
             return if !$parent;
         }
         return 1 if $parent->isa('PPI::Structure::List');
@@ -229,7 +226,7 @@ sub _is_in_slurpy_array_context {
     }
     if ($psib->isa('PPI::Token::Operator')) {
         # most operators kill slurpiness (except assignment, which is handled elsewhere)
-        return 1 if q{,} eq $psib->content();
+        return 1 if q{,} eq $psib;
         return;
     }
     return 1;
@@ -272,26 +269,6 @@ sub _check_for_magic {
     }
 
     return;
-}
-
-# Check if we are in the condition or block of a 'while'
-sub _check_if_in_while_condition_or_block {
-    my ( $elem ) = @_;
-    $elem or return;
-
-    my $parent = $elem->parent() or return;
-    $parent->isa( 'PPI::Statement' ) or return;
-
-    my $item = $parent = $parent->parent() or return;
-    if ( $item->isa( 'PPI::Structure::Block' ) ) {
-        $item = $item->sprevious_sibling() or return;
-    }
-    $item->isa( 'PPI::Structure::Condition' ) or return;
-
-    $item = $item->sprevious_sibling() or return;
-    $item->isa( 'PPI::Token::Word' ) or return;
-
-    return $WHILE eq $item->content();
 }
 
 # false if we hit another regexp

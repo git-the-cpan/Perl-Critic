@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitAmpersandSigils;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities hashify };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ sub violates {
     my $psib = $elem->sprevious_sibling();
     if ( $psib ) {
         #Sigil is allowed if taking a reference, e.g. "\&my_sub"
-        return if $psib->isa('PPI::Token::Cast') && $psib->content() eq q{\\};
+        return if $psib->isa('PPI::Token::Cast') && $psib eq q{\\};
     }
 
     return if ( $elem !~ m{\A [&] }xms ); # ok

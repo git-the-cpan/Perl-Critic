@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/RequireFinalReturn.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/Subroutines/RequireFinalReturn.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::RequireFinalReturn;
@@ -16,7 +16,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ sub _is_compound_return {
     my $begin = $final->schild(0);
     return if !$begin; #fail
     if (!($begin->isa('PPI::Token::Word') &&
-          ($begin->content() eq 'if' || $begin->content() eq 'unless'))) {
+          ($begin eq 'if' || $begin eq 'unless'))) {
         return; #fail
     }
 
@@ -147,7 +147,7 @@ sub _is_return_or_goto_stmnt {
     my ( $self, $stmnt ) = @_;
     return if not $stmnt->isa('PPI::Statement::Break');
     my $first_token = $stmnt->schild(0) || return;
-    return $first_token->content() eq 'return' || $first_token->content() eq 'goto';
+    return $first_token eq 'return' || $first_token eq 'goto';
 }
 
 #-----------------------------------------------------------------------------

@@ -27,7 +27,6 @@ exponentials
 filehandle
 filehandles
 filename
-filenames
 globals
 globbing
 Guzis
@@ -50,7 +49,6 @@ namespace
 namespaces
 octothorp
 PBP
-pbp
 perl
 perlcritic
 perlcriticrc
@@ -71,7 +69,6 @@ prepend
 prepending
 programmatically
 ProhibitPunctuationVars
-quotish
 readline
 Readonly
 refactor
@@ -79,7 +76,6 @@ refactoring
 regex
 runtime
 Schwartzian
-severities
 sigil
 sigils
 SQL
@@ -87,15 +83,12 @@ STDERR
 STDIN
 STDOUT
 stringification
-stringifying
 subdirectories
 superclass
-superclasses
 TerMarsch
 Thalhammer
 TODO
 typeglob
-typeglobs
 UI
 unblessed
 undef
@@ -103,9 +96,8 @@ unescaped
 unparsed
 vice-versa
 whitespace
-Wyant
 
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/40_stop_words $
-#     $Date: 2009-05-05 00:48:42 -0500 (Tue, 05 May 2009) $
-#   $Author: thaljef $
-# $Revision: 3323 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/xt/author/40_stop_words $
+#     $Date: 2009-07-17 23:23:06 -0500 (Fri, 17 Jul 2009) $
+#   $Author: clonezone $
+# $Revision: 3383 $

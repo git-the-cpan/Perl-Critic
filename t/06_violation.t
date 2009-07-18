@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/06_violation.t $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/06_violation.t $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 use 5.006001;
@@ -21,7 +21,7 @@ use Test::More tests => 43;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -72,13 +72,7 @@ my $expected_location = [1,1,1];
 
 is(        $viol->description(),   'Foo',              'description');
 is(        $viol->explanation(),   'Bar',              'explanation');
-{
-    local $TODO =
-        'The structure of the location changes in PPI 1.204_02. Once a non-dev release is made, replace this test with a set that checks the new accessors.';
-
-    # Passes with PPI 1.203, but fails with 1.204_02.
-    is_deeply( $viol->location(),      $expected_location, 'location');
-}
+is_deeply( $viol->location(),      $expected_location, 'location');
 is(        $viol->severity(),      99,                 'severity');
 is(        $viol->source(),        $code,              'source');
 is(        $viol->policy(),        $pkg,               'policy');

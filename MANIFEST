@@ -152,7 +152,6 @@ lib/Perl/Critic/Policy/Modules/RequireNoMatchVarsWithUseEnglish.pm
 lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm
 lib/Perl/Critic/Policy/NamingConventions/Capitalization.pm
 lib/Perl/Critic/Policy/NamingConventions/ProhibitAmbiguousNames.pm
-lib/Perl/Critic/Policy/Objects/ProhibitIndirectSyntax.pm
 lib/Perl/Critic/Policy/References/ProhibitDoubleSigils.pm
 lib/Perl/Critic/Policy/RegularExpressions/ProhibitCaptureWithoutTest.pm
 lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm
@@ -184,7 +183,6 @@ lib/Perl/Critic/Policy/TestingAndDebugging/RequireTestLabels.pm
 lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseStrict.pm
 lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseWarnings.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitCommaSeparatedStatements.pm
-lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitComplexVersion.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitConstantPragma.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitEmptyQuotes.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitEscapedCharacters.pm
@@ -199,7 +197,6 @@ lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitNoisyQuotes.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitQuotesAsQuotelikeOperatorDelimiters.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitSpecialLiteralHeredocTerminator.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitVersionStrings.pm
-lib/Perl/Critic/Policy/ValuesAndExpressions/RequireConstantVersion.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireNumberSeparators.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireQuotedHeredocTerminator.pm
@@ -228,12 +225,6 @@ lib/Perl/Critic/PolicyParameter/Behavior/Integer.pm
 lib/Perl/Critic/PolicyParameter/Behavior/String.pm
 lib/Perl/Critic/PolicyParameter/Behavior/StringList.pm
 lib/Perl/Critic/PolicySummary.pod.PL
-lib/Perl/Critic/PPIx/Optimized.pm
-lib/Perl/Critic/PPIx/Optimized/Caches.pm
-lib/Perl/Critic/PPIx/Optimized/Document.pm
-lib/Perl/Critic/PPIx/Optimized/Element.pm
-lib/Perl/Critic/PPIx/Optimized/Node.pm
-lib/Perl/Critic/PPIx/Optimized/Structure.pm
 lib/Perl/Critic/ProfilePrototype.pm
 lib/Perl/Critic/Statistics.pm
 lib/Perl/Critic/TestUtils.pm
@@ -285,7 +276,6 @@ t/14_policy_parameter_behavior_string.t
 t/14_policy_parameters.t
 t/15_statistics.t
 t/16_roundtrip_defaults.t
-t/17_optimizations.t
 t/20_policies.t
 t/20_policy_pod_spelling.d/stop-words.txt
 t/20_policy_pod_spelling.t
@@ -364,7 +354,6 @@ t/Modules/RequireNoMatchVarsWithUseEnglish.run
 t/Modules/RequireVersionVar.run
 t/NamingConventions/Capitalization.run.PL
 t/NamingConventions/ProhibitAmbiguousNames.run
-t/Objects/ProhibitIndirectSyntax.run
 t/References/ProhibitDoubleSigils.run
 t/RegularExpressions/ProhibitCaptureWithoutTest.run
 t/RegularExpressions/ProhibitComplexRegexes.run
@@ -396,7 +385,6 @@ t/TestingAndDebugging/RequireTestLabels.run
 t/TestingAndDebugging/RequireUseStrict.run
 t/TestingAndDebugging/RequireUseWarnings.run
 t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run
-t/ValuesAndExpressions/ProhibitComplexVersion.run
 t/ValuesAndExpressions/ProhibitConstantPragma.run
 t/ValuesAndExpressions/ProhibitEmptyQuotes.run
 t/ValuesAndExpressions/ProhibitEscapedCharacters.run
@@ -411,7 +399,6 @@ t/ValuesAndExpressions/ProhibitNoisyQuotes.run
 t/ValuesAndExpressions/ProhibitQuotesAsQuotelikeOperatorDelimiters.run
 t/ValuesAndExpressions/ProhibitSpecialLiteralHeredocTerminator.run
 t/ValuesAndExpressions/ProhibitVersionStrings.run
-t/ValuesAndExpressions/RequireConstantVersion.run
 t/ValuesAndExpressions/RequireInterpolationOfMetachars.run
 t/ValuesAndExpressions/RequireNumberSeparators.run
 t/ValuesAndExpressions/RequireQuotedHeredocTerminator.run

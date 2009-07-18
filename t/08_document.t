@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/08_document.t $
-#    $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/08_document.t $
+#    $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 use 5.006001;
@@ -17,17 +17,20 @@ use version;
 
 use Perl::Critic::Utils::DataConversion qw< dor >;
 
-use Test::More tests => 24;
+use Test::More tests => 27;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
 use_ok('Perl::Critic::Document');
 can_ok('Perl::Critic::Document', 'new');
 can_ok('Perl::Critic::Document', 'filename');
+can_ok('Perl::Critic::Document', 'find');
+can_ok('Perl::Critic::Document', 'find_first');
+can_ok('Perl::Critic::Document', 'find_any');
 can_ok('Perl::Critic::Document', 'highest_explicit_perl_version');
 can_ok('Perl::Critic::Document', 'ppi_document');
 

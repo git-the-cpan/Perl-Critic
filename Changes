@@ -1,48 +1,11 @@
-[1.099_002] Released on 2009-06-27
+[1.100] Released on 2009-07-17
 
-    Performance Improvements:
-    * We've been able to get a 30% improvement in the performance by
-      adding caching to some methods in PPI.  Your actual performance
-      gains may differ, depending on your configuration.  In general,
-      you'll notice a bigger speedup if you use a lot of Policies and
-      your source files are really large.  This code is highly experimental
-      and may be abandoned in the next release.
-
-[1.099_001] Released on 2009-06-25
-
-    New Policies:
-      Objects::ProhibitIndirectSyntax
-      ValuesAndExpressions::ProhibitComplexVersion
-      ValuesAndExpressions::RequireConstantVersion
-
-    New Features:
-    * Perlcritic will list the names of files with violations if given the
-      --files-with-violations option, or the names of files without
-      violations if given the --files-without-violations options. These
-      have synonyms -l and -L respectively.
-    * Perlcritic has a new --list-used option, which lists the Policies
-      that will be enforced, given the current configuration.  This is
-      useful if you've written a complex command-line or modified your
-      .perlcriticrc file and you want to see which Policies *would*
-      be used with the current configuration, if you were actually going
-      to critque a file with it.
-
-    Policy Changes:
-    * Variables::ProhibitPunctuationVars gained the ability to look inside
-      interpolated strings.  Doing this correctly is challenging and things
-      may not work out right; how the policy does this can be controlled via
-      the new "string_mode" option.  Contributed by Edgar Whipple
-      <perlmonk at misterwhipple dot com>.
-    * NamingConventions::Capitalization now allows fully qualified subroutine
-      declarations ( e.g. "sub Foo::Bar::baz {...}" ).  However, the
-      non-package part of the subroutine name must still conform to whatever
-      capitalization rule you have chosen.
-
-    Other News:
-    * Komodo version 5.1.1 now has built-in support for Perl-Critic,
-      if you have the Perl::Critic and criticism modules installed.
-      Both should be available through the ActiveState Perl Package
-      Manager ppm(1).
+    This is a POD fix release to deal with issues identified by Test::POD
+    1.40.  There is no functional difference between this release and 1.098.
+    This is the last release of Perl::Critic that will be compatible with PPI
+    1.203.  PPI's parsing of for(each)? loops is changing in its next release
+    in an incompatible manner and there will be a release in the near future
+    to make Perl::Critic compatible with that change.
 
 [1.098] Released on 2009-03-07
 
@@ -1616,10 +1579,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/Changes $
+#     $Date: 2009-07-17 23:43:35 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3386 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

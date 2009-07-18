@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseWarnings.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseWarnings.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings;
@@ -18,7 +18,7 @@ use version ();
 use Perl::Critic::Utils qw{ :severities $EMPTY };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ sub default_maximum_violations_per_document { return 1; }
 #-----------------------------------------------------------------------------
 
 sub violates {
-    my ( $self, undef, $document ) = @_;
+    my ( $self, $elem, $document ) = @_;
 
     my $version = $document->highest_explicit_perl_version();
     return if $version and $version < $MINIMUM_VERSION;
@@ -62,7 +62,7 @@ sub violates {
     my $warn_line  = $warn_stmnt ? $warn_stmnt->location()->[0] : undef;
 
     # Find all statements that aren't 'use', 'require', or 'package'
-    my $stmnts_ref =  $self->_find_isnt_include_or_package($document);
+    my $stmnts_ref = $document->find( \&_isnt_include_or_package );
     return if !$stmnts_ref;
 
     # If the 'use warnings' statement is not defined, or the other
@@ -80,8 +80,6 @@ sub violates {
     }
     return @viols;
 }
-
-#-----------------------------------------------------------------------------
 
 sub _generate_is_use_warnings {
     my ($self) = @_;
@@ -107,22 +105,10 @@ sub _generate_is_use_warnings {
     };
 }
 
-#-----------------------------------------------------------------------------
-# Here, we're using the fact that Perl::Critic::Document::find() is optimized
-# to search for elements based on their type.  This is faster than using the
-# native PPI::Node::find() method with a custom callback function.
+sub _isnt_include_or_package {
+    my (undef, $elem) = @_;
 
-sub _find_isnt_include_or_package {
-    my ($self, $doc) = @_;
-    my $all_statements = $doc->find('PPI::Statement') or return;
-    my @wanted_statements = grep { _statement_isnt_include_or_package($_) } @{$all_statements};
-    return @wanted_statements ? \@wanted_statements : ();
-}
-
-#-----------------------------------------------------------------------------
-
-sub _statement_isnt_include_or_package {
-    my ($elem) = @_;
+    return 0 if ! $elem->isa('PPI::Statement');
     return 0 if $elem->isa('PPI::Statement::Package');
     return 0 if $elem->isa('PPI::Statement::Include');
     return 1;

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/InputOutput/RequireBriefOpen.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/InputOutput/RequireBriefOpen.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::InputOutput::RequireBriefOpen;
@@ -18,7 +18,7 @@ use List::MoreUtils qw(any);
 use Perl::Critic::Utils qw{ :severities :classification :booleans parse_arg_list };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ sub violates {
     my ( $self, $elem, undef ) = @_;
 
     # Is it a call to open?
-    return if $elem->content() ne 'open';
+    return if $elem ne 'open';
     return if ! is_function_call($elem);
     my @open_args = parse_arg_list($elem);
     return if 2 > @open_args; # not a valid call to open()
@@ -113,7 +113,7 @@ sub _find_close_invocations_or_return {
         return 0 if $candidate_loc->[0] == $open_loc->[0] && $candidate_loc->[1] <= $open_loc->[1];
         return undef if defined $end_line && $candidate_loc->[0] > $end_line;
         return 0 if !$candidate->isa('PPI::Token::Word');
-        return 1 if $candidate->content() eq 'close' || $candidate->content() eq 'return';
+        return 1 if $candidate eq 'close' || $candidate eq 'return';
         return 0;
     });
     return @{$closes || []};
@@ -135,7 +135,7 @@ sub _get_opened_fh {
     my $fh;
 
     if ( 2 == @{$tokens} ) {
-        if ('my' eq $tokens->[0]->content() &&
+        if ('my' eq $tokens->[0] &&
             $tokens->[1]->isa('PPI::Token::Symbol') &&
             $SCALAR_SIGIL eq $tokens->[1]->raw_type) {
 

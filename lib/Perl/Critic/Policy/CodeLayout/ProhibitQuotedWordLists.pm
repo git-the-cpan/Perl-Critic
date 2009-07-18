@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/CodeLayout/ProhibitQuotedWordLists.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/CodeLayout/ProhibitQuotedWordLists.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :characters :severities :classification};
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ sub violates {
     return if not $sibling;
 
     return if $sibling->isa('PPI::Token::Symbol');
-    return if $sibling->isa('PPI::Token::Operator') and $sibling->content() eq '->';
+    return if $sibling->isa('PPI::Token::Operator') and $sibling eq '->';
     return if $sibling->isa('PPI::Token::Word') and not is_included_module_name($sibling);
 
     # Get the list elements
@@ -68,7 +68,7 @@ sub violates {
 
     my $count = 0;
     for my $child ( @children ) {
-        next if $child->isa('PPI::Token::Operator')  && $child->content() eq $COMMA;
+        next if $child->isa('PPI::Token::Operator')  && $child eq $COMMA;
 
         # All elements must be literal strings,
         # and must contain 1 or more word characters.

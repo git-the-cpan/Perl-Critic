@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitManyArgs.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/Subroutines/ProhibitManyArgs.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitManyArgs;
@@ -21,7 +21,7 @@ use Carp;
 use Perl::Critic::Utils qw{ :booleans :severities split_nodes_on_comma };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -84,7 +84,7 @@ sub _count_args {
     my $statement = shift @statements;
     my @elements = $statement->schildren();
     my $operand = pop @elements;
-    while ($operand && $operand->isa('PPI::Token::Structure') && q{;} eq $operand->content()) {
+    while ($operand && $operand->isa('PPI::Token::Structure') && q{;} eq $operand) {
        $operand = pop @elements;
     }
     return 0 if !$operand;
@@ -95,9 +95,9 @@ sub _count_args {
     return 0 if !$operator->isa('PPI::Token::Operator');
     return 0 if q{=} ne $operator;
 
-    if ($operand->isa('PPI::Token::Magic') && $AT_ARG eq $operand->content()) {
+    if ($operand->isa('PPI::Token::Magic') && $AT_ARG eq $operand) {
        return _count_list_elements(@elements);
-    } elsif ($operand->isa('PPI::Token::Word') && 'shift' eq $operand->content()) {
+    } elsif ($operand->isa('PPI::Token::Word') && 'shift' eq $operand) {
        return 1 + _count_args(@statements);
     }
 

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitCascadingIfElse.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/ControlStructures/ProhibitCascadingIfElse.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitCascadingIfElse;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ sub violates {
 sub _count_elsifs {
     my $elem = shift;
     return
-      grep { $_->isa('PPI::Token::Word') && $_->content() eq 'elsif' } $elem->schildren();
+      grep { $_->isa('PPI::Token::Word') && $_ eq 'elsif' } $elem->schildren();
 }
 
 1;

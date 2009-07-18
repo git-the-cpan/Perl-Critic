@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/BuiltinFunctions/ProhibitLvalueSubstr.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Policy/BuiltinFunctions/ProhibitLvalueSubstr.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 package Perl::Critic::Policy::BuiltinFunctions::ProhibitLvalueSubstr;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 
@@ -34,12 +34,12 @@ sub applies_to           { return 'PPI::Token::Word'         }
 sub violates {
     my ($self, $elem, undef) = @_;
 
-    return if $elem->content() ne 'substr';
+    return if $elem ne 'substr';
     return if ! is_function_call($elem);
 
     my $sib = $elem;
     while ($sib = $sib->snext_sibling()) {
-        if ( $sib->isa( 'PPI::Token::Operator') && $sib->content() eq q{=} ) {
+        if ( $sib->isa( 'PPI::Token::Operator') && $sib eq q{=} ) {
             return $self->violation( $DESC, $EXPL, $sib );
         }
     }

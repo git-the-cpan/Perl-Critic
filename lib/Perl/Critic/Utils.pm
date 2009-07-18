@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Utils.pm $
-#     $Date: 2009-06-27 20:02:58 -0400 (Sat, 27 Jun 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Utils.pm $
+#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3373 $
+# $Revision: 3385 $
 ##############################################################################
 
 # NOTE: This module is way too large.  Please think about adding new
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use base 'Exporter';
 
-our $VERSION = '1.099_002';
+our $VERSION = '1.100';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -315,10 +315,6 @@ Readonly::Hash my %PRECEDENCE_OF => (
 );
 
 ## use critic
-
-Readonly::Scalar my $MIN_PRECEDENCE_TO_TERMINATE_PARENLESS_ARG_LIST =>
-    precedence_of( 'not' );
-
 #-----------------------------------------------------------------------------
 
 sub hashify {  ## no critic (ArgUnpacking)
@@ -338,7 +334,7 @@ sub find_keywords {
     my ( $doc, $keyword ) = @_;
     my $nodes_ref = $doc->find('PPI::Token::Word');
     return if !$nodes_ref;
-    my @matches = grep { $_->content() eq $keyword } @{$nodes_ref};
+    my @matches = grep { $_ eq $keyword } @{$nodes_ref};
     return @matches ? \@matches : undef;
 }
 
@@ -719,7 +715,7 @@ sub is_hash_key {
     #Check declarative style: %hash = (foo => bar);
     my $sib = $elem->snext_sibling();
     return if !$sib;
-    return 1 if $sib->isa('PPI::Token::Operator') && $sib->content() eq '=>';
+    return 1 if $sib->isa('PPI::Token::Operator') && $sib eq '=>';
 
     return;
 }
@@ -795,7 +791,7 @@ sub _is_dereference_operator {
     my $elem = shift;
     return if !$elem;
 
-    return $elem->isa('PPI::Token::Operator') && $elem->content() eq q{->};
+    return $elem->isa('PPI::Token::Operator') && $elem eq q{->};
 }
 
 #-----------------------------------------------------------------------------
@@ -818,7 +814,7 @@ sub is_subroutine_name {
     return if !$sib;
     my $stmnt = $elem->statement();
     return if !$stmnt;
-    return $stmnt->isa('PPI::Statement::Sub') && $sib->content() eq 'sub';
+    return $stmnt->isa('PPI::Statement::Sub') && $sib eq 'sub';
 }
 
 #-----------------------------------------------------------------------------
@@ -957,10 +953,7 @@ sub parse_arg_list {
         my @arg_list = ();
 
         while ($iter = $iter->snext_sibling() ) {
-            last if $iter->isa('PPI::Token::Structure') and $iter->content() eq $SCOLON;
-            last if $iter->isa('PPI::Token::Operator')
-                and $MIN_PRECEDENCE_TO_TERMINATE_PARENLESS_ARG_LIST <=
-                    precedence_of( $iter );
+            last if $iter->isa('PPI::Token::Structure') and $iter eq $SCOLON;
             push @arg_list, $iter;
         }
         return split_nodes_on_comma( @arg_list );
@@ -977,7 +970,7 @@ sub split_nodes_on_comma {
     for my $node (@nodes) {
         if (
                 $node->isa('PPI::Token::Operator')
-            and ($node->content() eq $COMMA or $node->content() eq $FATCOMMA)
+            and ($node eq $COMMA or $node eq $FATCOMMA)
         ) {
             if (@node_stacks) {
                 $i++; #Move forward to next 'node stack'
@@ -1185,7 +1178,7 @@ sub is_unchecked_call {
         my $or_operators = sub  {
             my (undef, $elem) = @_;  ## no critic(Variables::ProhibitReusedNames)
             return if not $elem->isa('PPI::Token::Operator');
-            return if $elem->content() ne q{or} && $elem->content() ne q{||};
+            return if $elem ne q{or} && $elem ne q{||};
             return 1;
         };
 
@@ -1321,14 +1314,14 @@ sub _is_fatal {
         if ('Fatal' eq $include->module()) {
             my @args = parse_arg_list($include->schild(1));
             foreach my $arg (@args) {
-                return $TRUE if $arg->[0]->isa('PPI::Token::Quote') && $elem->content() eq $arg->[0]->string();
+                return $TRUE if $arg->[0]->isa('PPI::Token::Quote') && $elem eq $arg->[0]->string();
             }
         }
         elsif ('Fatal::Exception' eq $include->module()) {
             my @args = parse_arg_list($include->schild(1));
             shift @args;  # skip exception class name
             foreach my $arg (@args) {
-                return $TRUE if $arg->[0]->isa('PPI::Token::Quote') && $elem->content() eq $arg->[0]->string();
+                return $TRUE if $arg->[0]->isa('PPI::Token::Quote') && $elem eq $arg->[0]->string();
             }
         }
         elsif ('autodie' eq $include->pragma()) {
