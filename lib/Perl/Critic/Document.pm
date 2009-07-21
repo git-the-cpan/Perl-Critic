@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Document.pm $
-#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Document.pm $
+#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3385 $
+# $Revision: 3404 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -25,7 +25,7 @@ use Perl::Critic::Exception::Parse qw{ throw_parse };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.100';
+our $VERSION = '1.101_001';
 
 #-----------------------------------------------------------------------------
 
@@ -201,8 +201,8 @@ sub highest_explicit_perl_version {
             # that's enough for here.
             $highest_explicit_perl_version =
                 reduce { $a >= $b ? $a : $b }
-                map { version->new( $_->version() ) }
-                @{$includes};
+                map    { version->new( $_->version() ) }
+                       @{$includes};
         }
         else {
             $highest_explicit_perl_version = undef;

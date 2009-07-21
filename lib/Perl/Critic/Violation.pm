@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/lib/Perl/Critic/Violation.pm $
-#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Violation.pm $
+#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3385 $
+# $Revision: 3404 $
 ##############################################################################
 
 package Perl::Critic::Violation;
@@ -29,7 +29,15 @@ use Perl::Critic::Utils::POD qw<
 >;
 use Perl::Critic::Exception::Fatal::Internal qw< throw_internal >;
 
-our $VERSION = '1.100';
+our $VERSION = '1.101_001';
+
+
+Readonly::Scalar my $LOCATION_LINE_NUMBER               => 0;
+Readonly::Scalar my $LOCATION_COLUMN_NUMBER             => 1;
+Readonly::Scalar my $LOCATION_VISUAL_COLUMN_NUMBER      => 2;
+Readonly::Scalar my $LOCATION_LOGICAL_LINE_NUMBER       => 3;
+Readonly::Scalar my $LOCATION_LOGICAL_FILENAME          => 4;
+
 
 # Class variables...
 my $format = "%m at line %l, column %c. %e.\n"; # Default stringy format
@@ -42,8 +50,8 @@ Readonly::Scalar my $CONSTRUCTOR_ARG_COUNT => 5;
 sub new {
     my ( $class, $desc, $expl, $elem, $sev ) = @_;
 
-    #Check arguments to help out developers who might
-    #be creating new Perl::Critic::Policy modules.
+    # Check arguments to help out developers who might
+    # be creating new Perl::Critic::Policy modules.
 
     if ( @_ != $CONSTRUCTOR_ARG_COUNT ) {
         throw_internal 'Wrong number of args to Violation->new()';
@@ -54,7 +62,7 @@ sub new {
         $elem = $elem->ppi_document();
     }
 
-    if ( ! eval { $elem->isa( 'PPI::Element' ) } ) {
+    if ( not eval { $elem->isa( 'PPI::Element' ) } ) {
         throw_internal '3rd arg to Violation->new() must be a PPI::Element';
     }
 
@@ -62,7 +70,7 @@ sub new {
     # formats.  He/She can use whatever makes sense to them.
     ($desc, $expl) = _chomp_periods($desc, $expl);
 
-    #Create object
+    # Create object
     my $self = bless {}, $class;
     $self->{_description} = $desc;
     $self->{_explanation} = $expl;
@@ -74,21 +82,23 @@ sub new {
     my $top = $elem->top();
     $self->{_filename} = $top->can('filename') ? $top->filename() : undef;
     $self->{_source}   = _first_line_of_source( $elem );
+    $self->{_location} =
+        $elem->location() || [ 0, 0, 0, 0, $self->filename() ];
 
     return $self;
 }
 
 #-----------------------------------------------------------------------------
 
-sub set_format { return $format = verbosity_to_format( $_[0] ); }  ##no critic(ArgUnpacking)
+sub set_format { return $format = verbosity_to_format( $_[0] ); }  ## no critic(ArgUnpacking)
 sub get_format { return $format;         }
 
 #-----------------------------------------------------------------------------
 
-sub sort_by_location {  ##no critic(ArgUnpacking)
+sub sort_by_location {  ## no critic(ArgUnpacking)
 
-    ref $_[0] || shift;              #Can call as object or class method
-    return scalar @_ if ! wantarray; #In case we are called in scalar context
+    ref $_[0] || shift;              # Can call as object or class method
+    return scalar @_ if ! wantarray; # In case we are called in scalar context
 
     ## TODO: What if $a and $b are not Violation objects?
     return
@@ -100,10 +110,10 @@ sub sort_by_location {  ##no critic(ArgUnpacking)
 
 #-----------------------------------------------------------------------------
 
-sub sort_by_severity {  ##no critic(ArgUnpacking)
+sub sort_by_severity {  ## no critic(ArgUnpacking)
 
-    ref $_[0] || shift;              #Can call as object or class method
-    return scalar @_ if ! wantarray; #In case we are called in scalar context
+    ref $_[0] || shift;              # Can call as object or class method
+    return scalar @_ if ! wantarray; # In case we are called in scalar context
 
     ## TODO: What if $a and $b are not Violation objects?
     return
@@ -118,7 +128,39 @@ sub sort_by_severity {  ##no critic(ArgUnpacking)
 sub location {
     my $self = shift;
 
-    return $self->{_location} ||= $self->{_elem}->location() || [0,0,0];
+    return $self->{_location};
+}
+
+#-----------------------------------------------------------------------------
+
+sub line_number {
+    my ($self) = @_;
+
+    return $self->location()->[$LOCATION_LINE_NUMBER];
+}
+
+#-----------------------------------------------------------------------------
+
+sub logical_line_number {
+    my ($self) = @_;
+
+    return $self->location()->[$LOCATION_LOGICAL_LINE_NUMBER];
+}
+
+#-----------------------------------------------------------------------------
+
+sub column_number {
+    my ($self) = @_;
+
+    return $self->location()->[$LOCATION_COLUMN_NUMBER];
+}
+
+#-----------------------------------------------------------------------------
+
+sub visual_column_number {
+    my ($self) = @_;
+
+    return $self->location()->[$LOCATION_VISUAL_COLUMN_NUMBER];
 }
 
 #-----------------------------------------------------------------------------
@@ -186,6 +228,14 @@ sub filename {
 
 #-----------------------------------------------------------------------------
 
+sub logical_filename {
+    my ($self) = @_;
+
+    return $self->location()->[$LOCATION_LOGICAL_FILENAME];
+}
+
+#-----------------------------------------------------------------------------
+
 sub source {
     my $self = shift;
     return $self->{_source};
@@ -211,8 +261,8 @@ sub to_string {
     my %fspec = (
          'f' => sub { $self->filename()             },
          'F' => sub { basename( $self->filename() ) },
-         'l' => sub { $self->location->[0]          },
-         'c' => sub { $self->location->[1]          },
+         'l' => sub { $self->line_number()          },
+         'c' => sub { $self->visual_column_number() },
          'C' => sub { $self->element_class()        },
          'm' => $self->description(),
          'e' => $self->explanation(),
@@ -247,7 +297,7 @@ sub _first_line_of_source {
     my $stmnt = $elem->statement() || $elem;
     my $code_string = $stmnt->content() || $EMPTY;
 
-    #Chop everything but the first line (without newline);
+    # Chop everything but the first line (without newline);
     $code_string =~ s{ \n.* }{}smx;
     return $code_string;
 }
@@ -283,10 +333,10 @@ Perl::Critic::Violation - A violation of a Policy found in some source code.
   use PPI;
   use Perl::Critic::Violation;
 
-  my $elem = $doc->child(0);      #$doc is a PPI::Document object
-  my $desc = 'Offending code';    #Describe the violation
-  my $expl = [1,45,67];           #Page numbers from PBP
-  my $sev  = 5;                   #Severity level of this violation
+  my $elem = $doc->child(0);      # $doc is a PPI::Document object
+  my $desc = 'Offending code';    # Describe the violation
+  my $expl = [1,45,67];           # Page numbers from PBP
+  my $sev  = 5;                   # Severity level of this violation
 
   my $vio  = Perl::Critic::Violation->new($desc, $expl, $node, $sev);
 
@@ -343,9 +393,38 @@ based upon the specific code violating the policy.
 
 =item C<location()>
 
-Returns a three-element array reference containing the line and real &
-virtual column numbers where this Violation occurred, as in
-L<PPI::Element|PPI::Element>.
+Don't use this method.  Use the C<line_number()>,
+C<logical_line_number()>, C<column_number()>,
+C<visual_column_number()>, and C<logical_filename()> methods instead.
+
+Returns a five-element array reference containing the line and real &
+virtual column and logical numbers and logical file name where this
+Violation occurred, as in L<PPI::Element|PPI::Element>.
+
+
+=item C<line_number()>
+
+Returns the physical line number that the violation was found on.
+
+
+=item C<logical_line_number()>
+
+Returns the logical line number that the violation was found on.  This
+can differ from the physical line number when there were C<#line>
+directives in the code.
+
+
+=item C<column_number()>
+
+Returns the physical column that the violation was found at.  This
+means that hard tab characters count as a single character.
+
+
+=item C<visual_column_number()>
+
+Returns the column that the violation was found at, as it would appear
+if hard tab characters were expanded, based upon the value of
+L<PPI::Document/"tab_width [ $width ]">.
 
 
 =item C<filename()>
@@ -353,6 +432,13 @@ L<PPI::Element|PPI::Element>.
 Returns the path to the file where this Violation occurred.  In some
 cases, the path may be undefined because the source code was not read
 directly from a file.
+
+
+=item C<logical_filename()>
+
+Returns the logical path to the file where the Violation occurred.
+This can differ from C<filename()> when there was a C<#line> directive
+in the code.
 
 
 =item C<severity()>

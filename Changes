@@ -1,3 +1,10 @@
+[1.101_001] Released on 2009-07-21
+
+    Bug fixes:
+    * Works with PPI 1.204_05.  Yay for 5.10 support!
+    * Variables::RequireLexicalLoopIterators didn't work correctly on foreach
+      loops with labels.
+
 [1.100] Released on 2009-07-17
 
     This is a POD fix release to deal with issues identified by Test::POD
@@ -1579,10 +1586,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/Changes $
-#     $Date: 2009-07-17 23:43:35 -0500 (Fri, 17 Jul 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/Changes $
+#     $Date: 2009-07-21 08:54:57 -0700 (Tue, 21 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3386 $
+# $Revision: 3405 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

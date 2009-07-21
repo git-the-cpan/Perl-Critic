@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/NamingConventions/Capitalization.run.PL $
+#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3385 $
+# $Revision: 3404 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Carp qw< confess >;
 use Carp qw< confess >;
 use Fatal qw< open close >;
 
-our $VERSION = '1.100';
+our $VERSION = '1.101_001';
 
 
 
@@ -574,7 +574,6 @@ foreach my \$$variable_name (\@_) {
 
 ## name State variable as foreach loop variable named "$variable_name" vs the "$capitalization_scheme" capitalization scheme.
 ## failures $failures
-## TODO PPI that supports state variables isn't released yet.
 ## parms { local_lexical_variables => '$capitalization_scheme' }
 ## cut
 
@@ -606,32 +605,6 @@ foreach our \$$variable_name (\@_) {
 
 #-----------------------------------------------------------------------------
 
-## name Localized variable as foreach loop variable named "$variable_name" vs the "$capitalization_scheme" capitalization scheme.
-## failures $failures
-## parms { global_variables => '$capitalization_scheme' }
-## cut
-
-foreach local \$$variable_name (\@_) {
-    say \$$variable_name;
-}
-
-#-----------------------------------------------------------------------------
-
-## name Localized builtin variable as foreach loop variable vs the "$capitalization_scheme" capitalization scheme.
-## failures 0
-## parms { global_variables => '$capitalization_scheme' }
-## cut
-
-foreach local \$@ (\@_) {
-    say \$@;
-}
-
-foreach local \$EVAL_ERROR (\@_) {
-    say \$EVAL_ERROR;
-}
-
-#-----------------------------------------------------------------------------
-
 ## name Localized builtin variable
 ## failures 0
 ## cut
@@ -646,17 +619,6 @@ local \$\@;
 
 # \$\\ was missing from the built in global exceptions
 local \$\\;
-
-#-----------------------------------------------------------------------------
-
-## name Localized variable in another package as foreach loop variable vs the "$capitalization_scheme" capitalization scheme.
-## failures 0
-## parms { global_variables => '$capitalization_scheme' }
-## cut
-
-foreach local \$Foo::Bar (\@_) {
-    say \$Foo::Bar;
-}
 END_FOREACH_LOOP_VARIABLE_TESTS
 
     return;
@@ -683,7 +645,6 @@ for (my \$$variable_name = -7; \$$variable_name <= 17; \$$variable_name += 3) {
 
 ## name State variable as C-style for loop variable named "$variable_name" vs the "$capitalization_scheme" capitalization scheme.
 ## failures $failures
-## TODO PPI that supports state variables isn't released yet.
 ## parms { local_lexical_variables => '$capitalization_scheme' }
 ## cut
 
@@ -860,10 +821,10 @@ our @THING;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2009-07-17 23:35:52 -0500 (Fri, 17 Jul 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/NamingConventions/Capitalization.run.PL $
+#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3385 $
+# $Revision: 3404 $
 ##############################################################################
 
 # Local Variables:

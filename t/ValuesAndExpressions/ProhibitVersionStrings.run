@@ -46,7 +46,7 @@ require Foo v1.2.3 ('foo', 'bar');
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/ValuesAndExpressions/ProhibitVersionStrings.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/ValuesAndExpressions/ProhibitVersionStrings.run $
 #     $Date: 2008-03-16 17:40:45 -0500 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
 # $Revision: 2187 $

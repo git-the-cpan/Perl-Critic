@@ -95,7 +95,7 @@ __END__
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.203-cleanup/t/Miscellanea/RequireRcsKeywords.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/Miscellanea/RequireRcsKeywords.run $
 #     $Date: 2008-09-07 01:51:36 -0500 (Sun, 07 Sep 2008) $
 #   $Author: clonezone $
 # $Revision: 2723 $
