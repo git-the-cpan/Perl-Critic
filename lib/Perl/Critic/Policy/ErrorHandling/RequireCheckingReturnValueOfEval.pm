@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Policy/ErrorHandling/RequireCheckingReturnValueOfEval.pm $
-#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
+#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3404 $
+# $Revision: 3435 $
 ##############################################################################
 
 package Perl::Critic::Policy::ErrorHandling::RequireCheckingReturnValueOfEval;
@@ -18,7 +18,7 @@ use Scalar::Util qw< refaddr >;
 use Perl::Critic::Utils qw< :booleans :characters :severities hashify >;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.101_001';
+our $VERSION = '1.101_003';
 
 #-----------------------------------------------------------------------------
 
@@ -143,7 +143,7 @@ sub _is_in_correct_position_in_a_condition_or_foreach_loop_collection {
                 and $parent_statement->type() eq 'foreach';
         }
 
-        if ( $parent->isa('PPI::Structure::ForLoop') ) {
+        if ( $parent->isa('PPI::Structure::For') ) {
             my @for_loop_components = $parent->schildren();
 
             my $condition =

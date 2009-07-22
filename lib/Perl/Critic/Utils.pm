@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Utils.pm $
-#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
+#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3404 $
+# $Revision: 3435 $
 ##############################################################################
 
 # NOTE: This module is way too large.  Please think about adding new
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use base 'Exporter';
 
-our $VERSION = '1.101_001';
+our $VERSION = '1.101_003';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -867,7 +867,7 @@ sub is_in_void_context {
     my $parent = $token->statement()->parent();
     if ($parent) {
         return if $parent->isa('PPI::Structure::List');
-        return if $parent->isa('PPI::Structure::ForLoop');
+        return if $parent->isa('PPI::Structure::For');
         return if $parent->isa('PPI::Structure::Condition');
         return if $parent->isa('PPI::Structure::Constructor');
 

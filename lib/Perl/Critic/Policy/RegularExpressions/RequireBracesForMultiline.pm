@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Policy/RegularExpressions/RequireBracesForMultiline.pm $
-#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
+#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3404 $
+# $Revision: 3435 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::RequireBracesForMultiline;
@@ -19,7 +19,7 @@ use Perl::Critic::Utils qw{ :booleans :severities };
 use Perl::Critic::Utils::PPIRegexp qw{ get_match_string get_delimiters };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.101_001';
+our $VERSION = '1.101_003';
 
 #-----------------------------------------------------------------------------
 

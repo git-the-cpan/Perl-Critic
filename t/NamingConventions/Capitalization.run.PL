@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
+#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3404 $
+# $Revision: 3435 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Carp qw< confess >;
 use Carp qw< confess >;
 use Fatal qw< open close >;
 
-our $VERSION = '1.101_001';
+our $VERSION = '1.101_003';
 
 
 
@@ -822,9 +822,9 @@ our @THING;
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2009-07-21 08:50:56 -0700 (Tue, 21 Jul 2009) $
+#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
 #   $Author: clonezone $
-# $Revision: 3404 $
+# $Revision: 3435 $
 ##############################################################################
 
 # Local Variables:
