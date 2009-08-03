@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Policy/RegularExpressions/ProhibitEscapedMetacharacters.pm $
-#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
+#     $Date: 2009-08-03 01:23:03 -0500 (Mon, 03 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3435 $
+# $Revision: 3460 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitEscapedMetacharacters;
@@ -19,7 +19,7 @@ use Perl::Critic::Utils qw{ :booleans :severities hashify };
 use Perl::Critic::Utils::PPIRegexp qw{ ppiify parse_regexp };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.101_003';
+our $VERSION = '1.102';
 
 #-----------------------------------------------------------------------------
 

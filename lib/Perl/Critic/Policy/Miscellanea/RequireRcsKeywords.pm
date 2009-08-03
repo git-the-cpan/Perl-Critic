@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Policy/Miscellanea/RequireRcsKeywords.pm $
-#     $Date: 2009-07-22 10:19:39 -0700 (Wed, 22 Jul 2009) $
+#     $Date: 2009-08-03 01:23:03 -0500 (Mon, 03 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3435 $
+# $Revision: 3460 $
 ##############################################################################
 
 package Perl::Critic::Policy::Miscellanea::RequireRcsKeywords;
@@ -20,7 +20,7 @@ use Perl::Critic::Utils qw{
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.101_003';
+our $VERSION = '1.102';
 
 #-----------------------------------------------------------------------------
 
@@ -152,13 +152,13 @@ file helps the reader know where the file comes from, in case he or
 she needs to modify it.  This Policy scans your file for comments that
 look like this:
 
-    # $Revision: 3435 $
+    # $Revision: 3460 $
     # $Source: /myproject/lib/foo.pm $
 
 A common practice is to use the C<Revision> keyword to automatically
 define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 3435 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 3460 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION
