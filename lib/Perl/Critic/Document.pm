@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Document.pm $
-#     $Date: 2009-08-03 01:23:03 -0500 (Mon, 03 Aug 2009) $
+#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3460 $
+# $Revision: 3482 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -25,7 +25,7 @@ use Perl::Critic::Exception::Parse qw{ throw_parse };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.102';
+our $VERSION = '1.103';
 
 #-----------------------------------------------------------------------------
 

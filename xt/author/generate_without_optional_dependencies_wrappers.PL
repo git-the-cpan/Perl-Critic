@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/xt/author/generate_without_optional_dependencies_wrappers.PL $
-#     $Date: 2009-08-03 01:23:03 -0500 (Mon, 03 Aug 2009) $
+#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3460 $
+# $Revision: 3482 $
 ##############################################################################
 
 use 5.006001;
@@ -22,7 +22,7 @@ use Perl::Critic::BuildUtilities qw{ recommended_module_versions };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.102';
+our $VERSION = '1.103';
 
 #-----------------------------------------------------------------------------
 
