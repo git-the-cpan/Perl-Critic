@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Violation.pm $
-#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Violation.pm $
+#     $Date: 2009-08-23 16:18:28 -0500 (Sun, 23 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3482 $
+# $Revision: 3609 $
 ##############################################################################
 
 package Perl::Critic::Violation;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils::POD qw<
 >;
 use Perl::Critic::Exception::Fatal::Internal qw< throw_internal >;
 
-our $VERSION = '1.103';
+our $VERSION = '1.104';
 
 
 Readonly::Scalar my $LOCATION_LINE_NUMBER               => 0;
@@ -259,16 +259,19 @@ sub to_string {
 
     # Wrap the more expensive ones in sub{} to postpone evaluation
     my %fspec = (
-         'f' => sub { $self->filename()             },
-         'F' => sub { basename( $self->filename() ) },
-         'l' => sub { $self->line_number()          },
-         'c' => sub { $self->visual_column_number() },
-         'C' => sub { $self->element_class()        },
+         'f' => sub { $self->logical_filename()             },
+         'F' => sub { basename( $self->logical_filename() ) },
+         'g' => sub { $self->filename()                     },
+         'G' => sub { basename( $self->filename() )         },
+         'l' => sub { $self->logical_line_number()          },
+         'L' => sub { $self->line_number()                  },
+         'c' => sub { $self->visual_column_number()         },
+         'C' => sub { $self->element_class()                },
          'm' => $self->description(),
          'e' => $self->explanation(),
          's' => $self->severity(),
-         'd' => sub { $self->diagnostics()          },
-         'r' => sub { $self->source()               },
+         'd' => sub { $self->diagnostics()                  },
+         'r' => sub { $self->source()                       },
          'P' => $long_policy,
          'p' => $short_policy,
     );
@@ -526,15 +529,27 @@ characters are:
     %c        Column number where the violation occurred
     %d        Full diagnostic discussion of the violation (DESCRIPTION in POD)
     %e        Explanation of violation or page numbers in PBP
-    %F        Just the name of the file where the violation occurred.
-    %f        Path to the file where the violation occurred.
-    %l        Line number where the violation occurred
+    %F        Just the name of the logical file where the violation occurred.
+    %f        Path to the logical file where the violation occurred.
+    %G        Just the name of the physical file where the violation occurred.
+    %g        Path to the physical file where the violation occurred.
+    %l        Logical line number where the violation occurred
+    %L        Physical line number where the violation occurred
     %m        Brief description of the violation
     %P        Full name of the Policy module that created the violation
     %p        Name of the Policy without the Perl::Critic::Policy:: prefix
     %r        The string of source code that caused the violation
     %C        The class of the PPI::Element that caused the violation
     %s        The severity level of the violation
+
+Explanation of the C<%F>, C<%f>, C<%G>, C<%G>, C<%l>, and C<%L> formats:
+Using C<#line> directives, you can affect what perl thinks the current line
+number and file name are; see L<perlsyn/Plain Old Comments (Not!)> for
+the details.  Under normal circumstances, the values of C<%F>, C<%f>, and
+C<%l> will match the values of C<%G>, C<%g>, and C<%L>, respectively.  In the
+presence of a C<#line> directive, the values of C<%F>, C<%f>, and C<%l> will
+change to take that directive into account.  The values of C<%G>, C<%g>, and
+C<%L> are unaffected by those directives.
 
 Here are some examples:
 

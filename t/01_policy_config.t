@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/t/01_policy_config.t $
-#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/01_policy_config.t $
+#     $Date: 2009-08-23 16:18:28 -0500 (Sun, 23 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3482 $
+# $Revision: 3609 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Test::More tests => 29;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.103';
+our $VERSION = '1.104';
 
 #-----------------------------------------------------------------------------
 
@@ -174,7 +174,7 @@ sub test_standard_parameters_undef_via_get {
 
 #-----------------------------------------------------------------------------
 
-# ensure we run true if this test is loaded by
+# ensure we return true if this test is loaded by
 # t/01_policy_config.t_without_optional_dependencies.t
 1;
 

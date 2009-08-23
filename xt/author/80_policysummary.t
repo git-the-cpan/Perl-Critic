@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/xt/author/80_policysummary.t $
-#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/xt/author/80_policysummary.t $
+#     $Date: 2009-08-23 16:18:28 -0500 (Sun, 23 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3482 $
+# $Revision: 3609 $
 ##############################################################################
 
 use strict;
@@ -23,7 +23,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.103';
+our $VERSION = '1.104';
 
 #-----------------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ else {
 
 #-----------------------------------------------------------------------------
 
-# ensure we run true if this test is loaded by
+# ensure we return true if this test is loaded by
 # t/80_policysummary.t.without_optional_dependencies.t
 1;
 

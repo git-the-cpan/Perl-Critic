@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic.pm $
-#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic.pm $
+#     $Date: 2009-08-23 16:18:28 -0500 (Sun, 23 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3482 $
+# $Revision: 3609 $
 ##############################################################################
 
 package Perl::Critic;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils qw{ :characters hashify };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.103';
+our $VERSION = '1.104';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -429,6 +429,10 @@ B<-color-severity-lowest> are not used by Perl::Critic, but are provided for
 the benefit of L<perlcritic|perlcritic>. Each is set to the Term::ANSIColor
 color specification to be used to display violations of the corresponding
 severity.
+
+B<-files-with-violations> and B<-files-without-violations> are not used by
+Perl::Critic, but are provided for the benefit of L<perlcritic|perlcritic>, to
+cause only the relevant filenames to be displayed.
 
 =back
 

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitVersionStrings.pm $
-#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitVersionStrings.pm $
+#     $Date: 2009-08-23 16:18:28 -0500 (Sun, 23 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3482 $
+# $Revision: 3609 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitVersionStrings;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.103';
+our $VERSION = '1.104';
 
 #-----------------------------------------------------------------------------
 
@@ -32,25 +32,21 @@ sub applies_to           { return 'PPI::Statement::Include' }
 #-----------------------------------------------------------------------------
 
 sub violates {
-    my ( $self, $elem, undef ) = @_;
-    if (
-        (
-                $elem->type() eq 'use'
-            or  $elem->type() eq 'require'
-        )
-        and $elem->module ne 'lib'
-    ) {
-        # This is a pretty crude way to verify that a version string is
-        # being used.  But there are several permutations of the syntax
-        # for C<use> and C<require>.  Also PPI doesn't parses strings
-        # like "5.6.1" as an integer that is being concatenated to a
-        # float.  I'm not sure if this should be reported as a bug.
+    my ($self, $elem, undef) = @_;
 
-        if ( $elem =~ m{ \b v? \d+ [.] \d+ [.] \d+ \b }xms ) {
-            return $self->violation( $DESC, $EXPL, $elem );
-        }
+    my $module = $elem->module() || $elem->pragma();
+    if ($module) {
+        return if $module eq 'lib';
+
+        my $version = $elem->module_version() or return;
+        return if not $version->isa('PPI::Token::Number::Version');
     }
-    return;    #ok!
+    else {
+        my $version = $elem->schild(1) or return;
+        return if not $version->isa('PPI::Token::Number::Version');
+    }
+
+    return $self->violation($DESC, $EXPL, $elem);
 }
 
 1;

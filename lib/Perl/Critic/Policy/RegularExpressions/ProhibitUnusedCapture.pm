@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-PPI-1.204/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
-#     $Date: 2009-08-08 10:42:31 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
+#     $Date: 2009-08-23 16:18:28 -0500 (Sun, 23 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3482 $
+# $Revision: 3609 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitUnusedCapture;
@@ -24,9 +24,11 @@ use Perl::Critic::Utils::PPIRegexp qw<
 >;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.103';
+our $VERSION = '1.104';
 
 #-----------------------------------------------------------------------------
+
+Readonly::Scalar my $WHILE => q{while};
 
 Readonly::Scalar my $DESC => q{Only use a capturing group if you plan to use the captured value};
 Readonly::Scalar my $EXPL => [252];
@@ -85,7 +87,8 @@ sub violates {
     return if none {not defined $_} @captures;
 
     my %modifiers = get_modifiers($elem);
-    if ($modifiers{g}) {
+    if ($modifiers{g}
+            and not _check_if_in_while_condition_or_block( $elem ) ) {
         $ncaptures = $NUM_CAPTURES_FOR_GLOBAL;
         $#captures = $ncaptures - 1;
     }
@@ -289,6 +292,26 @@ sub _check_for_magic {
     }
 
     return;
+}
+
+# Check if we are in the condition or block of a 'while'
+sub _check_if_in_while_condition_or_block {
+    my ( $elem ) = @_;
+    $elem or return;
+
+    my $parent = $elem->parent() or return;
+    $parent->isa( 'PPI::Statement' ) or return;
+
+    my $item = $parent = $parent->parent() or return;
+    if ( $item->isa( 'PPI::Structure::Block' ) ) {
+        $item = $item->sprevious_sibling() or return;
+    }
+    $item->isa( 'PPI::Structure::Condition' ) or return;
+
+    $item = $item->sprevious_sibling() or return;
+    $item->isa( 'PPI::Token::Word' ) or return;
+
+    return $WHILE eq $item->content();
 }
 
 # false if we hit another regexp
