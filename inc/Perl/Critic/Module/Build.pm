@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/inc/Perl/Critic/Module/Build.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/inc/Perl/Critic/Module/Build.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ########################################################################
 
 package Perl::Critic::Module::Build;
@@ -12,10 +12,11 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 use Carp;
 use English qw< $OS_ERROR $EXECUTABLE_NAME -no_match_vars >;
+use Perl::Critic::PolicySummaryGenerator qw< generate_policy_summary >;
 
 use base 'Module::Build';
 
@@ -23,6 +24,7 @@ use base 'Module::Build';
 sub ACTION_test {
     my ($self, @arguments) = @_;
 
+    $self->depends_on('policysummary');
     $self->depends_on('manifest');
 
     return $self->SUPER::ACTION_test(@arguments);
@@ -49,6 +51,16 @@ sub ACTION_authortestcover {
 }
 
 
+sub ACTION_policysummary {
+    my ($self) = @_;
+
+    my $policy_summary_file = generate_policy_summary();
+    $self->add_to_cleanup( $policy_summary_file );
+
+    return;
+}
+
+
 sub ACTION_distdir {
     my ($self, @arguments) = @_;
 
@@ -60,8 +72,10 @@ sub ACTION_distdir {
 
 sub ACTION_nytprof {
     my ($self) = @_;
+
     $self->depends_on('build');
     $self->_run_nytprof();
+
     return;
 }
 
@@ -77,10 +91,23 @@ sub ACTION_manifest {
 }
 
 
+sub tap_harness_args {
+    my ($self) = @_;
+    return  $self->_tap_harness_args() if $ENV{RUNNING_UNDER_TEAMCITY};
+    return;
+}
+
+
+sub _tap_harness_args {
+    return {formatter_class => 'TAP::Formatter::TeamCity', merge => 1};
+}
+
+
 sub _authortest_dependencies {
     my ($self) = @_;
 
     $self->depends_on('build');
+    $self->depends_on('policysummary');
     $self->depends_on('manifest');
     $self->depends_on('distmeta');
 
@@ -118,6 +145,7 @@ sub _run_nytprof {
     return;
 }
 
+
 1;
 
 
@@ -138,20 +166,21 @@ Perl::Critic::Module::Build - Customization of L<Module::Build> for L<Perl::Crit
 
 This is a custom subclass of L<Module::Build> that enhances existing
 functionality and adds more for the benefit of installing and
-developing L<Perl::Critic>.
+developing L<Perl::Critic>.  The following actions have been added
+or redefined:
 
 
-=head1 METHODS
+=head1 ACTIONS
 
 =over
 
-=item C<ACTION_test()>
+=item test
 
 In addition to the standard action, this adds a dependency upon the
 C<manifest> action.
 
 
-=item C<ACTION_authortest()>
+=item authortest
 
 Runs the regular tests plus the author tests (those in F<xt/author>).
 It used to be the case that author tests were run if an environment
@@ -163,19 +192,28 @@ something not expected to run elsewhere.  Now, you've got to
 explicitly ask for the author tests to be run.
 
 
-=item C<ACTION_authortestcover()>
+=item authortestcover
 
 As C<authortest> is to the standard C<test> action, C<authortestcover>
 is to the standard C<testcover> action.
 
 
-=item C<ACTION_distdir()>
+=item distdir
 
 In addition to the standard action, this adds a dependency upon the
 C<authortest> action so you can't do a release without passing the
 author tests.
 
-=item C<ACTION_nytprof()>
+
+=item policysummary
+
+Generates the F<PolicySummary.pod> file.  This should only be used by
+C<Perl::Critic> developers.  This action is also invoked by the C<authortest>
+action, so the F<PolicySummary.pod> file will be generated whenever you create
+a distribution with the C<dist> or C<distdir> targets.
+
+
+=item nytprof
 
 Runs perlcritic under the L<Devel::NYTProf> profiler and generates
 an HTML report in F<nytprof/index.html>.
@@ -190,7 +228,7 @@ Elliot Shank <perl@galumph.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Elliot Shank.  All rights reserved.
+Copyright (c) 2007-2010 Elliot Shank.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

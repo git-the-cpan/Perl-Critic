@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Variables/ProhibitReusedNames.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Variables/ProhibitReusedNames.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::ProhibitReusedNames;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -175,7 +175,7 @@ a nice feature.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008-2009 Chris Dolan
+Copyright (c) 2008-2010 Chris Dolan
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

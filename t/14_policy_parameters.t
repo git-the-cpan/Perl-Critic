@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/14_policy_parameters.t $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/14_policy_parameters.t $
+#     $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3746 $
 ##############################################################################
 
 use 5.006001;
@@ -21,7 +21,7 @@ use Perl::Critic::TestUtils qw(bundled_policy_names);
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -30,11 +30,11 @@ use Test::More; #plan set below!
 Perl::Critic::TestUtils::block_perlcriticrc();
 
 #-----------------------------------------------------------------------------
-# This script proves that each policy that ships with Perl::Critic overrides
+# This program proves that each policy that ships with Perl::Critic overrides
 # the supported_parameters() method and, assuming that the policy is
 # configurable, that each parameter can parse its own default_string.
 #
-# This script also verifies that Perl::Critic::PolicyFactory throws an
+# This program also verifies that Perl::Critic::PolicyFactory throws an
 # exception when we try to create a policy with bogus parameters.  However, it
 # is your responsibility to verify that valid parameters actually work as
 # expected.  You can do this by using the #parms directive in the *.run files.

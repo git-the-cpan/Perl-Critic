@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Modules/RequireEndWithOne.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Modules/RequireEndWithOne.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireEndWithOne;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ sub applies_to           { return 'PPI::Document'     }
 sub prepare_to_scan_document {
     my ( $self, $document ) = @_;
 
-    return not is_script($document);   # Must be a library or module.
+    return $document->is_module();   # Must be a library or module.
 }
 
 sub violates {
@@ -101,7 +101,7 @@ L<Perl::Critic::Policy::Modules::RequireExplicitPackage|Perl::Critic::Policy::Mo
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Chris Dolan and Jeffrey Ryan Thalhammer.  All
+Copyright (c) 2005-2010 Chris Dolan and Imaginative Software Systems.  All
 rights reserved.
 
 This program is free software; you can redistribute it and/or modify

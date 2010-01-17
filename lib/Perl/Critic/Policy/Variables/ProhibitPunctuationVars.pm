@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Variables/ProhibitPunctuationVars.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Variables/ProhibitPunctuationVars.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::ProhibitPunctuationVars;
@@ -21,7 +21,7 @@ use Perl::Critic::Utils qw<
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ Readonly::Scalar my $MAGIC_REGEX => _create_magic_detector();
 # The magic vars in this array will be ignored in interpolated strings
 # in simple mode. See CONFIGURATION in the pod.
 Readonly::Array my @IGNORE_FOR_INTERPOLATION =>
-    ( q{$'}, q{$$}, q{$#}, q{$:}, );    ## no critic ( RequireInterpolationOfMetachars )
+    ( q{$'}, q{$$}, q{$#}, q{$:}, );    ## no critic ( RequireInterpolationOfMetachars, ProhibitQuotedWordLists )
 
 #-----------------------------------------------------------------------------
 
@@ -199,7 +199,7 @@ sub _strings_thorough {
         # $c is so named by analogy to that module.
 
         # possibly *not* a magic variable
-        if ($c =~ m/ ^  \$  .*  [  \w  :  \$  \{  ]  $ /xms) {
+        if ($c =~ m/ ^  \$  .*  [  \w  :  \$  {  ]  $ /xms) {
             ## no critic (RequireInterpolationOfMetachars)
 
             if (
@@ -226,7 +226,7 @@ sub _strings_thorough {
             # if ( $c =~ m/^\$\^\w{2}$/xms ) {
             # }
 
-            next MATCH if $c =~ m/ ^\$\#\{ /xms;    # It's a $#{...} cast
+            next MATCH if $c =~ m/ ^ \$ \# [{] /xms;    # It's a $#{...} cast
         }
 
         # The additional checking that PPI::Token::Magic does at this point
@@ -257,7 +257,7 @@ sub _create_magic_detector {
                 q<|>,
                 map          { quotemeta $_ }
                 reverse sort { length $a <=> length $b }
-                grep         { '%' ne substr $_, 0, 1 }
+                grep         { q<%> ne substr $_, 0, 1 }
                 @MAGIC_VARIABLES
         )
         .   ')';
@@ -365,12 +365,12 @@ interpolating  and  the  C<string_mode>   option   will   go   away.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

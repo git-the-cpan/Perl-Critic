@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/inc/Perl/Critic/BuildUtilities.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -13,7 +13,7 @@ use warnings;
 
 use English q<-no_match_vars>;
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 use base qw{ Exporter };
 
@@ -62,6 +62,7 @@ sub required_module_versions {
         'Readonly'                  => 1.03,
         'Scalar::Util'              => 0,
         'String::Format'            => 1.13,
+        'Test::Builder'             => 0.92,
         'base'                      => 0,
         'charnames'                 => 0,
         'overload'                  => 0,
@@ -90,8 +91,14 @@ sub recommended_module_versions {
         'File::HomeDir'         => 0,
         'Perl::Tidy'            => 0,
         'Readonly::XS'          => 0,
-        'Regexp::Parser'        => '0.20',
-        'Term::ANSIColor'       => 0,
+        'Regexp::Parser'        => '0.20',  # Needed until
+                                            # Perl::Critic::Utils::PPIRegexp
+                                            # goes away
+        'PPIx::Regexp'          => 0,
+
+        # If the following changes, the corresponding change needs to be made
+        # in $Perl::Critic::Utils::Constants::_MODULE_VERSION_TERM_ANSICOLOR.
+        'Term::ANSIColor'       => '2.02',
 
         # All of these are for Documentation::PodSpelling
         'File::Which'           => 0,
@@ -146,7 +153,6 @@ sub test_wrappers_to_generate {
 }
 
 my @TARGET_FILES = qw<
-    lib/Perl/Critic/PolicySummary.pod
     t/ControlStructures/ProhibitNegativeExpressionsInUnlessAndUntilConditions.run
     t/NamingConventions/Capitalization.run
     t/Variables/RequireLocalizedPunctuationVars.run
@@ -206,6 +212,9 @@ extracted the Perl::Critic tarball using GNU tar.
 END_OF_TAR_WARNING
     }
 }
+
+
+
 
 1;
 
@@ -273,7 +282,7 @@ Elliot Shank  C<< <perl@galumph.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007-2009, Elliot Shank C<< <perl@galumph.com> >>. All
+Copyright (c) 2007-2010, Elliot Shank C<< <perl@galumph.com> >>. All
 rights reserved.
 
 This program is free software; you can redistribute it and/or modify

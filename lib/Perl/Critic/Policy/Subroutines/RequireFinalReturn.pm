@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Subroutines/RequireFinalReturn.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Subroutines/RequireFinalReturn.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::RequireFinalReturn;
@@ -16,7 +16,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -240,12 +240,14 @@ F<.perlcriticrc>:
     [Subroutines::RequireFinalReturns]
     terminal_funcs = quit abort bailout
 
-=head1 LIMITATIONS
+=head1 BUGS
 
 We do not look for returns inside ternary operators.  That
 construction is too complicated to analyze right now.  Besides, a
 better form is the return outside of the ternary like this: C<return
 foo ? 1 : bar ? 2 : 3>
+
+This does not handle the perl 5.10 C<given>/C<when>/C<default> constructs.
 
 =head1 AUTHOR
 
@@ -253,7 +255,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Chris Dolan.
+Copyright (c) 2005-2010 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

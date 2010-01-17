@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Utils/PPI.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Utils/PPI.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Utils::PPI;
@@ -17,7 +17,7 @@ use Scalar::Util qw< blessed readonly >;
 
 use base 'Exporter';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -161,6 +161,11 @@ sub is_in_subroutine {
 
 sub get_constant_name_element_from_declaring_statement {
     my ($element) = @_;
+
+    warnings::warnif(
+        'deprecated',
+        'Perl::Critic::Utils::PPI::get_constant_name_element_from_declaring_statement() is deprecated. Use Perl::Critic::PPIx::Utilities::Statement::get_constant_name_elements_from_declaring_statement() instead.',
+    );
 
     return if not $element;
     return if not $element->isa('PPI::Statement');
@@ -327,6 +332,10 @@ Is the parameter a subroutine or inside one?
 
 =item C<get_constant_name_element_from_declaring_statement($statement)>
 
+B<This subroutine is deprecated.> You should use
+L<Perl::Critic::PPIx::Utilities::Statement/get_constant_name_elements_from_declaring_statement()>
+instead.
+
 Given a L<PPI::Statement|PPI::Statement>, if the statement is a C<use
 constant> or L<Readonly|Readonly> declaration statement, return the name of
 the thing being defined.
@@ -378,7 +387,7 @@ For example, with the line
 
     use version; our $VERSION = ...;
 
-given the L<PPI::Token::Symbol> instance for C<$VERSION>, this will return
+given the L<PPI::Token::Symbol|PPI::Token::Symbol> instance for C<$VERSION>, this will return
 "version".
 
 If the given element is in a C<use> or <require>, the return is from the
@@ -395,7 +404,7 @@ Elliot Shank <perl@galumph.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Elliot Shank.  All rights reserved.
+Copyright (c) 2007-2010 Elliot Shank.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

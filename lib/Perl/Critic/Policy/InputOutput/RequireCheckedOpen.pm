@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/InputOutput/RequireCheckedOpen.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/InputOutput/RequireCheckedOpen.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::InputOutput::RequireCheckedOpen;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -74,8 +74,9 @@ was successful.
     use autodie;
     open $filehandle, $mode, $filename;                                 # ok
 
-You can use L<autodie>, L<Fatal>, or L<Fatal::Exception> to get around
-this.  Currently, L<autodie> is not properly treated as a pragma; its
+You can use L<autodie|autodie>, L<Fatal|Fatal>, or
+L<Fatal::Exception|Fatal::Exception> to get around
+this.  Currently, L<autodie|autodie> is not properly treated as a pragma; its
 lexical effects aren't taken into account.
 
 
@@ -91,11 +92,11 @@ Andrew Moore <amoore@mooresystems.com>
 =head1 ACKNOWLEDGMENTS
 
 This policy module is based heavily on policies written by Jeffrey
-Ryan Thalhammer <thaljef@cpan.org>.
+Ryan Thalhammer <jeff@imaginative-software.com>.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Andrew Moore.  All rights reserved.
+Copyright (c) 2007-2010 Andrew Moore.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

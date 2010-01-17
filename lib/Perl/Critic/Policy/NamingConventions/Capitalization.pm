@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/NamingConventions/Capitalization.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/NamingConventions/Capitalization.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::NamingConventions::Capitalization;
@@ -25,12 +25,14 @@ use Perl::Critic::Utils qw<
 use Perl::Critic::Utils::Perl qw< symbol_without_sigil >;
 use Perl::Critic::Utils::PPI qw<
     is_in_subroutine
-    get_constant_name_element_from_declaring_statement
+>;
+use Perl::Critic::PPIx::Utilities::Statement qw<
+    get_constant_name_elements_from_declaring_statement
 >;
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -353,11 +355,10 @@ sub violates {
     }
 
     if (
-        my $name = get_constant_name_element_from_declaring_statement($elem)
+        my @names = get_constant_name_elements_from_declaring_statement($elem)
     ) {
         return ( grep { $_ }
-            map { $self->_constant_capitalization( $elem, $_ ) }
-            _get_all_constant_element_names_from_declaration( $name ) );
+            map { $self->_constant_capitalization( $elem, $_ ) } @names )
     }
 
     if ( $elem->isa('PPI::Statement::Package') ) {
@@ -375,32 +376,6 @@ sub violates {
     }
 
     return;
-}
-
-sub _get_all_constant_element_names_from_declaration {
-    my ( $elem ) = @_;
-
-    if ( $elem->isa( 'PPI::Structure::Constructor' )
-            or $elem->isa( 'PPI::Structure::Block' ) ) {
-
-        my $statement = $elem->schild( 0 ) or return;
-        $statement->isa( 'PPI::Statement' ) or return;
-
-        my @elements;
-        my $inx = 0;
-        foreach my $child ( $statement->schildren() ) {
-            $inx % 2
-                or push @{ $elements[ $inx ] ||= [] }, $child;
-            $IS_COMMA{ $child->content() }
-                and $inx++;
-        }
-        return ( map { ( $_ && @{ $_ } == 2 &&
-                    $FATCOMMA eq $_->[1]->content() &&
-                    $_->[0]->isa( 'PPI::Token::Word' ) ) ? $_->[0] : () }
-            @elements );
-    } else {
-        return $elem;
-    }
 }
 
 sub _variable_capitalization {
@@ -622,25 +597,6 @@ sub _is_directly_in_scope_block {
     return $prior_to_grand_parent->content() ne 'continue';
 }
 
-sub _local_variable {
-    my ($self, $elem) = @_;
-
-    # The last symbol should be a variable
-    my $n = $elem->snext_sibling() or return 1;
-    my $p = $elem->sprevious_sibling();
-    if ( !$p || $p eq $COMMA ) {
-        # In the middle of a list
-        return 1 if $n eq $COMMA;
-
-        # The first half of an assignment
-        return 1 if $n eq $EQUAL;
-    }
-
-    # Lets say no for know... additional work
-    # should go here.
-    return $EMPTY;
-}
-
 sub _is_not_real_label {
     my $elem = shift;
 
@@ -711,7 +667,8 @@ Constants are in all-caps.
 
     Readonly::Scalar my $foo = 42;  # not ok
 
-There are other opinions on the specifics, for example, in L<perlstyle>.  This
+There are other opinions on the specifics, for example, in
+L<perlstyle|perlstyle>.  This
 policy can be configured to match almost any style that you can think of.
 
 
@@ -778,7 +735,8 @@ defaults to
 C<\$VERSION @ISA @EXPORT(?:_OK)? %EXPORT_TAGS \$AUTOLOAD %ENV %SIG \$TODO>.
 C<subroutine_exemptions> defaults to
 C<AUTOLOAD BUILD BUILDARGS CLEAR CLOSE DELETE DEMOLISH DESTROY EXISTS EXTEND FETCH FETCHSIZE FIRSTKEY GETC NEXTKEY POP PRINT PRINTF PUSH READ READLINE SCALAR SHIFT SPLICE STORE STORESIZE TIEARRAY TIEHANDLE TIEHASH TIESCALAR UNSHIFT UNTIE WRITE>
-which should cover all the standard Perl subroutines plus those from L<Moose>.
+which should cover all the standard Perl subroutines plus those from
+L<Moose|Moose>.
 
 For example, if you want all local variables to be in all lower-case
 and global variables to start with "G_" and otherwise not contain
@@ -796,7 +754,7 @@ underscores, but exempt any variable with a name that contains
 Handle C<use vars>.  Treat constant subroutines like constant
 variables.  Handle bareword file handles.  There needs to be "schemes"
 or ways of specifying "perlstyle" or "pbp".  Differentiate lexical
-L<Readonly> constants in scopes.
+L<Readonly|Readonly> constants in scopes.
 
 
 =head1 BUGS
@@ -815,7 +773,7 @@ Multiple people
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008-2009 Michael G Schwern.  All rights reserved.
+Copyright (c) 2008-2010 Michael G Schwern.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

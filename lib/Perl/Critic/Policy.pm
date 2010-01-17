@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy;
@@ -47,7 +47,7 @@ use Perl::Critic::Violation qw<>;
 
 use Exception::Class;   # this must come after "use P::C::Exception::*"
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -112,6 +112,12 @@ sub new {
     }
 
     return $self;
+}
+
+#-----------------------------------------------------------------------------
+
+sub is_safe {
+    return $TRUE;
 }
 
 #-----------------------------------------------------------------------------
@@ -407,7 +413,7 @@ sub violates {
 
 #-----------------------------------------------------------------------------
 
-sub violation {  ##no critic(ArgUnpacking)
+sub violation {  ## no critic (ArgUnpacking)
     my ( $self, $desc, $expl, $elem ) = @_;
     # HACK!! Use goto instead of an explicit call because P::C::V::new() uses caller()
     my $sev = $self->get_severity();
@@ -500,16 +506,6 @@ sub _format_lack_of_parameter_metadata {
     return
         'Cannot programmatically discover what parameters this policy takes.';
 }
-
-sub _get_source_file {
-    my ($self) = @_;
-
-    my $relative_path =
-        File::Spec->catfile( split m/::/xms, ref $self ) . '.pm';
-
-    return $INC{$relative_path};
-}
-
 
 #-----------------------------------------------------------------------------
 # Apparently, some perls do not implicitly stringify overloading
@@ -671,8 +667,8 @@ override this.
 
 Returns the maximum number of violations this policy will report for a
 single document.  If this is not defined, then there is no limit.  If
-L<set_maximum_violations_per_document()> has not been invoked, then
-L<default_maximum_violations_per_document()> is returned.
+L</set_maximum_violations_per_document()> has not been invoked, then
+L</default_maximum_violations_per_document()> is returned.
 
 
 =item C< set_maximum_violations_per_document() >
@@ -768,13 +764,6 @@ circumstance and the one where this policy does not take any
 parameters, it is necessary to call C<parameter_metadata_available()>.
 
 
-=item C< get_parameter( $parameter_name ) >
-
-Returns the
-L<Perl::Critic::PolicyParameter|Perl::Critic::PolicyParameter> with
-the specified name.
-
-
 =item C<set_format( $format )>
 
 Class method.  Sets the format for all Policy objects when they are
@@ -793,6 +782,22 @@ they are evaluated in string context.
 Returns a string representation of the policy.  The content of the
 string depends on the current value returned by C<get_format()>.
 See L<"OVERLOADS"> for the details.
+
+
+=item C<is_safe()>
+
+Answer whether this Policy can be used to analyze untrusted code, i.e. the
+Policy doesn't have any potential side effects.
+
+This method returns a true value by default.
+
+An "unsafe" policy might attempt to compile the code, which, if you have
+C<BEGIN> or C<CHECK> blocks that affect files or connect to databases, is not
+a safe thing to do.  If you are writing a such a Policy, then you should
+override this method to return false.
+
+By default L<Perl::Critic|Perl::Critic> will not run unsafe policies.
+
 
 
 =back
@@ -889,12 +894,12 @@ The current maximum number of violations per document of the policy.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

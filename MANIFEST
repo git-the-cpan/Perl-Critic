@@ -12,11 +12,13 @@ inc/Devel/AssertOS/Solaris.pm
 inc/Devel/CheckOS.pm
 inc/Perl/Critic/BuildUtilities.pm
 inc/Perl/Critic/Module/Build.pm
+inc/Perl/Critic/PolicySummaryGenerator.pm
 INSTALL
 lib/Perl/Critic.pm
 lib/Perl/Critic/Annotation.pm
 lib/Perl/Critic/Command.pm
 lib/Perl/Critic/Config.pm
+lib/Perl/Critic/CORE_DEVELOPER.pod
 lib/Perl/Critic/DEVELOPER.pod
 lib/Perl/Critic/Document.pm
 lib/Perl/Critic/Exception.pm
@@ -77,6 +79,7 @@ lib/Perl/Critic/Policy/ControlStructures/ProhibitUntilBlocks.pm
 lib/Perl/Critic/Policy/Documentation/PodSpelling.pm
 lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm
 lib/Perl/Critic/Policy/Documentation/RequirePodAtEnd.pm
+lib/Perl/Critic/Policy/Documentation/RequirePodLinksIncludeText.pm
 lib/Perl/Critic/Policy/Documentation/RequirePodSections.pm
 lib/Perl/Critic/Policy/ErrorHandling/RequireCarping.pm
 lib/Perl/Critic/Policy/ErrorHandling/RequireCheckingReturnValueOfEval.pm
@@ -132,6 +135,7 @@ lib/Perl/Critic/Policy/Subroutines/ProhibitManyArgs.pm
 lib/Perl/Critic/Policy/Subroutines/ProhibitNestedSubs.pm
 lib/Perl/Critic/Policy/Subroutines/ProhibitReturnSort.pm
 lib/Perl/Critic/Policy/Subroutines/ProhibitSubroutinePrototypes.pm
+lib/Perl/Critic/Policy/Subroutines/ProhibitUnusedPrivateSubroutines.pm
 lib/Perl/Critic/Policy/Subroutines/ProtectPrivateSubs.pm
 lib/Perl/Critic/Policy/Subroutines/RequireArgUnpacking.pm
 lib/Perl/Critic/Policy/Subroutines/RequireFinalReturn.pm
@@ -163,6 +167,7 @@ lib/Perl/Critic/Policy/ValuesAndExpressions/RequireNumberSeparators.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireQuotedHeredocTerminator.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireUpperCaseHeredocTerminator.pm
 lib/Perl/Critic/Policy/Variables/ProhibitConditionalDeclarations.pm
+lib/Perl/Critic/Policy/Variables/ProhibitEvilVariables.pm
 lib/Perl/Critic/Policy/Variables/ProhibitLocalVars.pm
 lib/Perl/Critic/Policy/Variables/ProhibitMatchVars.pm
 lib/Perl/Critic/Policy/Variables/ProhibitPackageVars.pm
@@ -185,7 +190,8 @@ lib/Perl/Critic/PolicyParameter/Behavior/Enumeration.pm
 lib/Perl/Critic/PolicyParameter/Behavior/Integer.pm
 lib/Perl/Critic/PolicyParameter/Behavior/String.pm
 lib/Perl/Critic/PolicyParameter/Behavior/StringList.pm
-lib/Perl/Critic/PolicySummary.pod.PL
+lib/Perl/Critic/PolicySummary.pod
+lib/Perl/Critic/PPIx/Utilities/Statement.pm
 lib/Perl/Critic/ProfilePrototype.pm
 lib/Perl/Critic/Statistics.pm
 lib/Perl/Critic/TestUtils.pm
@@ -201,6 +207,7 @@ lib/Perl/Critic/Utils/POD.pm
 lib/Perl/Critic/Utils/PPI.pm
 lib/Perl/Critic/Utils/PPIRegexp.pm
 lib/Perl/Critic/Violation.pm
+lib/Test/Perl/Critic/Policy.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
@@ -210,6 +217,7 @@ t/01_config.t
 t/01_config_bad_perlcriticrc.t
 t/01_policy_config.t
 t/02_policy.t
+t/03_annotations.t
 t/03_pragmas.t
 t/04_options_processor.t
 t/05_utils.t
@@ -283,6 +291,7 @@ t/ControlStructures/ProhibitUnreachableCode.run
 t/ControlStructures/ProhibitUntilBlocks.run
 t/Documentation/RequirePackageMatchesPodName.run
 t/Documentation/RequirePodAtEnd.run
+t/Documentation/RequirePodLinksIncludeText.run
 t/Documentation/RequirePodSections.run
 t/ErrorHandling/RequireCarping.run
 t/ErrorHandling/RequireCheckingReturnValueOfEval.run
@@ -339,6 +348,7 @@ t/Subroutines/ProhibitManyArgs.run
 t/Subroutines/ProhibitNestedSubs.run
 t/Subroutines/ProhibitReturnSort.run
 t/Subroutines/ProhibitSubroutinePrototypes.run
+t/Subroutines/ProhibitUnusedPrivateSubroutines.run
 t/Subroutines/ProtectPrivateSubs.run
 t/Subroutines/RequireArgUnpacking.run
 t/Subroutines/RequireFinalReturn.run
@@ -370,6 +380,9 @@ t/ValuesAndExpressions/RequireNumberSeparators.run
 t/ValuesAndExpressions/RequireQuotedHeredocTerminator.run
 t/ValuesAndExpressions/RequireUpperCaseHeredocTerminator.run
 t/Variables/ProhibitConditionalDeclarations.run
+t/Variables/ProhibitEvilVariables.d/variables-no-regular-expressions.txt
+t/Variables/ProhibitEvilVariables.d/variables-regular-expressions.txt
+t/Variables/ProhibitEvilVariables.run
 t/Variables/ProhibitLocalVars.run
 t/Variables/ProhibitMatchVars.run
 t/Variables/ProhibitPackageVars.run

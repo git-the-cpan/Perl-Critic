@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitComplexVersion.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitComplexVersion.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitComplexVersion;
@@ -24,7 +24,7 @@ use Scalar::Util qw{ blessed };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -250,9 +250,9 @@ following to your perlcriticrc file:
 
 This code assumes that the hallmark of a violation is a 'use' on the same line
 as the C<$VERSION> assignment, because that is the way to have it seen by
-L<ExtUtils::MakeMaker>->parse_version(). Other ways to get a version value
-from outside the module can be imagined, and this policy is currently
-oblivious to them.
+L<ExtUtils::MakeMaker|ExtUtils::MakeMaker>->parse_version(). Other ways to get
+a version value from outside the module can be imagined, and this policy is
+currently oblivious to them.
 
 
 =head1 AUTHOR
@@ -262,7 +262,7 @@ Thomas R. Wyant, III F<wyant at cpan dot org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009 Tom Wyant.
+Copyright (c) 2009-2010 Tom Wyant.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

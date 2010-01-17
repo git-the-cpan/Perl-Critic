@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Subroutines/ProtectPrivateSubs.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Subroutines/ProtectPrivateSubs.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProtectPrivateSubs;
@@ -15,15 +15,17 @@ use warnings;
 use English qw< $EVAL_ERROR -no_match_vars >;
 use Readonly;
 
-use Perl::Critic::Utils qw{ :severities $EMPTY };
+use Perl::Critic::Utils qw<
+    :severities $EMPTY is_function_call is_method_call
+>;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{Private subroutine/method used};
-Readonly::Scalar my $EXPL => q{Use published APIs};
+Readonly::Scalar my $DESC => q<Private subroutine/method used>;
+Readonly::Scalar my $EXPL => q<Use published APIs>;
 
 #-----------------------------------------------------------------------------
 
@@ -34,6 +36,7 @@ sub supported_parameters {
             description     => 'Pattern that determines what a private subroutine is.',
             default_string  => '\b_\w+\b',
             behavior        => 'string',
+            parser          => \& _parse_private_name_regex,
         },
         {
             name            => 'allow',
@@ -96,6 +99,9 @@ sub applies_to           { return 'PPI::Token::Word'     }
 sub _parse_private_name_regex {
     my ($self, $parameter, $config_string) = @_;
 
+    defined $config_string
+        or $config_string = $parameter->get_default_string();
+
     my $regex;
     eval { $regex = qr/$config_string/; 1 } ## no critic (RegularExpressions)
         or $self->throw_parameter_value_exception(
@@ -134,6 +140,8 @@ sub violates {
 
 sub _is_other_pkg_private_function {
     my ( $self, $elem ) = @_;
+
+    return if ! is_function_call($elem) && ! is_method_call($elem);
 
     my $private_name_regex = $self->{_private_name_regex};
     my $content = $elem->content();
@@ -194,7 +202,7 @@ indicate private methods and variables by inserting a leading
 underscore before the identifier.  This policy catches attempts to
 access private variables from outside the package itself.
 
-The subroutines in the L<POSIX> package which begin with an underscore
+The subroutines in the L<POSIX|POSIX> package which begin with an underscore
 (e.g. C<POSIX::_POSIX_ARG_MAX>) are not flagged as errors by this
 policy.
 
@@ -249,7 +257,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2009 Chris Dolan.
+Copyright (c) 2006-2010 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/05_utils.t $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/05_utils.t $
+#     $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3746 $
 ##############################################################################
 
 ## There's too much use of source code in strings.
@@ -28,7 +28,7 @@ use Test::More tests => 125;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -90,7 +90,11 @@ sub test_export {
 #-----------------------------------------------------------------------------
 
 sub count_matches { my $val = shift; return defined $val ? scalar @{$val} : 0; }
-sub make_doc { my $code = shift; return PPI::Document->new( ref $code ? $code : \$code); }
+sub make_doc {
+    my $code = shift;
+    return
+        Perl::Critic::Document->new('-source' => ref $code ? $code : \$code);
+}
 
 sub test_find_keywords {
     my $doc = PPI::Document->new(); #Empty doc
@@ -155,6 +159,8 @@ sub test_is_script {
         "\n#!perl\n",
     );
 
+    no warnings qw< deprecated >;   ## no critic (TestingAndDebugging::ProhibitNoWarnings)
+
     for my $code (@good) {
         my $doc = PPI::Document->new(\$code) or confess;
         $doc->index_locations();
@@ -184,7 +190,8 @@ sub test_is_script_with_PL_files { ## no critic (NamingConventions::Capitalizati
     close $temp_file or confess "Couldn't close $temp_file: $OS_ERROR";
 
     my $doc = PPI::Document::File->new($temp_file->filename());
-    $doc->index_locations();
+
+    no warnings qw< deprecated >;   ## no critic (TestingAndDebugging::ProhibitNoWarnings)
     ok(is_script($doc), 'is_script, false for .PL files');
 
     return;

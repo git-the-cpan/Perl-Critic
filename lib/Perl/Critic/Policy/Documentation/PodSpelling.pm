@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Documentation/PodSpelling.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Documentation/PodSpelling.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::PodSpelling;
@@ -28,7 +28,7 @@ use Perl::Critic::Exception::Fatal::Generic qw{ throw_generic };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -144,14 +144,6 @@ sub _get_spell_command {
     return $self->{_spell_command};
 }
 
-sub _set_spell_command {
-    my ( $self, $spell_command ) = @_;
-
-    $self->{_spell_command} = $spell_command;
-
-    return;
-}
-
 #-----------------------------------------------------------------------------
 
 sub _get_spell_command_line {
@@ -208,7 +200,7 @@ sub _run_spell_command {
 
     eval {
         # temporarily add our special wordlist to this annoying global
-        local %Pod::Wordlist::Wordlist =    ##no critic(ProhibitPackageVars)
+        local %Pod::Wordlist::Wordlist =    ## no critic (ProhibitPackageVars)
             %{ $self->_get_stop_words() };
 
         Pod::Spell->new()->parse_from_filehandle($infh, $outfh);
@@ -230,7 +222,7 @@ sub _run_spell_command {
         }
 
         # Why is this extra step needed???
-        @words = grep { not exists $Pod::Wordlist::Wordlist{$_} } @words;  ## no critic(ProhibitPackageVars)
+        @words = grep { not exists $Pod::Wordlist::Wordlist{$_} } @words;  ## no critic (ProhibitPackageVars)
         1;
     }
         or do {
@@ -293,7 +285,7 @@ __END__
 
 =pod
 
-=for stopwords Hmm stopwords
+=for stopwords foobie foobie-bletch Hmm stopwords
 
 =head1 NAME
 
@@ -378,6 +370,17 @@ together into a single list of exemptions.
 L<Pod::Spell|Pod::Spell> is not included with Perl::Critic, nor is a
 spell checking program.
 
+The results of failures for this policy can be confusing when F<aspell>
+complains about words containing punctuation such as hyphens and apostrophes.
+In this situation F<aspell> will often only emit part of the word that it
+thinks is misspelled.  For example, if you ask F<aspell> to check
+"foobie-bletch", the output only complains about "foobie".  Unfortunately,
+you'll have to look through your POD to figure out what the real word that
+F<aspell> is complaining about is.  One thing to try is looking at the output
+of C<< perl -MPod::Spell -e 'print
+Pod::Spell->new()->parse_from_file("lib/Your/Module.pm")' >> to see what is
+actually being checked for spelling.
+
 
 =head1 PREREQUISITES
 
@@ -399,7 +402,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

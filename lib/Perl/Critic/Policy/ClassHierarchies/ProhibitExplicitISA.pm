@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/ClassHierarchies/ProhibitExplicitISA.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/ClassHierarchies/ProhibitExplicitISA.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::ClassHierarchies::ProhibitExplicitISA;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ distribution.
 
 Conway recommends employing C<use base qw(Foo)> instead of the usual
 C<our @ISA = qw(Foo)> because the former happens at compile time and
-the latter at runtime.  The L<base> pragma also automatically loads
+the latter at runtime.  The L<base|base> pragma also automatically loads
 C<Foo> for you so you save a line of easily-forgotten code.
 
 
@@ -74,7 +74,7 @@ This Policy is not configurable except for the standard options.
 
 =head1 NOTE
 
-Some people prefer L<parent> over L<base>.
+Some people prefer L<parent|parent> over L<base|base>.
 
 
 =head1 AUTHOR
@@ -84,7 +84,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2009 Chris Dolan.
+Copyright (c) 2006-2010 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

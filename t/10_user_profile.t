@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/10_user_profile.t $
-#    $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/10_user_profile.t $
+#    $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3746 $
 ##############################################################################
 
 use 5.006001;
@@ -19,7 +19,7 @@ use Test::More tests => 41;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitVersionStrings.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitVersionStrings.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitVersionStrings;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -34,17 +34,18 @@ sub applies_to           { return 'PPI::Statement::Include' }
 sub violates {
     my ($self, $elem, undef) = @_;
 
-    my $module = $elem->module() || $elem->pragma();
-    if ($module) {
+    my $version;
+
+    if ( my $module = $elem->module() ) {
         return if $module eq 'lib';
 
-        my $version = $elem->module_version() or return;
-        return if not $version->isa('PPI::Token::Number::Version');
+        $version = $elem->module_version();
+    } else {
+        $version = $elem->schild(1);
     }
-    else {
-        my $version = $elem->schild(1) or return;
-        return if not $version->isa('PPI::Token::Number::Version');
-    }
+
+    return if not defined $version;
+    return if not $version->isa('PPI::Token::Number::Version');
 
     return $self->violation($DESC, $EXPL, $elem);
 }
@@ -89,11 +90,11 @@ This Policy is not configurable except for the standard options.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

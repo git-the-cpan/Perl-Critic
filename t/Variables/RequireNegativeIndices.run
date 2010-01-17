@@ -63,8 +63,8 @@ $ref->[$#{$some->{complicated}->[$data_structure]} -1];
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/Variables/RequireNegativeIndices.run $
-#     $Date: 2008-03-16 17:40:45 -0500 (Sun, 16 Mar 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/Variables/RequireNegativeIndices.run $
+#     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
 # $Revision: 2187 $
 ##############################################################################

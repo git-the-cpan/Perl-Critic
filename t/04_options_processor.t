@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/04_options_processor.t $
-#    $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/04_options_processor.t $
+#    $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3746 $
 ##############################################################################
 
 use 5.006001;
@@ -17,11 +17,11 @@ use Perl::Critic::OptionsProcessor;
 use Perl::Critic::Utils qw< :booleans >;
 use Perl::Critic::Utils::Constants qw< :color_severity >;
 
-use Test::More tests => 52;
+use Test::More tests => 54;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -56,6 +56,8 @@ our $VERSION = '1.105';
     is($processor->color_severity_lowest(),
                                $PROFILE_COLOR_SEVERITY_LOWEST_DEFAULT,
                                'native default color-severity-lowest');
+    is_deeply($processor->program_extensions(), [],
+                               'native default program extensions');
 }
 
 #-----------------------------------------------------------------------------
@@ -78,6 +80,7 @@ our $VERSION = '1.105';
          'color-severity-medium'    => 'blue',
          'color-severity-low'       => 'gray',
          'color-severity-lowest'    => 'scots tartan',
+         'program-extensions'  => '.PL .pl .t',
     );
 
     my $processor = Perl::Critic::OptionsProcessor->new( %user_defaults );
@@ -102,6 +105,8 @@ our $VERSION = '1.105';
                                 'gray',     'user default color_severity_low');
     is($processor->color_severity_lowest(),
                                 'scots tartan', 'user default color_severity_lowest');
+    is_deeply($processor->program_extensions(), [ qw(.PL .pl .t) ],
+                                            'user default program-extensions');
 }
 
 #-----------------------------------------------------------------------------

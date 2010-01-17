@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/Build.PL $
-#     $Date: 2009-08-08 10:49:22 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/Build.PL $
+#     $Date: 2009-09-30 17:35:26 -0700 (Wed, 30 Sep 2009) $
 #   $Author: clonezone $
-# $Revision: 3483 $
+# $Revision: 3661 $
 ########################################################################
 
 use 5.006001;
@@ -29,7 +29,7 @@ emit_tar_warning_if_necessary();
 
 my $builder = Perl::Critic::Module::Build->new(
     module_name         => 'Perl::Critic',
-    dist_author         => 'Jeffrey Thalhammer <thaljef@cpan.org>',
+    dist_author         => 'Jeffrey Thalhammer <jeff@imaginative-software.com>',
     dist_abstract       => 'Critique Perl source code for best-practices.',
     license             => 'perl',
     dynamic_config      => 1,

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::RequirePackageMatchesPodName;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -35,8 +35,8 @@ sub applies_to           { return 'PPI::Document'         }
 sub prepare_to_scan_document {
     my ( $self, $document ) = @_;
 
-    # idea: force NAME to match the file name in scripts?
-    return not is_script($document); # mismatch is normal in program entry points
+    # idea: force NAME to match the file name in programs?
+    return $document->is_module(); # mismatch is normal in program entry points
 }
 
 sub violates {
@@ -106,7 +106,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008-2009 Chris Dolan
+Copyright (c) 2008-2010 Chris Dolan
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

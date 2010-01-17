@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Policy/InputOutput/RequireCheckedSyscalls.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/InputOutput/RequireCheckedSyscalls.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Policy::InputOutput::RequireCheckedSyscalls;
@@ -17,7 +17,7 @@ use Perl::Critic::Utils qw{ :booleans :characters :severities :classification
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -141,7 +141,7 @@ except that this is configurable to apply to any function, whether
 core or user-defined.
 
 If your module uses L<Fatal|Fatal>,
-L<Fatal::Exception|Fatal::Exception>, or L<autodie> then any functions
+L<Fatal::Exception|Fatal::Exception>, or L<autodie|autodie> then any functions
 wrapped by those modules will not trigger this policy.  For example:
 
     use Fatal qw(open);
@@ -212,7 +212,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

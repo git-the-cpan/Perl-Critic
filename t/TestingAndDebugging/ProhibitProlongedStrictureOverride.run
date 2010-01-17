@@ -81,8 +81,8 @@ sub foo {
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/TestingAndDebugging/ProhibitProlongedStrictureOverride.run $
-#     $Date: 2009-02-15 11:10:42 -0600 (Sun, 15 Feb 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/TestingAndDebugging/ProhibitProlongedStrictureOverride.run $
+#     $Date: 2009-02-15 09:10:42 -0800 (Sun, 15 Feb 2009) $
 #   $Author: clonezone $
 # $Revision: 3116 $
 ##############################################################################

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/TestUtils.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/TestUtils.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::TestUtils;
@@ -29,7 +29,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ &throw_internal };
 use Perl::Critic::Utils qw{ :severities :data_conversion policy_long_name };
 use Perl::Critic::PolicyFactory (-test => 1);
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 Readonly::Array our @EXPORT_OK => qw(
     pcritique pcritique_with_violations
@@ -420,7 +420,7 @@ interface will go through a deprecation cycle.
 
 This module is used by L<Perl::Critic|Perl::Critic> only for
 self-testing. It provides a few handy subroutines for testing new
-Perl::Critic::Policy modules.  Look at the test scripts that ship with
+Perl::Critic::Policy modules.  Look at the test programs that ship with
 Perl::Critic for more examples of how to use these subroutines.
 
 
@@ -633,7 +633,7 @@ and the rest of the L<Perl::Critic|Perl::Critic> team.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Chris Dolan.
+Copyright (c) 2005-2010 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

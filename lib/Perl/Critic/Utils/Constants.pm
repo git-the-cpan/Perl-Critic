@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/lib/Perl/Critic/Utils/Constants.pm $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Utils/Constants.pm $
+#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3748 $
 ##############################################################################
 
 package Perl::Critic::Utils::Constants;
@@ -16,7 +16,7 @@ use Perl::Critic::Utils qw{ $EMPTY hashify };
 
 use base 'Exporter';
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -31,6 +31,7 @@ our @EXPORT_OK = qw{
     $PROFILE_COLOR_SEVERITY_MEDIUM_DEFAULT
     $PROFILE_COLOR_SEVERITY_LOW_DEFAULT
     $PROFILE_COLOR_SEVERITY_LOWEST_DEFAULT
+    $_MODULE_VERSION_TERM_ANSICOLOR
 };
 
 our %EXPORT_TAGS = (
@@ -74,6 +75,10 @@ Readonly::Scalar our $PROFILE_COLOR_SEVERITY_HIGH_DEFAULT       => 'magenta';
 Readonly::Scalar our $PROFILE_COLOR_SEVERITY_MEDIUM_DEFAULT     => $EMPTY;
 Readonly::Scalar our $PROFILE_COLOR_SEVERITY_LOW_DEFAULT        => $EMPTY;
 Readonly::Scalar our $PROFILE_COLOR_SEVERITY_LOWEST_DEFAULT     => $EMPTY;
+
+# If the following changes, the corresponding change needs to be made in
+# inc/Perl/Critic/BuildUtilities.pm, sub recommended_module_versions().
+Readonly::Scalar our $_MODULE_VERSION_TERM_ANSICOLOR => 2.02;
 
 #-----------------------------------------------------------------------------
 
@@ -159,7 +164,7 @@ Elliot Shank <perl@galumph.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Elliot Shank.  All rights reserved.
+Copyright (c) 2007-2010 Elliot Shank.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

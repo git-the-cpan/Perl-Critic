@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/92_memory_leaks.t $
-#     $Date: 2009-09-07 16:19:21 -0500 (Mon, 07 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3629 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/92_memory_leaks.t $
+#     $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#   $Author: thaljef $
+# $Revision: 3746 $
 ##############################################################################
 
 use 5.006001;
@@ -25,7 +25,7 @@ use Test::More; #plan set below
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105';
+our $VERSION = '1.105_01';
 
 #-----------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ eval 'use Test::Memory::Cycle; 1'
 
     my $code    = q<print foo(); split /this/, $that;>; ## no critic (RequireInterpolationOfMetachars)
     my $ppi_doc = PPI::Document->new( \$code );
-    my $pc_doc  = Perl::Critic::Document->new( $ppi_doc );
+    my $pc_doc  = Perl::Critic::Document->new( '-source' => $ppi_doc );
     my $critic  = Perl::Critic->new( -severity => 1 );
     my @violations = $critic->critique( $pc_doc );
     confess 'No violations were created' if not @violations;

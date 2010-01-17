@@ -134,8 +134,8 @@ sort(foo(@x));
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-backlog/t/CodeLayout/ProhibitParensWithBuiltins.run $
-#     $Date: 2009-08-08 20:17:30 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/CodeLayout/ProhibitParensWithBuiltins.run $
+#     $Date: 2009-08-08 18:17:30 -0700 (Sat, 08 Aug 2009) $
 #   $Author: clonezone $
 # $Revision: 3525 $
 ##############################################################################
