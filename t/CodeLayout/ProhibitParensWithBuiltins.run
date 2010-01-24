@@ -133,11 +133,21 @@ sort(foo(@x));
 
 #-----------------------------------------------------------------------------
 
+## name RT 52029 - Accept parens with 'state'
+## failures 0
+## cut
+
+use 5.010;
+
+state ( $foo );
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/CodeLayout/ProhibitParensWithBuiltins.run $
-#     $Date: 2009-08-08 18:17:30 -0700 (Sat, 08 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3525 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/CodeLayout/ProhibitParensWithBuiltins.run $
+#     $Date: 2010-01-19 17:44:15 -0800 (Tue, 19 Jan 2010) $
+#   $Author: wyant $
+# $Revision: 3752 $
 ##############################################################################
 
 # Local Variables:

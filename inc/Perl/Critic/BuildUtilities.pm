@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/inc/Perl/Critic/BuildUtilities.pm $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -13,7 +13,7 @@ use warnings;
 
 use English q<-no_match_vars>;
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 use base qw{ Exporter };
 
@@ -50,12 +50,12 @@ sub required_module_versions {
         'List::MoreUtils'           => 0.19,
         'List::Util'                => 0,
         'Module::Pluggable'         => 3.1,
-        'PPI'                       => '1.205',
-        'PPI::Document'             => '1.205',
-        'PPI::Document::File'       => '1.205',
-        'PPI::Node'                 => '1.205',
-        'PPI::Token::Quote::Single' => '1.205',
-        'PPI::Token::Whitespace'    => '1.205',
+        'PPI'                       => '1.208',
+        'PPI::Document'             => '1.208',
+        'PPI::Document::File'       => '1.208',
+        'PPI::Node'                 => '1.208',
+        'PPI::Token::Quote::Single' => '1.208',
+        'PPI::Token::Whitespace'    => '1.208',
         'Pod::PlainText'            => 0,
         'Pod::Select'               => 0,
         'Pod::Usage'                => 0,
@@ -91,9 +91,6 @@ sub recommended_module_versions {
         'File::HomeDir'         => 0,
         'Perl::Tidy'            => 0,
         'Readonly::XS'          => 0,
-        'Regexp::Parser'        => '0.20',  # Needed until
-                                            # Perl::Critic::Utils::PPIRegexp
-                                            # goes away
         'PPIx::Regexp'          => 0,
 
         # If the following changes, the corresponding change needs to be made

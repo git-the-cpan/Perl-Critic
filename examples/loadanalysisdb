@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/examples/loadanalysisdb $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/examples/loadanalysisdb $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ##############################################################################
 
 
@@ -12,7 +12,7 @@ use 5.008001;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv('1.105_01');
+use version; our $VERSION = qv('1.105_02');
 
 use Carp qw{ croak };
 use English qw{ -no_match_vars };

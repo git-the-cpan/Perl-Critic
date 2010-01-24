@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Variables/ProhibitEvilVariables.pm $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/Variables/ProhibitEvilVariables.pm $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ##############################################################################
 package Perl::Critic::Policy::Variables::ProhibitEvilVariables;
 
@@ -22,7 +22,7 @@ use Perl::Critic::Utils::DataConversion qw{ dor };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 #-----------------------------------------------------------------------------
 

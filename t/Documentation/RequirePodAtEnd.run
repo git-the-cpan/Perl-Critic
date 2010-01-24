@@ -115,7 +115,7 @@ __END__
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/Documentation/RequirePodAtEnd.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Documentation/RequirePodAtEnd.run $
 #     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
 # $Revision: 2187 $

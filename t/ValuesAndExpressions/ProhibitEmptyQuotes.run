@@ -36,7 +36,7 @@ $var = "other";
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/ValuesAndExpressions/ProhibitEmptyQuotes.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/ValuesAndExpressions/ProhibitEmptyQuotes.run $
 #     $Date: 2009-01-24 17:44:43 -0800 (Sat, 24 Jan 2009) $
 #   $Author: clonezone $
 # $Revision: 3059 $

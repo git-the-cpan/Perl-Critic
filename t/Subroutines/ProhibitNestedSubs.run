@@ -57,7 +57,7 @@ sub quack {
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/Subroutines/ProhibitNestedSubs.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Subroutines/ProhibitNestedSubs.run $
 #     $Date: 2009-12-23 16:30:42 -0800 (Wed, 23 Dec 2009) $
 #   $Author: clonezone $
 # $Revision: 3738 $

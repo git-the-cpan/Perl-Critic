@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/Modules/ProhibitExcessMainComplexity.pm $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/Modules/ProhibitExcessMainComplexity.pm $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::ProhibitExcessMainComplexity;
@@ -19,7 +19,7 @@ use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 #-----------------------------------------------------------------------------
 
@@ -89,8 +89,7 @@ possible paths through a block of code.  This Policy approximates the
 McCabe score by summing the number of conditional statements and
 operators within a block of code.  Research has shown that a McCabe
 score higher than 20 is a sign of high-risk, potentially untestable
-code.  See
-L<http://www.sei.cmu.edu/str/descriptions/cyclomatic_body.html> for
+code.  See L<http://en.wikipedia.org/wiki/Cyclomatic_complexity> for
 some discussion about the McCabe number and other complexity metrics.
 
 Whereas

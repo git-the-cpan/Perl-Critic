@@ -166,7 +166,7 @@ use Generic::Module '$FOO';
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
 #     $Date: 2009-08-09 14:06:04 -0700 (Sun, 09 Aug 2009) $
 #   $Author: clonezone $
 # $Revision: 3547 $

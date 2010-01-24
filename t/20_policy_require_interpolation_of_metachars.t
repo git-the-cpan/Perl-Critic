@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/20_policy_require_interpolation_of_metachars.t $
-#     $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/20_policy_require_interpolation_of_metachars.t $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3746 $
+# $Revision: 3762 $
 ##############################################################################
 
 use 5.006001;
@@ -17,12 +17,9 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 #-----------------------------------------------------------------------------
-
-eval 'use Email::Address 1.889; 1'
-    or plan skip_all => 'Email::Address 1.889 required for ValuesAndExpressions::RequireInterpolationOfMetachars to ignore email addresses.';
 
 plan tests => 2;
 
@@ -30,10 +27,13 @@ plan tests => 2;
 
 Perl::Critic::TestUtils::block_perlcriticrc();
 
+#-----------------------------------------------------------------------------
+
 # This is in addition to the regular .run file.
-
 my $policy = 'ValuesAndExpressions::RequireInterpolationOfMetachars';
+my $has_email_address = eval {require Email::Address};
 
+#-----------------------------------------------------------------------------
 
 my $code = <<'END_PERL';
 
@@ -45,7 +45,7 @@ END_PERL
 my $result = pcritique($policy, \$code);
 is(
     $result,
-    0,
+    $has_email_address ? 0 : 2,
     "$policy exempts things that look like email addresses if Email::Address is installed.",
 );
 
@@ -61,7 +61,7 @@ END_PERL
 $result = pcritique($policy, \$code);
 is(
     $result,
-    0,
+    $has_email_address ? 0 : 3,
     "$policy exempts things email addresses in the middle of larger strings if Email::Address is installed.",
 );
 

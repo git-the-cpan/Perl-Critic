@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/20_policy_pod_spelling.t $
-#     $Date: 2010-01-16 11:22:15 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/20_policy_pod_spelling.t $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3746 $
+# $Revision: 3762 $
 ##############################################################################
 
 =for stopwords arglbargl
@@ -16,12 +16,16 @@ use strict;
 use warnings;
 
 use Perl::Critic::TestUtils qw(pcritique);
+use Readonly;
 
-use Test::More tests => 5;
+use Test::More;
+
+Readonly::Scalar my $NUMBER_OF_TESTS => 5;
+plan( tests => $NUMBER_OF_TESTS );
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 #-----------------------------------------------------------------------------
 
@@ -67,8 +71,13 @@ $code = <<'END_PERL';
 =cut
 END_PERL
 
-if ( eval { pcritique($policy, \$code) } ) {
-   skip 'Test environment is not English', 4
+# Sorry about the double negative. The idea is that if aspell fails (say,
+# because it can not find the right dictionary) or pcritique returns a
+# non-zero number we want to skip. We have to negate the eval to catch the
+# aspell failure, and then negate pcritique because we negated the eval.
+# Clearer code welcome.
+if ( ! eval { ! pcritique($policy, \$code) } ) {
+   skip 'Test environment is not English', $NUMBER_OF_TESTS;
 }
 
 #-----------------------------------------------------------------------------

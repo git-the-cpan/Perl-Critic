@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitComplexRegexes;
@@ -17,12 +17,10 @@ use Carp;
 use List::Util qw{ min };
 
 use Perl::Critic::Utils qw{ :booleans :severities };
-use Perl::Critic::Utils::PPIRegexp qw{
-    get_match_string
-};
+
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 #-----------------------------------------------------------------------------
 
@@ -65,7 +63,7 @@ sub violates {
     my ( $self, $elem, undef ) = @_;
 
     # Optimization: if its short enough now, parsing won't make it longer
-    return if $self->{_max_characters} >= length get_match_string($elem);
+    return if $self->{_max_characters} >= length $elem->get_match_string();
 
     my $re = PPIx::Regexp->new( $elem )
         or return;  # Abort on syntax error.

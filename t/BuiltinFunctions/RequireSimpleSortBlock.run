@@ -43,7 +43,7 @@ sort { -M $b <=> -M $a} @entries;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/BuiltinFunctions/RequireSimpleSortBlock.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/BuiltinFunctions/RequireSimpleSortBlock.run $
 #     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
 # $Revision: 2187 $

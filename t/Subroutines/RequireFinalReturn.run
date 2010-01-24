@@ -1,8 +1,8 @@
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/Subroutines/RequireFinalReturn.run $
-#    $Date: 2009-08-23 13:50:01 -0700 (Sun, 23 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3606 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Subroutines/RequireFinalReturn.run $
+#    $Date: 2010-01-19 20:28:27 -0800 (Tue, 19 Jan 2010) $
+#   $Author: wyant $
+# $Revision: 3754 $
 ##############################################################################
 
 
@@ -172,6 +172,18 @@ sub foo {
 
     return;
 }
+
+#-----------------------------------------------------------------------------
+
+## name RT 43309 - given/when followed by return
+## failures 0
+## cut
+
+sub foo {
+    given ($bar) {}
+    return;
+}
+
 
 ##############################################################################
 # Local Variables:

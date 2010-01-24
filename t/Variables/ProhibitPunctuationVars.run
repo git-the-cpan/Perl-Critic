@@ -406,7 +406,7 @@ sprintf "%-03f\n", $foo;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/Variables/ProhibitPunctuationVars.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Variables/ProhibitPunctuationVars.run $
 #     $Date: 2009-09-07 13:59:49 -0700 (Mon, 07 Sep 2009) $
 #   $Author: clonezone $
 # $Revision: 3625 $

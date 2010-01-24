@@ -57,7 +57,7 @@ until ( $condition ) {}
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/Variables/RequireLexicalLoopIterators.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Variables/RequireLexicalLoopIterators.run $
 #     $Date: 2009-07-20 19:59:30 -0700 (Mon, 20 Jul 2009) $
 #   $Author: clonezone $
 # $Revision: 3402 $

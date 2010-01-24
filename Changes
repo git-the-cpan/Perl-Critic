@@ -1,4 +1,22 @@
-[1.105_001] Released on 2010-01-16
+[1.105_02] Released on 2010-01-23
+
+    !! THIS IS A DEVELOPER RELEASE !!
+
+    Bug Fixes:
+    * 'state( $foo )' is now allowed.  RT #52029.
+    * Capture variables inside when(){} are now allowed by
+      RegularExpressions::ProhibitCaptureWithoutTest.  RT #36081.
+    * t/20_policy_pod_spelling.t now works (or at least no longer fails)
+      in non-English locales.  RT #43291 and RT #48986.
+    * RT #53219 perldoc has broken link for McCabe score definition
+
+    Other Changes:
+    * Removed all uses of Perl::Critic::Utils::PPIRegep. Since the
+      PPIx::Regexp update, Perl::Critic only used get_match_string() and
+      friends, which were superseded by the corresponding PPI methods.
+      Now depends on PPI-1.208 or newer.
+
+[1.105_01] Released on 2010-01-16
 
     !! THIS IS A DEVELOPER RELEASE !!
 
@@ -50,7 +68,7 @@
     * The PolicySummary.pod file is now generated when the distribution
       is created, rather than when you install it.  This ensures the file
       will be available on http://search.cpan.org.  Thanks to Bear Longyear
-      for brigning this to our attention.
+      for bringing this to our attention.
 
 [1.105_01] Released on 2009-09-07
 
@@ -1763,10 +1781,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/Changes $
-#     $Date: 2010-01-16 11:28:48 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/Changes $
+#     $Date: 2010-01-23 21:05:15 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3747 $
+# $Revision: 3763 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

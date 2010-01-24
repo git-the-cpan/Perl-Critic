@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/inc/Perl/Critic/Module/Build.pm $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/inc/Perl/Critic/Module/Build.pm $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ########################################################################
 
 package Perl::Critic::Module::Build;
@@ -12,23 +12,13 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 use Carp;
 use English qw< $OS_ERROR $EXECUTABLE_NAME -no_match_vars >;
 use Perl::Critic::PolicySummaryGenerator qw< generate_policy_summary >;
 
 use base 'Module::Build';
-
-
-sub ACTION_test {
-    my ($self, @arguments) = @_;
-
-    $self->depends_on('policysummary');
-    $self->depends_on('manifest');
-
-    return $self->SUPER::ACTION_test(@arguments);
-}
 
 
 sub ACTION_authortest {

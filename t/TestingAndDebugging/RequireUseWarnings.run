@@ -218,7 +218,7 @@ $this_is_not_covered_by_warnings;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/TestingAndDebugging/RequireUseWarnings.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/TestingAndDebugging/RequireUseWarnings.run $
 #     $Date: 2009-01-19 20:59:21 -0800 (Mon, 19 Jan 2009) $
 #   $Author: thaljef $
 # $Revision: 3019 $

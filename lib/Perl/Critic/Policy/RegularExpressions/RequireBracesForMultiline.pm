@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/lib/Perl/Critic/Policy/RegularExpressions/RequireBracesForMultiline.pm $
-#     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/RegularExpressions/RequireBracesForMultiline.pm $
+#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
-# $Revision: 3748 $
+# $Revision: 3762 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::RequireBracesForMultiline;
@@ -16,10 +16,10 @@ use English qw(-no_match_vars);
 use Carp;
 
 use Perl::Critic::Utils qw{ :booleans :severities };
-use Perl::Critic::Utils::PPIRegexp qw{ get_match_string get_delimiters };
+
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_01';
+our $VERSION = '1.105_02';
 
 #-----------------------------------------------------------------------------
 
@@ -67,10 +67,10 @@ sub initialize_if_enabled {
 sub violates {
     my ( $self, $elem, undef ) = @_;
 
-    my $re = get_match_string($elem);
+    my $re = $elem->get_match_string();
     return if $re !~ m/\n/xms;
 
-    my ($match_delim) = get_delimiters($elem);
+    my ($match_delim) = $elem->get_delimiters();
     return if $self->{_allowed_delimiters}{$match_delim};
 
     return $self->violation( $DESC, $EXPL, $elem );

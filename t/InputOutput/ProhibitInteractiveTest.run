@@ -16,7 +16,7 @@ if (-t) { }
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/t/InputOutput/ProhibitInteractiveTest.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/InputOutput/ProhibitInteractiveTest.run $
 #     $Date: 2009-02-15 09:10:42 -0800 (Sun, 15 Feb 2009) $
 #   $Author: clonezone $
 # $Revision: 3116 $

@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_001/extras/KomodoIntegration.pod $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/extras/KomodoIntegration.pod $
 #     $Date: 2010-01-16 11:48:41 -0800 (Sat, 16 Jan 2010) $
 #   $Author: thaljef $
 # $Revision: 3748 $
