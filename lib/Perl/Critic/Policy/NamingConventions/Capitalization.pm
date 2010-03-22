@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/NamingConventions/Capitalization.pm $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/NamingConventions/Capitalization.pm $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 package Perl::Critic::Policy::NamingConventions::Capitalization;
@@ -26,13 +26,13 @@ use Perl::Critic::Utils::Perl qw< symbol_without_sigil >;
 use Perl::Critic::Utils::PPI qw<
     is_in_subroutine
 >;
-use Perl::Critic::PPIx::Utilities::Statement qw<
+use PPIx::Utilities::Statement qw<
     get_constant_name_elements_from_declaring_statement
 >;
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 #-----------------------------------------------------------------------------
 
@@ -41,8 +41,8 @@ Readonly::Scalar my $ALL_ONE_CASE_REGEX      =>
     qr< \A [@%\$]? (?: [[:lower:]_\d]+ | [[:upper:]_\d]+ ) \z >xms;
 Readonly::Scalar my $ALL_LOWER_REGEX         => qr< \A [[:lower:]_\d]+ \z >xms;
 Readonly::Scalar my $ALL_UPPER_REGEX         => qr< \A [[:upper:]_\d]+ \z >xms;
-Readonly::Scalar my $STARTS_WITH_LOWER_REGEX => qr< \A _* [[:lower:]]     >xms;
-Readonly::Scalar my $STARTS_WITH_UPPER_REGEX => qr< \A _* [[:upper:]]     >xms;
+Readonly::Scalar my $STARTS_WITH_LOWER_REGEX => qr< \A _* [[:lower:]\d]   >xms;
+Readonly::Scalar my $STARTS_WITH_UPPER_REGEX => qr< \A _* [[:upper:]\d]   >xms;
 Readonly::Scalar my $NO_RESTRICTION_REGEX    => qr< .                     >xms;
 
 Readonly::Hash my %CAPITALIZATION_SCHEME_TAGS    => (
@@ -625,7 +625,7 @@ __END__
 
 =pod
 
-=for stopwords pbp perlstyle Schwern
+=for stopwords pbp perlstyle Schwern THINGY
 
 =head1 NAME
 

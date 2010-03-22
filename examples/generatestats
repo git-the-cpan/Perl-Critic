@@ -1,17 +1,17 @@
 #!/usr/bin/perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/examples/generatestats $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/examples/generatestats $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 use 5.008001;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv('1.105_02');
+use version; our $VERSION = qv('1.105_03');
 
 use Carp qw{ croak };
 use English qw{ -no_match_vars };
@@ -268,8 +268,7 @@ Elliot Shank  C<< <perl@galumph.com> >>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2010, Elliot Shank C<< <perl@galumph.com> >>. All rights
-reserved.
+Copyright (c) 2006-2010, Elliot Shank.
 
 This module is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself. See L<perlartistic|perlartistic>.

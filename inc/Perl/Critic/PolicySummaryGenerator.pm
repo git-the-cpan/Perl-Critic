@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/inc/Perl/Critic/PolicySummaryGenerator.pm $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/inc/Perl/Critic/PolicySummaryGenerator.pm $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 package Perl::Critic::PolicySummaryGenerator;
@@ -27,7 +27,7 @@ use Exception::Class ();  # Must be after P::C::Exception::*
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 #-----------------------------------------------------------------------------
 
@@ -121,7 +121,7 @@ print {$pod_file} <<'END_FOOTER';
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.105_02.
+This is part of L<Perl::Critic|Perl::Critic> version 1.105_03.
 
 
 =head1 AUTHOR

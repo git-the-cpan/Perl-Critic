@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Violation.pm $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Violation.pm $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 package Perl::Critic::Violation;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils::POD qw<
 >;
 use Perl::Critic::Exception::Fatal::Internal qw< throw_internal >;
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 
 Readonly::Scalar my $LOCATION_LINE_NUMBER               => 0;

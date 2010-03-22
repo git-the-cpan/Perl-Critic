@@ -104,7 +104,7 @@ open my $a, 'testing' or die 'error: ', $!;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/InputOutput/ProhibitTwoArgOpen.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/InputOutput/ProhibitTwoArgOpen.run $
 #     $Date: 2009-08-08 16:35:01 -0700 (Sat, 08 Aug 2009) $
 #   $Author: clonezone $
 # $Revision: 3504 $

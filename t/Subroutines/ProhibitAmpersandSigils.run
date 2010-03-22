@@ -66,7 +66,7 @@ sort &foo($x)
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Subroutines/ProhibitAmpersandSigils.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Subroutines/ProhibitAmpersandSigils.run $
 #     $Date: 2009-10-02 14:41:49 -0700 (Fri, 02 Oct 2009) $
 #   $Author: clonezone $
 # $Revision: 3670 $

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/01_config_bad_perlcriticrc.t $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/01_config_bad_perlcriticrc.t $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::Constants qw< $_MODULE_VERSION_TERM_ANSICOLOR >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 #-----------------------------------------------------------------------------
 

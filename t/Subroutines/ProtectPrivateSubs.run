@@ -162,7 +162,7 @@ $self->Other::Package::_baz();
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Subroutines/ProtectPrivateSubs.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Subroutines/ProtectPrivateSubs.run $
 #     $Date: 2009-12-23 16:07:09 -0800 (Wed, 23 Dec 2009) $
 #   $Author: clonezone $
 # $Revision: 3737 $

@@ -324,7 +324,7 @@ given ( 'abc' ) {
 }
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/RegularExpressions/ProhibitCaptureWithoutTest.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/RegularExpressions/ProhibitCaptureWithoutTest.run $
 #     $Date: 2010-01-21 21:10:25 -0800 (Thu, 21 Jan 2010) $
 #   $Author: wyant $
 # $Revision: 3755 $

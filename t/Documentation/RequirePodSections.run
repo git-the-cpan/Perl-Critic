@@ -114,7 +114,7 @@ Blah...
 =cut
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Documentation/RequirePodSections.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Documentation/RequirePodSections.run $
 #     $Date: 2009-01-24 17:44:43 -0800 (Sat, 24 Jan 2009) $
 #   $Author: clonezone $
 # $Revision: 3059 $

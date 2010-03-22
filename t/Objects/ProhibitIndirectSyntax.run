@@ -56,7 +56,7 @@ create {$foo};
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Objects/ProhibitIndirectSyntax.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Objects/ProhibitIndirectSyntax.run $
 #     $Date: 2009-08-08 16:13:17 -0700 (Sat, 08 Aug 2009) $
 #   $Author: clonezone $
 # $Revision: 3498 $

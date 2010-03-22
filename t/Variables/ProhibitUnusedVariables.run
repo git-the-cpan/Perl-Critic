@@ -133,7 +133,7 @@ my $x = 2;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/Variables/ProhibitUnusedVariables.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Variables/ProhibitUnusedVariables.run $
 #     $Date: 2009-03-07 07:14:51 -0800 (Sat, 07 Mar 2009) $
 #   $Author: clonezone $
 # $Revision: 3231 $

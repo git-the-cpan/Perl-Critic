@@ -1,9 +1,29 @@
+[1.105_03] Released on 2010-03-21
+
+    !! THIS IS A DEVELOPER RELEASE !!
+
+    Bug Fixes:
+    * Fixed regex test that caused test failures on every Perl 5.11
+      (credit Tom Wyant).
+    * RT #54524: False Positive: ValuesAndExpressions::ProhibitMismatchedOperators 
+      with 'foo' x 15 . 'bar'
+    * RT #55604: Variables::ProhibitPunctuationVars gives false-positive 
+      on qr// regexp's ending in '$'
+    * RT #33935 and #49679 were fixed by upgrading to PPI 1.208
+
+    Other Changes:
+    * Email::Address was optional, but is now required.  So everyone
+      gets the optimal behavior from RequireInterpolationOfMetachars.
+    * Some infrastructure has been extracted to the new PPIx-Utilities
+      distro.  It is also a required dependency here.
+
 [1.105_02] Released on 2010-01-23
 
     !! THIS IS A DEVELOPER RELEASE !!
 
     Bug Fixes:
-    * 'state( $foo )' is now allowed.  RT #52029.
+    * 'state ($foo)' is now allowed by CodeLayout::ProhibitParensWithBuiltins.
+      RT #52029.
     * Capture variables inside when(){} are now allowed by
       RegularExpressions::ProhibitCaptureWithoutTest.  RT #36081.
     * t/20_policy_pod_spelling.t now works (or at least no longer fails)
@@ -14,7 +34,9 @@
     * Removed all uses of Perl::Critic::Utils::PPIRegep. Since the
       PPIx::Regexp update, Perl::Critic only used get_match_string() and
       friends, which were superseded by the corresponding PPI methods.
-      Now depends on PPI-1.208 or newer.
+      Perl::Critic now depends on PPI-1.208 or newer.
+    * Moved Perl::Critic::Utils::PPIRegep to the Perl-Critic-Deprecated
+      distribution.
 
 [1.105_01] Released on 2010-01-16
 
@@ -63,6 +85,8 @@
       CORE::GLOBAL::open, and CORE::GLOBAL::close.  RT #52391
     * Spaces are now allowed immediately inside the enclosing parentheses in
       "## no critic ( Foo )".  RT #52038
+    * With the introduction of PPIx::Regexp, Perl::Critic no longer dies
+      when it encounters a Perl 5.010 regexp.  RT #49442.
 
     Other Changes:
     * The PolicySummary.pod file is now generated when the distribution
@@ -1781,10 +1805,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/Changes $
-#     $Date: 2010-01-23 21:05:15 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/Changes $
+#     $Date: 2010-03-21 18:08:59 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3763 $
+# $Revision: 3793 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

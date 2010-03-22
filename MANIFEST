@@ -5,7 +5,6 @@ examples/generatestats
 examples/loadanalysisdb
 examples/perlcriticrc
 examples/perlcriticrc-conway
-extras/KomodoIntegration.pod
 extras/perlcritic.el
 inc/Devel/AssertOS.pm
 inc/Devel/AssertOS/Solaris.pm
@@ -191,7 +190,6 @@ lib/Perl/Critic/PolicyParameter/Behavior/Integer.pm
 lib/Perl/Critic/PolicyParameter/Behavior/String.pm
 lib/Perl/Critic/PolicyParameter/Behavior/StringList.pm
 lib/Perl/Critic/PolicySummary.pod
-lib/Perl/Critic/PPIx/Utilities/Statement.pm
 lib/Perl/Critic/ProfilePrototype.pm
 lib/Perl/Critic/Statistics.pm
 lib/Perl/Critic/TestUtils.pm
@@ -252,11 +250,8 @@ t/20_policy_prohibit_evil_modules.t
 t/20_policy_prohibit_hard_tabs.t
 t/20_policy_prohibit_trailing_whitespace.t
 t/20_policy_require_consistent_newlines.t
-t/20_policy_require_interpolation_of_metachars.t
 t/20_policy_require_tidy_code.t
 t/92_memory_leaks.t
-t/98_pod_syntax.t
-t/99_pod_coverage.t
 t/BuiltinFunctions/ProhibitBooleanGrep.run
 t/BuiltinFunctions/ProhibitComplexMappings.run
 t/BuiltinFunctions/ProhibitLvalueSubstr.run
@@ -414,6 +409,8 @@ xt/author/82_optional_modules.t
 xt/author/93_version.t
 xt/author/94_includes.t
 xt/author/95_kwalitee.t
+xt/author/98_pod_syntax.t
+xt/author/99_pod_coverage.t
 xt/author/generate_without_optional_dependencies_wrappers.PL
 README
 META.yml

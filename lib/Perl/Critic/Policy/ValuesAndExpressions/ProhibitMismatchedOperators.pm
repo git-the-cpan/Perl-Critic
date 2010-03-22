@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators;
@@ -11,10 +11,10 @@ use strict;
 use warnings;
 use Readonly;
 
-use Perl::Critic::Utils qw{ :severities };
+use Perl::Critic::Utils qw{ :booleans :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 #-----------------------------------------------------------------------------
 
@@ -74,6 +74,10 @@ sub violates {
     return if ( !defined $prev_compat || $prev_compat->[$op_type] )
         && ( !defined $next_compat || $next_compat->[$op_type] );
 
+    return if $op_type && defined $prev_compat &&
+        !  $prev_compat->[$op_type] &&
+        $self->_have_stringy_x( $prev_elem ); # RT 54524
+
     return $self->violation( $DESC, $EXPL, $elem );
 }
 
@@ -87,6 +91,21 @@ sub _get_token_compat {
         return $TOKEN_COMPAT{$class} if $elem->isa($class);
     }
     return;
+}
+
+#-----------------------------------------------------------------------------
+
+# see if we follow a stringy 'x'.
+
+sub _have_stringy_x {
+    my ( $self, $elem ) = @_;
+    $elem or return;
+    my $prev_oper = $elem->sprevious_sibling() or return;
+    $prev_oper->isa( 'PPI::Token::Operator' )
+        and 'x' eq $prev_oper->content()
+        or return;
+    my $prev_elem = $prev_oper->sprevious_sibling() or return;
+    return $TRUE;
 }
 
 1;

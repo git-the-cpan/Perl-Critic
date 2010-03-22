@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireVersionVar;
@@ -17,7 +17,7 @@ use List::MoreUtils qw(any);
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 #-----------------------------------------------------------------------------
 
@@ -137,10 +137,10 @@ have to declare it like one of these:
     use vars qw($VERSION);
     use version; our $VERSION = qv(1.0611);
 
-A common practice is to use the C<$Revision: 3762 $> keyword to
+A common practice is to use the C<$Revision: 3794 $> keyword to
 automatically define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 3762 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 3794 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION

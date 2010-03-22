@@ -10,7 +10,7 @@ use Carp qw< confess >;
 use Carp qw< confess >;
 use Fatal qw< open close >;
 
-our $VERSION = '1.105_02';
+our $VERSION = '1.105_03';
 
 
 
@@ -48,10 +48,10 @@ print {$test_file} <<'END_FOOTER';
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/ControlStructures/ProhibitNegativeExpressionsInUnlessAndUntilConditions.run.PL $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/ControlStructures/ProhibitNegativeExpressionsInUnlessAndUntilConditions.run.PL $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 # Local Variables:
@@ -308,10 +308,10 @@ END_COMPARATOR_CODE
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/ControlStructures/ProhibitNegativeExpressionsInUnlessAndUntilConditions.run.PL $
-#     $Date: 2010-01-23 21:02:32 -0800 (Sat, 23 Jan 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/ControlStructures/ProhibitNegativeExpressionsInUnlessAndUntilConditions.run.PL $
+#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
 #   $Author: thaljef $
-# $Revision: 3762 $
+# $Revision: 3794 $
 ##############################################################################
 
 # Local Variables:

@@ -357,7 +357,7 @@ die "A horrible death\n" ;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/ErrorHandling/RequireCarping.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/ErrorHandling/RequireCarping.run $
 #     $Date: 2009-02-15 12:37:19 -0800 (Sun, 15 Feb 2009) $
 #   $Author: wyant $
 # $Revision: 3130 $

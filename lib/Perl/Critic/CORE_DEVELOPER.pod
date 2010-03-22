@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/lib/Perl/Critic/CORE_DEVELOPER.pod $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/CORE_DEVELOPER.pod $
 #     $Date: 2010-01-23 19:39:42 -0800 (Sat, 23 Jan 2010) $
 #   $Author: thaljef $
 # $Revision: 3756 $

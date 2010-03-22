@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_02/t/RegularExpressions/ProhibitSingleCharAlternation.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/RegularExpressions/ProhibitSingleCharAlternation.run $
 #     $Date: 2009-11-07 07:50:02 -0800 (Sat, 07 Nov 2009) $
 #   $Author: wyant $
 # $Revision: 3705 $
