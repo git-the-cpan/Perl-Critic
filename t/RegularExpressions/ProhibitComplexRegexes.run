@@ -1,11 +1,11 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/RegularExpressions/ProhibitComplexRegexes.run $
-#     $Date: 2009-11-07 07:50:02 -0800 (Sat, 07 Nov 2009) $
-#   $Author: wyant $
-# $Revision: 3705 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/RegularExpressions/ProhibitComplexRegexes.run $
+#     $Date: 2009-08-09 17:01:17 -0500 (Sun, 09 Aug 2009) $
+#   $Author: clonezone $
+# $Revision: 3554 $
 ##############################################################################
 
-## global prerequisites PPIx::Regexp
+## global prerequisites Regexp::Parser
 
 ## name basic passes
 ## failures 0
@@ -40,7 +40,7 @@ m/ foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo f
 
 ## name basic failures, m//x
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 m/foo # this is a foo
@@ -89,13 +89,12 @@ m/ $#{^_now_is_the_time_for_all_good_men_to_come_to} /;
 #-----------------------------------------------------------------------------
 
 ## name RT 36098 things that look like interpolation but are not
-## failures 3
+## failures 2
 ## parms {max_characters => 20}
 ## cut
 
 m/ \$now_is_the_time_for_all_good_men_to_come_to /;
 m/ \\\$now_is_the_time_for_all_good_men_to_come_to /;
-m' $now_is_the_time_for_all_good_men_to_come_to ';
 
 #-----------------------------------------------------------------------------
 # Local Variables:

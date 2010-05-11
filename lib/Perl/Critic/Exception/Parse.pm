@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Exception/Parse.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Exception/Parse.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Exception::Parse;
@@ -17,7 +17,7 @@ use Readonly;
 
 use Perl::Critic::Utils qw< :characters >;
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ Elliot Shank <perl@galumph.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008-2010 Elliot Shank.
+Copyright (c) 2008-2009 Elliot Shank.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

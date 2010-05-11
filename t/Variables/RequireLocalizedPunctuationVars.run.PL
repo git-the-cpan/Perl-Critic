@@ -1,7 +1,7 @@
 #!perl
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Variables/RequireLocalizedPunctuationVars.run.PL $
-#     $Date: 2009-03-07 07:14:51 -0800 (Sat, 07 Mar 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Variables/RequireLocalizedPunctuationVars.run.PL $
+#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
 #   $Author: clonezone $
 # $Revision: 3231 $
 ##############################################################################
@@ -344,8 +344,8 @@ for my $entry (
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Variables/RequireLocalizedPunctuationVars.run.PL $
-#     $Date: 2009-03-07 07:14:51 -0800 (Sat, 07 Mar 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Variables/RequireLocalizedPunctuationVars.run.PL $
+#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
 #   $Author: clonezone $
 # $Revision: 3231 $
 ##############################################################################

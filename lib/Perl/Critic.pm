@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic;
@@ -25,11 +25,11 @@ use Perl::Critic::Config;
 use Perl::Critic::Violation;
 use Perl::Critic::Document;
 use Perl::Critic::Statistics;
-use Perl::Critic::Utils qw{ :characters hashify shebang_line };
+use Perl::Critic::Utils qw{ :characters hashify };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -100,14 +100,8 @@ sub critique {  ## no critic (ArgUnpacking)
     $self = ref $self eq 'HASH' ? __PACKAGE__->new(%{ $self }) : $self;
     return if not defined $source_code;  # If no code, then nothing to do.
 
-    my $config = $self->config();
-    my $doc =
-        blessed($source_code) && $source_code->isa('Perl::Critic::Document')
-            ? $source_code
-            : Perl::Critic::Document->new(
-                '-source' => $source_code,
-                '-program-extensions' => [$config->program_extensions_as_regexes()],
-            );
+    my $doc = blessed($source_code) && $source_code->isa('Perl::Critic::Document') ?
+        $source_code : Perl::Critic::Document->new($source_code);
 
     if ( 0 == $self->policies() ) {
         Perl::Critic::Exception::Configuration::Generic->throw(
@@ -121,11 +115,6 @@ sub critique {  ## no critic (ArgUnpacking)
 #=============================================================================
 # PRIVATE methods
 
-my $regexp_cleanup = eval {
-    require PPIx::Regexp;
-    sub { PPIx::Regexp->flush_cache() };
-} || sub {};
-
 sub _gather_violations {
     my ($self, $doc) = @_;
 
@@ -138,9 +127,6 @@ sub _gather_violations {
     my @policies = $self->config->policies();
     my @ordered_policies = _futz_with_policy_order(@policies);
     my @violations = map { _critique($_, $doc) } @ordered_policies;
-
-    # Flush PPIx::Regexp cache.
-    $regexp_cleanup->();
 
     # Accumulate statistics
     $self->statistics->accumulate( $doc, \@violations );
@@ -232,7 +218,7 @@ __END__
 =pod
 
 =for stopwords DGR INI-style API -params pbp refactored ActivePerl ben Jore
-Dolan's Twitter Alexandr Ciornii Ciornii's downloadable
+Dolan's Twitter
 
 =head1 NAME
 
@@ -264,15 +250,14 @@ Policy modules that suit your own tastes.
 For a command-line interface to Perl::Critic, see the documentation
 for L<perlcritic|perlcritic>.  If you want to integrate Perl::Critic
 with your build process, L<Test::Perl::Critic|Test::Perl::Critic>
-provides an interface that is suitable for test programs.  Also,
+provides an interface that is suitable for test scripts.  Also,
 L<Test::Perl::Critic::Progressive|Test::Perl::Critic::Progressive> is
 useful for gradually applying coding standards to legacy code.  For
 the ultimate convenience (at the expense of some flexibility) see the
 L<criticism|criticism> pragma.
 
-Win32 and ActivePerl users can find PPM distributions of Perl::Critic at
-L<http://theoryx5.uwinnipeg.ca/ppms/> and Alexandr Ciornii's downloadable
-executable at L<http://chorny.net/perl/perlcritic.html>.
+Win32 and ActivePerl users can find PPM distributions of Perl::Critic
+at L<http://theoryx5.uwinnipeg.ca/ppms/>.
 
 If you'd like to try L<Perl::Critic|Perl::Critic> without installing
 anything, there is a web-service available at
@@ -304,7 +289,7 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< new( [ -profile => $FILE, -severity => $N, -theme => $string, -include => \@PATTERNS, -exclude => \@PATTERNS, -top => $N, -only => $B, -profile-strictness => $PROFILE_STRICTNESS_{WARN|FATAL|QUIET}, -force => $B, -verbose => $N ], -color => $B, -pager => $string, -unsafe => $B, -criticism-fatal => $B) >>
+=item C<< new( [ -profile => $FILE, -severity => $N, -theme => $string, -include => \@PATTERNS, -exclude => \@PATTERNS, -top => $N, -only => $B, -profile-strictness => $PROFILE_STRICTNESS_{WARN|FATAL|QUIET}, -force => $B, -verbose => $N ], -color => $B, -pager => $string, -criticism-fatal => $B) >>
 
 =item C<< new() >>
 
@@ -431,10 +416,6 @@ format specification.  See
 L<Perl::Critic::Violation|Perl::Critic::Violation> for an explanation
 of format specifications.  You can set the default value for this
 option in your F<.perlcriticrc> file.
-
-B<-unsafe> directs Perl::Critic to allow the use of Policies that are marked
-as "unsafe" by the author.  Such policies may compile untrusted code or do
-other nefarious things.
 
 B<-color> and B<-pager> are not used by Perl::Critic but is provided for the benefit
 of L<perlcritic|perlcritic>.
@@ -567,7 +548,6 @@ corresponding constructor argument.
     exclude   = Variables  Modules::RequirePackage    #Space-delimited list
     criticism-fatal = 1                               #Zero or One
     color     = 1                                     #Zero or One
-    unsafe    = 1                                     #Zero or One
     pager     = less                                  #pager to pipe output to
 
 The remainder of the configuration file is a series of blocks like
@@ -701,7 +681,7 @@ Each Policy is defined with one or more "themes".  Themes can be used
 to create arbitrary groups of Policies.  They are intended to provide
 an alternative mechanism for selecting your preferred set of Policies.
 For example, you may wish disable a certain subset of Policies when
-analyzing test programs.  Conversely, you may wish to enable only a
+analyzing test scripts.  Conversely, you may wish to enable only a
 specific subset of Policies when analyzing modules.
 
 The Policies that ship with Perl::Critic have been broken into the
@@ -718,7 +698,7 @@ needs.
     cosmetic          Policies that only have a superficial effect
     complexity        Policies that specificaly relate to code complexity
     security          Policies that relate to security issues
-    tests             Policies that are specific to test programs
+    tests             Policies that are specific to test scripts
 
 
 Any Policy may fit into multiple themes.  Say C<"perlcritic -list"> to
@@ -857,7 +837,7 @@ this distribution for a step-by-step demonstration of how to create
 new Policy modules.
 
 If you develop any new Policy modules, feel free to send them to C<<
-<jeff@imaginative-software.com> >> and I'll be happy to put them into the
+<thaljef@cpan.org> >> and I'll be happy to put them into the
 Perl::Critic distribution.  Or if you would like to work on the
 Perl::Critic project directly, check out our repository at
 L<http://perlcritic.tigris.org>.  To subscribe to our mailing list,
@@ -869,7 +849,7 @@ Policies to enforce your local guidelines.  Or if your code base is
 prone to a particular defect pattern, we can design Policies that will
 help you catch those costly defects B<before> they go into production.
 To discuss your needs with the Perl::Critic team, just contact C<<
-<jeff@imaginative-software.com> >>.
+<thaljef@cpan.org> >>.
 
 
 =head1 PREREQUISITES
@@ -898,8 +878,6 @@ L<PPI|PPI>
 
 L<Pod::PlainText|Pod::PlainText>
 
-L<Pod::Select|Pod::Select>
-
 L<Pod::Usage|Pod::Usage>
 
 L<Readonly|Readonly>
@@ -908,15 +886,11 @@ L<Scalar::Util|Scalar::Util>
 
 L<String::Format|String::Format>
 
-L<Test::Builder|Test::Builder>
-
 L<version|version>
 
 
 The following modules are optional, but recommended for complete
 testing:
-
-L<Email::Address|Email::Address>
 
 L<File::HomeDir|File::HomeDir>
 
@@ -942,7 +916,7 @@ L<Text::ParseWords|Text::ParseWords>
 You are encouraged to subscribe to the mailing list; send a message to
 L<mailto:users-subscribe@perlcritic.tigris.org>.  See also the archives at
 L<http://perlcritic.tigris.org/servlets/SummarizeList?listName=users>.
-You can also contact the author at C<< <jeff@imaginative-software.com> >>.
+You can also contact the author at C<< <thaljef@cpan.org> >>.
 
 At least one member of the development team has started hanging around
 in L<irc://irc.perl.org/#perlcritic>.
@@ -1019,12 +993,12 @@ L<http://www.perlfoundation.org/april_1_2007_new_grant_awards>
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

@@ -22,14 +22,13 @@ DESCRIPTION
     For a command-line interface to Perl::Critic, see the documentation for
     perlcritic. If you want to integrate Perl::Critic with your build
     process, Test::Perl::Critic provides an interface that is suitable for
-    test programs. Also, Test::Perl::Critic::Progressive is useful for
+    test scripts. Also, Test::Perl::Critic::Progressive is useful for
     gradually applying coding standards to legacy code. For the ultimate
     convenience (at the expense of some flexibility) see the criticism
     pragma.
 
     Win32 and ActivePerl users can find PPM distributions of Perl::Critic at
-    <http://theoryx5.uwinnipeg.ca/ppms/> and Alexandr Ciornii's downloadable
-    executable at <http://chorny.net/perl/perlcritic.html>.
+    <http://theoryx5.uwinnipeg.ca/ppms/>.
 
     If you'd like to try Perl::Critic without installing anything, there is
     a web-service available at <http://perlcritic.com>. The web-service does
@@ -57,8 +56,8 @@ CONSTRUCTOR
     "new( [ -profile => $FILE, -severity => $N, -theme => $string, -include
     => \@PATTERNS, -exclude => \@PATTERNS, -top => $N, -only => $B,
     -profile-strictness => $PROFILE_STRICTNESS_{WARN|FATAL|QUIET}, -force =>
-    $B, -verbose => $N ], -color => $B, -pager => $string, -unsafe => $B,
-    -criticism-fatal => $B)"
+    $B, -verbose => $N ], -color => $B, -pager => $string, -criticism-fatal
+    => $B)"
     "new()"
         Returns a reference to a new Perl::Critic object. Most arguments are
         just passed directly into Perl::Critic::Config, but I have described
@@ -181,10 +180,6 @@ CONSTRUCTOR
         of format specifications. You can set the default value for this
         option in your .perlcriticrc file.
 
-        -unsafe directs Perl::Critic to allow the use of Policies that are
-        marked as "unsafe" by the author. Such policies may compile
-        untrusted code or do other nefarious things.
-
         -color and -pager are not used by Perl::Critic but is provided for
         the benefit of perlcritic.
 
@@ -297,7 +292,6 @@ CONFIGURATION
         exclude   = Variables  Modules::RequirePackage    #Space-delimited list
         criticism-fatal = 1                               #Zero or One
         color     = 1                                     #Zero or One
-        unsafe    = 1                                     #Zero or One
         pager     = less                                  #pager to pipe output to
 
     The remainder of the configuration file is a series of blocks like this:
@@ -422,7 +416,7 @@ POLICY THEMES
     create arbitrary groups of Policies. They are intended to provide an
     alternative mechanism for selecting your preferred set of Policies. For
     example, you may wish disable a certain subset of Policies when
-    analyzing test programs. Conversely, you may wish to enable only a
+    analyzing test scripts. Conversely, you may wish to enable only a
     specific subset of Policies when analyzing modules.
 
     The Policies that ship with Perl::Critic have been broken into the
@@ -438,7 +432,7 @@ POLICY THEMES
         cosmetic          Policies that only have a superficial effect
         complexity        Policies that specificaly relate to code complexity
         security          Policies that relate to security issues
-        tests             Policies that are specific to test programs
+        tests             Policies that are specific to test scripts
 
     Any Policy may fit into multiple themes. Say "perlcritic -list" to get a
     listing of all available Policies and the themes that are associated
@@ -567,19 +561,18 @@ EXTENDING THE CRITIC
     create new Policy modules.
 
     If you develop any new Policy modules, feel free to send them to
-    "<jeff@imaginative-software.com>" and I'll be happy to put them into the
-    Perl::Critic distribution. Or if you would like to work on the
-    Perl::Critic project directly, check out our repository at
-    <http://perlcritic.tigris.org>. To subscribe to our mailing list, send a
-    message to <mailto:dev-subscribe@perlcritic.tigris.org>.
+    "<thaljef@cpan.org>" and I'll be happy to put them into the Perl::Critic
+    distribution. Or if you would like to work on the Perl::Critic project
+    directly, check out our repository at <http://perlcritic.tigris.org>. To
+    subscribe to our mailing list, send a message to
+    <mailto:dev-subscribe@perlcritic.tigris.org>.
 
     The Perl::Critic team is also available for hire. If your organization
     has its own coding standards, we can create custom Policies to enforce
     your local guidelines. Or if your code base is prone to a particular
     defect pattern, we can design Policies that will help you catch those
     costly defects before they go into production. To discuss your needs
-    with the Perl::Critic team, just contact
-    "<jeff@imaginative-software.com>".
+    with the Perl::Critic team, just contact "<thaljef@cpan.org>".
 
 PREREQUISITES
     Perl::Critic requires the following modules:
@@ -606,8 +599,6 @@ PREREQUISITES
 
     Pod::PlainText
 
-    Pod::Select
-
     Pod::Usage
 
     Readonly
@@ -616,14 +607,10 @@ PREREQUISITES
 
     String::Format
 
-    Test::Builder
-
     version
 
     The following modules are optional, but recommended for complete
     testing:
-
-    Email::Address
 
     File::HomeDir
 
@@ -647,7 +634,7 @@ CONTACTING THE DEVELOPMENT TEAM
     You are encouraged to subscribe to the mailing list; send a message to
     <mailto:users-subscribe@perlcritic.tigris.org>. See also the archives at
     <http://perlcritic.tigris.org/servlets/SummarizeList?listName=users>.
-    You can also contact the author at "<jeff@imaginative-software.com>".
+    You can also contact the author at "<thaljef@cpan.org>".
 
     At least one member of the development team has started hanging around
     in <irc://irc.perl.org/#perlcritic>.
@@ -716,11 +703,10 @@ CREDITS
     <http://www.perlfoundation.org/april_1_2007_new_grant_awards>
 
 AUTHOR
-    Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+    Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 COPYRIGHT
-    Copyright (c) 2005-2010 Imaginative Software Systems. All rights
-    reserved.
+    Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer. All rights reserved.
 
     This program is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself. The full text of this license can

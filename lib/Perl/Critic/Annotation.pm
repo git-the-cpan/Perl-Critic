@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Annotation.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Annotation.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Annotation;
@@ -16,13 +16,10 @@ use English qw(-no_match_vars);
 
 use Perl::Critic::PolicyFactory;
 use Perl::Critic::Utils qw(:characters hashify);
-use Readonly;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
-
-Readonly::Scalar my $LAST_ELEMENT => -1;
+our $VERSION = '1.106';
 
 #=============================================================================
 # CLASS methods
@@ -64,9 +61,10 @@ sub _init {
     # Grab surrounding nodes to determine the context.
     # This determines whether the annotation applies to
     # the current line or the block that follows.
-    my $annotation_line = $annotation_element->logical_line_number();
+    my $annotation_line = $annotation_element->location()->[0];
     my $parent = $annotation_element->parent();
     my $grandparent = $parent ? $parent->parent() : undef;
+    my $sib = $annotation_element->sprevious_sibling();
 
     # Handle case when it appears on the shebang line.  In this
     # situation, it only affects the first line, not the whole doc
@@ -77,8 +75,9 @@ sub _init {
 
     # Handle single-line usage on simple statements.  In this
     # situation, it only affects the line that it appears on.
-    if ( _is_single_line_annotation_on_simple_statement( $annotation_element )
-    ) {
+    # TODO: Make this work for simple statements that are broken
+    # onto multiple lines.
+    if ( $sib && $sib->location->[0] == $annotation_line ) {
         $self->{_effective_range} = [$annotation_line, $annotation_line];
         return $self;
     }
@@ -88,8 +87,8 @@ sub _init {
     if ( ref $parent eq 'PPI::Structure::Block' ) {
         if ( ref $grandparent eq 'PPI::Statement::Compound'
             || ref $grandparent eq 'PPI::Statement::Sub' ) {
-            if ( $parent->logical_line_number() == $annotation_line ) {
-                my $grandparent_line = $grandparent->logical_line_number();
+            if ( $parent->location->[0] == $annotation_line ) {
+                my $grandparent_line = $grandparent->location->[0];
                 $self->{_effective_range} = [$grandparent_line, $grandparent_line];
                 return $self;
             }
@@ -111,7 +110,7 @@ sub _init {
     }
 
     # We either found an end or hit the end of the scope.
-    my $ending_line = $end->logical_line_number();
+    my $ending_line = $end->location->[0];
     $self->{_effective_range} = [$annotation_line, $ending_line];
     return $self;
 }
@@ -158,50 +157,7 @@ sub disables_all_policies {
 sub disables_line {
     my ($self, $line_number) = @_;
     my $effective_range = $self->{_effective_range};
-    return 1 if $line_number >= $effective_range->[0]
-        and $line_number <= $effective_range->[$LAST_ELEMENT];
-    return 0;
-}
-
-#-----------------------------------------------------------------------------
-
-# Recognize a single-line annotation on a simple statement.
-sub _is_single_line_annotation_on_simple_statement {
-    my ( $annotation_element ) = @_;
-    my $annotation_line = $annotation_element->logical_line_number();
-
-    # If there is no sibling, we are clearly not a single-line annotation of
-    # any sort.
-    my $sib = $annotation_element->sprevious_sibling()
-        or return 0;
-
-    # The easy case: the sibling (whatever it is) is on the same line as the
-    # annotation.
-    $sib->logical_line_number() == $annotation_line
-        and return 1;
-
-    # If the sibling is a node, we may have an annotation on one line of a
-    # statement that was split over multiple lines. So we descend through the
-    # children, keeping the last significant child of each, until we bottom
-    # out. If the ultimate significant descendant is on the same line as the
-    # annotation, we accept the annotation as a single-line annotation.
-    if ( $sib->isa( 'PPI::Node' ) &&
-        $sib->logical_line_number() < $annotation_line
-    ) {
-        my $neighbor = $sib;
-        while ( $neighbor->isa( 'PPI::Node' )
-                and my $kid = $neighbor->schild( $LAST_ELEMENT ) ) {
-            $neighbor = $kid;
-        }
-        if ( $neighbor &&
-            $neighbor->logical_line_number() == $annotation_line
-        ) {
-            return 1;
-        }
-    }
-
-    # We do not understand any other sort of single-line annotation. Accepting
-    # the annotation as such (if it is) is Someone Else's Problem.
+    return 1 if $line_number >= $effective_range->[0] and $line_number <= $effective_range->[-1];
     return 0;
 }
 
@@ -236,8 +192,7 @@ sub _parse_annotation {
         # Compose the specified modules into a regex alternation.  Wrap each
         # in a no-capturing group to permit "|" in the modules specification.
 
-        my @policy_name_patterns = grep { $_ ne $EMPTY }
-            split m{\s *[,\s] \s*}xms, $patterns_string;
+        my @policy_name_patterns = split m{\s *[,\s] \s*}xms, $patterns_string;
         my $re = join $PIPE, map {"(?:$_)"} @policy_name_patterns;
         my @site_policy_names = Perl::Critic::PolicyFactory::site_policy_names();
         @disabled_policy_names = grep {m/$re/ixms} @site_policy_names;
@@ -285,12 +240,12 @@ Perl::Critic::Annotation - A "## no critic" annotation in a document.
 
 =head1 DESCRIPTION
 
-C<Perl::Critic::Annotation> represents a single C<"## no critic">
+L<Perl::Critic::Annotation> represents a single C<"## no critic">
 annotation in a L<PPI:Document>.  The Annotation takes care of parsing
 the annotation and keeps track of which lines and Policies it affects.
 It is intended to encapsulate the details of the no-critic
 annotations, and to provide a way for Policy objects to interact with
-the annotations (via a L<Perl::Critic::Document|Perl::Critic::Document>).
+the annotations (via a L<Perl::Critic::Document>).
 
 
 =head1 INTERFACE SUPPORT
@@ -305,11 +260,11 @@ to change without notice.
 
 =item create_annotations( -doc => $doc )
 
-Given a L<Perl::Critic::Document|Perl::Critic::Document>, finds all the C<"## no critic">
-annotations and constructs a new C<Perl::Critic::Annotation> for each
+Given a L<Perl::Critic::Document>, finds all the C<"## no critic">
+annotations and constructs a new L<Perl::Critic::Annotation> for each
 one and returns them.  The order of the returned objects is not
 defined.  It is generally expected that clients will use this
-interface rather than calling the C<Perl::Critic::Annotation>
+interface rather than calling the L<Perl::Critic::Annotation>
 constructor directly.
 
 
@@ -371,8 +326,8 @@ return true.
 
 =item C<< element() >>
 
-Returns the L<PPI::Element|PPI::Element> where this annotation started.  This is
-typically an instance of L<PPI::Token::Comment|PPI::Token::Comment>.
+Returns the L<PPI::Element> where this annotation started.  This is
+typically an instance of L<PPI::Token::Comment>.
 
 
 =back
@@ -380,12 +335,12 @@ typically an instance of L<PPI::Token::Comment|PPI::Token::Comment>.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

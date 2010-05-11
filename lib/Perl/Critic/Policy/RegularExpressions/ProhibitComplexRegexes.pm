@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitComplexRegexes;
@@ -14,21 +14,38 @@ use Readonly;
 
 use English qw(-no_match_vars);
 use Carp;
-use List::Util qw{ min };
 
 use Perl::Critic::Utils qw{ :booleans :severities };
-
+use Perl::Critic::Utils::PPIRegexp qw{ parse_regexp get_match_string get_modifiers };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => q{Split long regexps into smaller qr// chunks};
 Readonly::Scalar my $EXPL => [261];
 
-Readonly::Scalar my $MAX_LITERAL_LENGTH => 7;
-Readonly::Scalar my $MAX_VARIABLE_LENGTH => 4;
+Readonly::Scalar my $RECOGNIZE_SIGIL =>
+                qr{ (?: \A | [^\\] ) (?: \\\\ )* [\@\$] }smx;
+Readonly::Scalar my $RECOGNIZE_PUNCTUATION_VARIABLE =>
+                qr{ [&`'+.\/|,\\";%=\-~:?!\$<>()[\]] }smx;
+Readonly::Scalar my $RECOGNIZE_ESCAPE_VARIABLE => qr{ \^ \w }smx;
+Readonly::Scalar my $RECOGNIZE_NORMAL_VARIABLE =>
+                qr{ (?: \w+ :: )* \w+ }smx;
+Readonly::Scalar my $RECOGNIZE_BRACKETED_VARIABLE =>
+                qr{ [{] (?:
+                    $RECOGNIZE_PUNCTUATION_VARIABLE |
+                    $RECOGNIZE_ESCAPE_VARIABLE |
+                    (?: (?: \w+ :: )* \^? \w+ )
+                ) [}] }smx;
+Readonly::Scalar my $RECOGNIZE_VARIABLE => qr{ [#]? (?:
+        $RECOGNIZE_PUNCTUATION_VARIABLE |
+        $RECOGNIZE_ESCAPE_VARIABLE |
+        $RECOGNIZE_BRACKETED_VARIABLE |
+        $RECOGNIZE_NORMAL_VARIABLE
+    )
+}smx;
 
 #-----------------------------------------------------------------------------
 
@@ -54,7 +71,7 @@ sub applies_to           { return qw(PPI::Token::Regexp::Match
 #-----------------------------------------------------------------------------
 
 sub initialize_if_enabled {
-    return eval { require PPIx::Regexp; 1 } ? $TRUE : $FALSE;
+    return eval { require Regexp::Parser; 1 } ? $TRUE : $FALSE;
 }
 
 #-----------------------------------------------------------------------------
@@ -63,43 +80,28 @@ sub violates {
     my ( $self, $elem, undef ) = @_;
 
     # Optimization: if its short enough now, parsing won't make it longer
-    return if $self->{_max_characters} >= length $elem->get_match_string();
+    return if $self->{_max_characters} >= length get_match_string($elem);
 
-    my $re = PPIx::Regexp->new( $elem )
+    my $re = parse_regexp($elem)
         or return;  # Abort on syntax error.
-    $re->failures()
-        and return; # Abort if parse errors found.
-    my $qr = $re->regular_expression()
-        or return;  # Abort if no regular expression.
+    my $qr = $re->visual();
 
-    my $length = 0;
-    # We use map { $_->tokens() } qr->children() rather than just
-    # $qr->tokens() because we are not interested in the delimiters.
-    foreach my $token ( map { $_->tokens() } $qr->children() ) {
+    # Hack: don't penalize long variable names
+    $qr =~ s/ ( $RECOGNIZE_SIGIL ) $RECOGNIZE_VARIABLE /${1}foo/gxms;
 
-        # Do not count whitespace or comments
-        $token->significant() or next;
+    # If it has an "x" flag, it might be shorter after comment and whitespace removal
+    my %modifiers = get_modifiers($elem);
+    if ($modifiers{x}) {
 
-        if ( $token->isa( 'PPIx::Regexp::Token::Interpolation' ) ) {
+       # HACK: Remove any (?xism:...) wrapper we may have added in the parse process...
+       $qr =~ s/\A [(][?][xism]+(?:-[xism]+)?: (.*) [)] \z/$1/xms;
 
-            # Do not penalize long variable names
-            $length += min( $MAX_VARIABLE_LENGTH, length $token->content() );
-
-        } elsif ( $token->isa( 'PPIx::Regexp::Token::Literal' ) ) {
-
-            # Do not penalize long literals like \p{...}
-            $length += min( $MAX_LITERAL_LENGTH, length $token->content() );
-
-        } else {
-
-            # Take everything else at face value
-            $length += length $token->content();
-
-        }
+       # Hack: don't count long \p{...} expressions against us so badly
+       $qr =~ s/\\[pP][{]\w+[}]/\\p{...}/gxms;
 
     }
 
-    return if $self->{_max_characters} >= $length;
+    return if $self->{_max_characters} >= length $qr;
 
     return $self->violation( $DESC, $EXPL, $elem );
 }
@@ -205,7 +207,7 @@ F<.perlcriticrc> file like this:
 
 =head1 PREREQUISITES
 
-This policy will disable itself if L<PPIx::Regexp|PPIx::Regexp> is not
+This policy will disable itself if L<Regexp::Parser|Regexp::Parser> is not
 installed.
 
 
@@ -222,7 +224,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

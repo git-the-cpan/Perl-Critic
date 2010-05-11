@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitUnusedCapture;
@@ -18,16 +18,17 @@ use English qw(-no_match_vars);
 use Carp;
 use Readonly;
 
-use Perl::Critic::Utils qw{ :booleans :severities hashify split_nodes_on_comma };
+use Perl::Critic::Utils qw{ :booleans :severities split_nodes_on_comma };
+use Perl::Critic::Utils::PPIRegexp qw<
+    parse_regexp get_match_string get_substitute_string get_modifiers
+>;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $WHILE => q{while};
-
-Readonly::Hash my %NAMED_CAPTURE_REFERENCE => hashify( qw{ $+ $- } );
 
 Readonly::Scalar my $DESC => q{Only use a capturing group if you plan to use the captured value};
 Readonly::Scalar my $EXPL => [252];
@@ -44,7 +45,7 @@ sub applies_to           {
 #-----------------------------------------------------------------------------
 
 sub initialize_if_enabled {
-    return eval { require PPIx::Regexp; 1 } ? $TRUE : $FALSE;
+    return eval { require Regexp::Parser; 1 } ? $TRUE : $FALSE;
 }
 
 #-----------------------------------------------------------------------------
@@ -57,78 +58,46 @@ sub violates {
     # optimization: don't bother parsing the regexp if there are no parens
     return if 0 > index $elem->content(), '(';
 
-    my $re = PPIx::Regexp->new_from_cache( $elem ) or return;
-    $re->failures() and return;
-
-    my $ncaptures = $re->max_capture_number() or return;
+    my $re = parse_regexp($elem);
+    return if not $re;
+    my $ncaptures = @{ $re->captures() };
+    return if 0 == $ncaptures;
 
     my @captures;  # List of expected captures
     $#captures = $ncaptures - 1;
 
-    my %named_captures; # List of expected named captures.
-                        # Unlike the numbered capture logic, %named_captures
-                        # entries are made undefined when a use of the name is
-                        # found. Otherwise two hashes would be needed, one to
-                        # become defined when a use is found, and one to hold
-                        # the mapping of name to number.
-    foreach my $struct ( @{ $re->find( 'PPIx::Regexp::Structure::NamedCapture'
-                ) || [] } ) {
-        # There can be more than one capture with the same name, so we need to
-        # record all of them. There will be duplications if the 'branch reset'
-        # "(?| ... )" pattern is used, but this is benign given how numbered
-        # captures are recorded.
-        push @{ $named_captures{ $struct->name() } ||= [] }, $struct->number();
-    }
-
     # Look for references to the capture in the regex itself
-    return if _enough_uses_in_regexp( $re, \@captures, \%named_captures );
+    my $iter = $re->walker;
+    while (my $token = $iter->()) {
+        if ($token->isa('Regexp::Parser::ref')) {
+            my ($num) = $token->raw =~ m/ (\d+) /xms;
+            $captures[$num-1] = 1;
+        }
+    }
+    my $subst = get_substitute_string($elem);
+    if ($subst) {
 
-    my $mod = $re->modifier();
-    if ($mod and $mod->asserts( 'g' )
+        # TODO: This is a quick hack.  Really, we should parse the string.  It could
+        # be false positive (s///e) or false negative (s/(.)/\$1/)
+
+        for my $num ($subst =~ m< \$ (\d+) >xmsg) {
+            $captures[$num - 1] = 1;
+        }
+    }
+    return if none {not defined $_} @captures;
+
+    my %modifiers = get_modifiers($elem);
+    if ($modifiers{g}
             and not _check_if_in_while_condition_or_block( $elem ) ) {
         $ncaptures = $NUM_CAPTURES_FOR_GLOBAL;
         $#captures = $ncaptures - 1;
     }
 
-    return if _enough_assignments($elem, \@captures) && !%named_captures;
-    return if _is_in_slurpy_array_context($elem) && !%named_captures;
-    return if _enough_magic($elem, \@captures, \%named_captures);
+    return if _enough_assignments($elem, \@captures);
+    return if _is_in_slurpy_array_context($elem);
+    return if _enough_magic($elem, \@captures);
 
     return $self->violation( $DESC, $EXPL, $elem );
-}
-
-# Find uses of both numbered and named capture variables in the regexp itself.
-# Return true if all are used.
-sub _enough_uses_in_regexp {
-    my ( $re, $captures, $named_captures ) = @_;
-
-    # Look for references to the capture in the regex itself. Note that this
-    # will also find backreferences in the replacement string of s///.
-    foreach my $token ( @{ $re->find( 'PPIx::Regexp::Token::Reference' )
-            || [] } ) {
-        if ( $token->is_named() ) {
-            _record_named_capture( $token->name(), $captures, $named_captures );
-        } else {
-            $captures->[ $token->absolute() - 1 ] = 1;
-        }
-    }
-
-    if ( my $subst = $re->replacement() ) {
-        # TODO check for /e
-        foreach my $token ( @{ $subst->find(
-                    'PPIx::Regexp::Token::Interpolation' ) || [] } ) {
-            my $content = $token->content();
-            if ( $content =~ m/ \A \$ ( \d+ ) \z /xms ) {
-                $captures->[ $1 - 1 ] = 1;
-            } elsif ( $content =~ m/ \A \$ [+-] [{] ( .*? ) [}] /smx ) {
-                _record_named_capture( $1, $captures, $named_captures );
-            }
-        }
-    }
-
-    return ( none {not defined $_} @{$captures} )
-        && ( !%{$named_captures} ||
-            none {defined $_} values %{$named_captures} );
 }
 
 sub _enough_assignments {
@@ -296,18 +265,16 @@ sub _skip_lhs {
 }
 
 sub _enough_magic {
-    my ($elem, $captures, $named_captures) = @_;
+    my ($elem, $captures) = @_;
 
-    _check_for_magic($elem, $captures, $named_captures);
+    _check_for_magic($elem, $captures);
 
-    return ( none {not defined $_} @{$captures} )
-        && ( !%{$named_captures} ||
-            none {defined $_} values %{$named_captures} );
+    return none {not defined $_} @{$captures};
 }
 
 # void return
 sub _check_for_magic {
-    my ($elem, $captures, $named_captures) = @_;
+    my ($elem, $captures) = @_;
 
     # Search for $1..$9 in :
     #  * the rest of this statement
@@ -316,12 +283,11 @@ sub _check_for_magic {
     #  * if this is in a while/for condition, the loop body
     # But NO intervening regexps!
 
-    return if ! _check_rest_of_statement($elem, $captures, $named_captures);
+    return if ! _check_rest_of_statement($elem, $captures);
 
     my $parent = $elem->parent();
     while ($parent && ! $parent->isa('PPI::Statement::Sub')) {
-        return if ! _check_rest_of_statement($parent, $captures,
-            $named_captures);
+        return if ! _check_rest_of_statement($parent, $captures);
         $parent = $parent->parent();
     }
 
@@ -350,15 +316,15 @@ sub _check_if_in_while_condition_or_block {
 
 # false if we hit another regexp
 sub _check_rest_of_statement {
-    my ($elem, $captures, $named_captures) = @_;
+    my ($elem, $captures) = @_;
 
     my $nsib = $elem->snext_sibling;
     while ($nsib) {
         return if $nsib->isa('PPI::Token::Regexp');
         if ($nsib->isa('PPI::Node')) {
-            return if ! _check_node_children($nsib, $captures, $named_captures);
+            return if ! _check_node_children($nsib, $captures);
         } else {
-            _mark_magic($nsib, $captures, $named_captures);
+            _mark_magic($nsib, $captures);
         }
         $nsib = $nsib->snext_sibling;
     }
@@ -367,33 +333,27 @@ sub _check_rest_of_statement {
 
 # false if we hit another regexp
 sub _check_node_children {
-    my ($elem, $captures, $named_captures) = @_;
+    my ($elem, $captures) = @_;
 
     # caveat: this will descend into subroutine definitions...
 
     for my $child ($elem->schildren) {
         return if $child->isa('PPI::Token::Regexp');
         if ($child->isa('PPI::Node')) {
-            return if ! _check_node_children($child, $captures,
-                $named_captures);
+            return if ! _check_node_children($child, $captures);
         } else {
-            _mark_magic($child, $captures, $named_captures);
+            _mark_magic($child, $captures);
         }
     }
     return $TRUE;
 }
 
 sub _mark_magic {
-    my ($elem, $captures, $named_captures) = @_;
+    my ($elem, $captures) = @_;
 
-    # Only interested in magic.
-    $elem->isa( 'PPI::Token::Magic' ) or return;
+    # Record if we see $1, $2, $3, ...
 
-    my $content = $elem->content();
-
-    if ( $content =~ m/ \A \$ ( \d+ ) /xms ) {
-
-        # Record if we see $1, $2, $3, ...
+    if ($elem->isa('PPI::Token::Magic') && $elem =~ m/\A \$ (\d+) /xms) {
         my $num = $1;
         if (0 < $num) { # don't mark $0
             # Only mark the captures we really need -- don't mark superfluous magic vars
@@ -401,28 +361,7 @@ sub _mark_magic {
                 $captures->[$num-1] = 1;
             }
         }
-    } elsif ( $NAMED_CAPTURE_REFERENCE{$content} ) {
-
-        # Record if we see $+{foo} or $-{foo}.
-        my $subscr = $elem->snext_sibling() or return;
-        $subscr->isa( 'PPI::Structure::Subscript' ) or return;
-        my $subval = $subscr->content();
-        $subval =~ m/ \A [{] (.*?) [}] \z /xms or return;
-        _record_named_capture( $1, $captures, $named_captures );
-
     }
-    return;
-}
-
-# Because a named capture is also one or more numbered captures, the recording
-# of the use of a named capture seemed complex enough to wrap in a subroutine.
-sub _record_named_capture {
-    my ( $name, $captures, $named_captures ) = @_;
-    defined ( my $numbers = $named_captures->{$name} ) or return;
-    foreach my $capnum ( @{ $numbers } ) {
-        $captures->[ $capnum - 1 ] = 1;
-    }
-    $named_captures->{$name} = undef;
     return;
 }
 
@@ -468,9 +407,9 @@ This Policy is not configurable except for the standard options.
 
 =head1 CAVEATS
 
-=head2 PPIx::Regexp
+=head2 Regexp::Parser
 
-We use L<PPIx::Regexp|PPIx::Regexp> to analyze the regular
+We use L<Regexp::Parser|Regexp::Parser> to analyze the regular
 expression syntax.  This is an optional module for Perl::Critic, so it
 will not be automatically installed by CPAN for you.  If you wish to
 use this policy, you must install that module first.
@@ -492,7 +431,7 @@ remains happy.
 
 =head1 PREREQUISITES
 
-This policy will disable itself if L<PPIx::Regexp|PPIx::Regexp> is not
+This policy will disable itself if L<Regexp::Parser|Regexp::Parser> is not
 installed.
 
 
@@ -509,7 +448,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

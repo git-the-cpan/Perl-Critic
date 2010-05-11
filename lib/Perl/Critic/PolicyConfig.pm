@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/PolicyConfig.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/PolicyConfig.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::PolicyConfig;
@@ -13,7 +13,7 @@ use warnings;
 
 use Readonly;
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 use Perl::Critic::Exception::AggregateConfiguration;
 use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue;
@@ -51,6 +51,54 @@ sub new {
 
 
     return bless \%self, $class;
+}
+
+#-----------------------------------------------------------------------------
+
+sub _validate_maximum_violations_per_document {
+    my ($self, $errors) = @_;
+
+    my $user_maximum_violations =
+        $self->get_maximum_violations_per_document();
+
+    if ( defined $user_maximum_violations ) {
+        if (
+                $user_maximum_violations =~ m/$NO_LIMIT/xmsio
+            or  $user_maximum_violations eq $EMPTY
+        ) {
+            $user_maximum_violations = undef;
+        }
+        elsif ( not is_integer($user_maximum_violations) ) {
+            $errors->add_exception(
+                new_parameter_value_exception(
+                    'maximum_violations_per_document',
+                    $user_maximum_violations,
+                    undef,
+                    "does not look like an integer.\n"
+                )
+            );
+
+            return;
+        }
+        elsif ( $user_maximum_violations < 0 ) {
+            $errors->add_exception(
+                new_parameter_value_exception(
+                    'maximum_violations_per_document',
+                    $user_maximum_violations,
+                    undef,
+                    "is not greater than or equal to zero.\n"
+                )
+            );
+
+            return;
+        }
+
+        $self->set_maximum_violations_per_document(
+            $user_maximum_violations
+        );
+    }
+
+    return;
 }
 
 #-----------------------------------------------------------------------------
@@ -324,7 +372,7 @@ Elliot Shank <perl@galumph.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008-2010 Elliot Shank.
+Copyright (c) 2008-2009 Elliot Shank.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

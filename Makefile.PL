@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/Makefile.PL $
-#     $Date: 2009-09-30 17:35:26 -0700 (Wed, 30 Sep 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/Makefile.PL $
+#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
 #   $Author: clonezone $
-# $Revision: 3661 $
+# $Revision: 3231 $
 ########################################################################
 
 use 5.006001;
@@ -34,7 +34,7 @@ emit_tar_warning_if_necessary();
 
 WriteMakefile(
     NAME           => 'Perl::Critic',
-    AUTHOR         => 'Jeffrey Thalhammer <jeff@imaginative-software.com>',
+    AUTHOR         => 'Jeffrey Thalhammer <thaljef@cpan.org>',
     ABSTRACT_FROM  => 'lib/Perl/Critic.pm',
     VERSION_FROM   => 'lib/Perl/Critic.pm',
     EXE_FILES      => ['bin/perlcritic'],

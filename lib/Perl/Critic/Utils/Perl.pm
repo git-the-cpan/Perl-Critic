@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Utils/Perl.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Utils/Perl.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Utils::Perl;
@@ -13,7 +13,7 @@ use warnings;
 
 use base 'Exporter';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ Perl::Critic::Utils::Perl - Utility functions for dealing with Perl language iss
 =head1 DESCRIPTION
 
 This handles various issues with Perl, the language, that aren't necessarily
-L<PPI|PPI> related.
+L<PPI> related.
 
 
 =head1 INTERFACE SUPPORT
@@ -76,7 +76,7 @@ interface will go through a deprecation cycle.
 =item C<symbol_without_sigil( $symbol )>
 
 Returns the name of the specified symbol with any sigil at the front.
-The parameter can be a vanilla Perl string or a L<PPI::Element|PPI::Element>.
+The parameter can be a vanilla Perl string or a L<PPI::Element>.
 
 
 =back
@@ -89,7 +89,7 @@ Elliot Shank <perl@galumph.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2010 Elliot Shank.
+Copyright (c) 2007-2009 Elliot Shank.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/01_config_bad_perlcriticrc.t $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/01_config_bad_perlcriticrc.t $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 
@@ -23,24 +23,16 @@ use Test::More;
 
 use Perl::Critic::PolicyFactory (-test => 1);
 use Perl::Critic;
-use Perl::Critic::Utils::Constants qw< $_MODULE_VERSION_TERM_ANSICOLOR >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
 my @color_severity_params;
-my $skip_color_severity =
-    eval {
-        require Term::ANSIColor;
-        Term::ANSIColor->VERSION( $_MODULE_VERSION_TERM_ANSICOLOR );
-        1;
-    }
-        ? undef
-        : "Term::ANSIColor $_MODULE_VERSION_TERM_ANSICOLOR is not available";
-
+my $skip_color_severity = eval { require Term::ANSIColor; 1; } ? undef :
+    'Term::ANSIColor is not available';
 # We can not do the color-severity tests if Term::ANSIColor is not available,
 # because without Term::ANSIColor the parameters are not validated, so any
 # value will be accepted and we will not get any errors from them.

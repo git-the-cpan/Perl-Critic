@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/RegularExpressions/ProhibitFixedStringMatches.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/RegularExpressions/ProhibitFixedStringMatches.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitFixedStringMatches;
@@ -16,10 +16,10 @@ use English qw(-no_match_vars);
 use Carp;
 
 use Perl::Critic::Utils qw{ :booleans :severities };
-
+use Perl::Critic::Utils::PPIRegexp qw{ get_match_string get_modifiers };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ sub applies_to           { return qw(PPI::Token::Regexp::Match
 sub violates {
     my ( $self, $elem, undef ) = @_;
 
-    my $re = $elem->get_match_string();
+    my $re = get_match_string($elem);
 
     # only flag regexps that are anchored front and back
     if ($re =~ m{\A \s*
@@ -55,7 +55,7 @@ sub violates {
 
         # If it's a multiline match, then end-of-line anchors don't represent the whole string
         if ($front_anchor eq q{^} || $end_anchor eq q{$}) {
-            my %mods = $elem->get_modifiers();
+            my %mods = get_modifiers($elem);
             return if $mods{m};
         }
 
@@ -166,7 +166,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

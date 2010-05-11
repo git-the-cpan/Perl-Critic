@@ -1,11 +1,11 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/RegularExpressions/ProhibitUnusedCapture.run $
-#     $Date: 2009-11-22 21:14:40 -0800 (Sun, 22 Nov 2009) $
-#   $Author: wyant $
-# $Revision: 3728 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/RegularExpressions/ProhibitUnusedCapture.run $
+#     $Date: 2009-08-08 19:12:31 -0500 (Sat, 08 Aug 2009) $
+#   $Author: clonezone $
+# $Revision: 3512 $
 ##############################################################################
 
-## global prerequisites PPIx::Regexp
+## global prerequisites Regexp::Parser
 
 ## name non-captures
 ## failures 0
@@ -186,14 +186,13 @@ map {print} $str =~ m/(foo)/g;
 
 m/(foo)\1/;
 s/(foo)/$1/;
-s/(foo)/\1/;
 s<\A t[\\/] (\w+) [\\/] (\w+) [.]run \z><$1\::$2>xms
 
 #-----------------------------------------------------------------------------
 
 ## name basic failures
 ## failures 5
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 m/(foo)/;
@@ -215,7 +214,7 @@ for (m/(foo)/) {
 
 ## name negated regexp failures
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 my ($foo) = $str !~ m/(foo)/;
@@ -224,7 +223,7 @@ my ($foo) = $str !~ m/(foo)/;
 
 ## name statement failures
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 m/(foo)/ && m/(bar)/ && print $1;
@@ -233,7 +232,7 @@ m/(foo)/ && m/(bar)/ && print $1;
 
 ## name sub failures
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 sub foo {
@@ -246,7 +245,7 @@ print $1;
 
 ## name anon sub failures
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## TODO PPI v1.118 doesn't recognize anonymous subroutines
 ## cut
 
@@ -299,7 +298,7 @@ m/(foo)(/;
 
 ## name lvalue sub assigment failure
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## TODO lvalue subs are too complex to support
 ## cut
 
@@ -309,7 +308,7 @@ m/(foo)(/;
 
 ## name code coverage
 ## failures 1
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 m/(foo)/;
@@ -321,69 +320,12 @@ print $_;
 
 ## name while loop with /g
 ## failures 0
-## optional_modules PPIx::Regexp
+## optional_modules Regexp::Parser
 ## cut
 
 while (m/(\d+)/g) {
     print $1, "\n";
 }
-
-#-----------------------------------------------------------------------------
-
-## name conditional named captures
-## failures 0
-## optional_modules PPIx::Regexp
-## cut
-
-if ( m/(?<foo>bar)/ ) {
-    print $+{foo}, "\n";
-}
-
-while ( m/(?'foo'\d+)/g ) {
-    print $-{foo}[0], "\n";
-}
-
-m/(?P<foo>\w+)|(?<foo>\W+)/ and print $+{foo}, "\n";
-
-#-----------------------------------------------------------------------------
-
-## name named capture in array context is unused
-## failures 2
-## optional_modules PPIx::Regexp
-## cut
-
-my @foo = m/(?<foo>\w+)/;
-sub foo {
-    return m/(?<foo>\W+)/;
-}
-
-#-----------------------------------------------------------------------------
-
-## name named capture in array context with siblings is OK
-## failures 0
-## optional_modules PPIx::Regexp
-## cut
-
-my @foo = m/(?<foo>\w+)/;
-print $+{foo}, "\n";
-
-#-----------------------------------------------------------------------------
-
-## name named capture not used in replacement
-## failures 1
-## optional_modules PPIx::Regexp
-## cut
-
-s/(?<foo>\w+)/foo$1/g;
-
-#-----------------------------------------------------------------------------
-
-## name named capture used in replacement
-## failures 0
-## optional_modules PPIx::Regexp
-## cut
-
-s/(?<foo>\w+)/foo$+{foo}/g;
 
 #-----------------------------------------------------------------------------
 

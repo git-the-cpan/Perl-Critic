@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Document.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Document.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -21,12 +21,11 @@ use Scalar::Util qw< blessed weaken >;
 use version;
 
 use Perl::Critic::Annotation;
-use Perl::Critic::Exception::Parse qw< throw_parse >;
-use Perl::Critic::Utils qw< :booleans :characters shebang_line >;
+use Perl::Critic::Exception::Parse qw{ throw_parse };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -48,20 +47,9 @@ sub new {
 
 #-----------------------------------------------------------------------------
 
-sub _init { ## no critic (Subroutines::RequireArgUnpacking)
+sub _init {
 
-    my $self = shift;
-    my %args;
-    if (@_ == 1) {
-        warnings::warnif(
-            'deprecated',
-            'Perl::Critic::Document->new($source) deprecated, use Perl::Critic::Document->new(-source => $source) instead.' ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
-        );
-        %args = ('-source' => shift);
-    } else {
-        %args = @_;
-    }
-    my $source_code = $args{'-source'};
+    my ($self, $source_code) = @_;
 
     # $source_code can be a file name, or a reference to a
     # PPI::Document, or a reference to a scalar containing source
@@ -86,7 +74,6 @@ sub _init { ## no critic (Subroutines::RequireArgUnpacking)
     $self->{_disabled_line_map} = {};
     $self->index_locations();
     $self->_disable_shebang_fix();
-    $self->{_is_module} = $self->_determine_is_module(\%args);
 
     return $self;
 }
@@ -305,22 +292,6 @@ sub suppressed_violations {
 }
 
 #-----------------------------------------------------------------------------
-
-sub is_program {
-    my ($self) = @_;
-
-    return not $self->is_module();
-}
-
-#-----------------------------------------------------------------------------
-
-sub is_module {
-    my ($self) = @_;
-
-    return $self->{_is_module};
-}
-
-#-----------------------------------------------------------------------------
 # PRIVATE functions & methods
 
 sub _is_a_version_statement {
@@ -371,9 +342,9 @@ sub _caching_finder {
 sub _disable_shebang_fix {
     my ($self) = @_;
 
-    # When you install a program using ExtUtils::MakeMaker or Module::Build, it
+    # When you install a script using ExtUtils::MakeMaker or Module::Build, it
     # inserts some magical code into the top of the file (just after the
-    # shebang).  This code allows people to call your program using a shell,
+    # shebang).  This code allows people to call your script using a shell,
     # like `sh my_script`.  Unfortunately, this code causes several Policy
     # violations, so we disable them as if they had "## no critic" annotations.
 
@@ -383,7 +354,7 @@ sub _disable_shebang_fix {
     # fixing strings.  This matches most of the ones I've found in my own Perl
     # distribution, but it may not be bullet-proof.
 
-    my $fixin_rx = qr<^eval 'exec .* \$0 \${1[+]"\$@"}'\s*[\r\n]\s*if.+;>ms; ## no critic (ExtendedFormatting)
+    my $fixin_rx = qr<^eval 'exec .* \$0 \${1\+"\$@"}'\s*[\r\n]\s*if.+;>ms; ## no critic (ExtendedFormatting)
     if ( $first_stmnt =~ $fixin_rx ) {
         my $line = $first_stmnt->location->[0];
         $self->{_disabled_line_map}->{$line}->{ALL} = 1;
@@ -391,32 +362,6 @@ sub _disable_shebang_fix {
     }
 
     return $self;
-}
-
-#-----------------------------------------------------------------------------
-
-sub _determine_is_module {
-    my ($self, $args) = @_;
-
-    my $file_name = $self->filename();
-    if (
-            defined $file_name
-        and ref $args->{'-program-extensions'} eq 'ARRAY'
-    ) {
-        foreach my $ext ( @{ $args->{'-program-extensions'} } ) {
-            my $regex =
-                ref $ext eq 'Regexp'
-                    ? $ext
-                    : qr< @{ [ quotemeta $ext ] } \z >xms;
-
-            return $FALSE if $file_name =~ m/$regex/smx;
-        }
-    }
-
-    return $FALSE if shebang_line($self);
-    return $FALSE if defined $file_name && $file_name =~ m/ [.] PL \z /smx;
-
-    return $TRUE;
 }
 
 #-----------------------------------------------------------------------------
@@ -439,7 +384,7 @@ Perl::Critic::Document - Caching wrapper around a PPI::Document.
     use PPI::Document;
     use Perl::Critic::Document;
     my $doc = PPI::Document->new('Foo.pm');
-    $doc = Perl::Critic::Document->new(-source => $doc);
+    $doc = Perl::Critic::Document->new($doc);
     ## Then use the instance just like a PPI::Document
 
 
@@ -476,21 +421,12 @@ will go through a deprecation cycle.
 
 =over
 
-=item C<< new(-source => $source_code, '-program-extensions' => [program_extensions]) >>
+=item C<< new($source_code) >>
 
 Create a new instance referencing a PPI::Document instance.  The
 C<$source_code> can be the name of a file, a reference to a scalar
-containing actual source code, or a L<PPI::Document|PPI::Document> or
-L<PPI::Document::File|PPI::Document::File>.
-
-The '-program-extensions' argument is optional, and is a reference to a list
-of strings and/or regular expressions. The strings will be made into regular
-expressions matching the end of a file name, and any document whose file name
-matches one of the regular expressions will be considered a program.
-
-If -program-extensions is not specified, or if it does not determine the
-document type, the document will be considered to be a program if the source
-has a shebang line or its file name (if any) matches C<< m/ [.] PL \z /smx >>.
+containing actual source code, or a L<PPI::Document> or
+L<PPI::Document::File>.
 
 =back
 
@@ -552,8 +488,7 @@ Adds an C<$annotation> object to this Document.
 
 =item C<< annotations() >>
 
-Returns a list containing all the
-L<Perl::Critic::Annotation|Perl::Critic::Annotation>s that
+Returns a list containing all the L<Perl::Critic::Annotation> that
 were found in this Document.
 
 =item C<< add_suppressed_violation($violation) >>
@@ -564,19 +499,8 @@ annotation. Returns C<$self>.
 
 =item C<< suppressed_violations() >>
 
-Returns a list of references to all the
-L<Perl::Critic::Violation|Perl::Critic::Violation>s
+Returns a list of references to all the L<Perl::Critic::Violation>s
 that were found in this Document but were suppressed.
-
-
-=item C<< is_program() >>
-
-Returns whether this document is considered to be a program.
-
-
-=item C<< is_module() >>
-
-Returns whether this document is considered to be a Perl module.
 
 =back
 
@@ -586,7 +510,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2010 Chris Dolan.
+Copyright (c) 2006-2009 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

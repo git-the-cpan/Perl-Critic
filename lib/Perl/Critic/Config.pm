@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Config.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Config.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Config;
@@ -28,19 +28,49 @@ use Perl::Critic::Utils qw{
     :booleans :characters :severities :internal_lookup :classification
     :data_conversion
 };
-use Perl::Critic::Utils::Constants qw<
-    :profile_strictness
-    $_MODULE_VERSION_TERM_ANSICOLOR
->;
-use Perl::Critic::Utils::DataConversion qw< boolean_to_number dor >;
+use Perl::Critic::Utils::Constants qw{ :profile_strictness };
+use Perl::Critic::Utils::DataConversion qw{ boolean_to_number dor };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $SINGLE_POLICY_CONFIG_KEY => 'single-policy';
+
+Readonly::Hash my %TERM_ANSICOLOR_OPTIONS => hashify(
+    qw<
+        clear
+        reset
+        bold
+        dark
+        faint
+        underline
+        underscore
+        blink
+        reverse
+        concealed
+
+        black
+        red
+        green
+        yellow
+        blue
+        magenta
+        cyan
+        white
+
+        on_black
+        on_red
+        on_green
+        on_yellow
+        on_blue
+        on_magenta
+        on_cyan
+        on_white
+    >
+);
 
 #-----------------------------------------------------------------------------
 # Constructor
@@ -115,15 +145,12 @@ sub _init {
     $self->_validate_and_save_top($args{-top}, $errors);
     $self->_validate_and_save_theme($args{-theme}, $errors);
     $self->_validate_and_save_pager($args{-pager}, $errors);
-    $self->_validate_and_save_program_extensions(
-        $args{'-program-extensions'}, $errors);
 
     # If given, these options can be true or false (but defined)
     # We normalize these to numeric values by multiplying them by 1;
     $self->{_force} = boolean_to_number( dor( $args{-force}, $options_processor->force() ) );
     $self->{_only}  = boolean_to_number( dor( $args{-only},  $options_processor->only()  ) );
     $self->{_color} = boolean_to_number( dor( $args{-color}, $options_processor->color() ) );
-    $self->{_unsafe} = boolean_to_number( dor( $args{-unsafe}, $options_processor->unsafe() ) );
     $self->{_criticism_fatal} = boolean_to_number( dor( $args{'-criticism-fatal'}, $options_processor->criticism_fatal() ) );
 
 
@@ -223,9 +250,6 @@ sub _load_policies {
             }
             next;
         }
-
-        # Always exclude unsafe policies, unless instructed not to
-        next if not ( $policy->is_safe() or $self->unsafe() );
 
         # To load, or not to load -- that is the question.
         my $load_me = $self->only() ? $FALSE : $TRUE;
@@ -714,15 +738,12 @@ sub _validate_and_save_color_severity {
 
     # Should we really be validating this?
     my $found_errors;
-    if (
-        eval {
-            require Term::ANSIColor;
-            Term::ANSIColor->VERSION( $_MODULE_VERSION_TERM_ANSICOLOR );
-            1;
+    if ( eval { require Term::ANSIColor; 1; } ) {
+        foreach my $attribute ( words_from_string($color_severity) ) {
+            if ( not $TERM_ANSICOLOR_OPTIONS{$attribute} ) {
+                $found_errors = 1;
+            }
         }
-    ) {
-        $found_errors =
-            not Term::ANSIColor::colorvalid( words_from_string($color_severity) );
     }
 
     # If we do not have Term::ANSIColor we can not validate, but we store the
@@ -746,25 +767,6 @@ sub _validate_and_save_color_severity {
     }
 
     return;
-}
-
-#-----------------------------------------------------------------------------
-
-sub _validate_and_save_program_extensions {
-    my ($self, $args_value, $errors) = @_;
-
-    delete $self->{_program_extensions_as_regexes};
-
-    my $extension_list = q{ARRAY} eq ref $args_value ?
-        [map {words_from_string($_)} @{ $args_value }] :
-        $self->_profile()->options_processor()->program_extensions();
-
-    my %program_extensions = hashify( @{ $extension_list } );
-
-    $self->{_program_extensions} = [keys %program_extensions];
-
-    return;
-
 }
 
 #-----------------------------------------------------------------------------
@@ -875,13 +877,6 @@ sub pager  {
 
 #-----------------------------------------------------------------------------
 
-sub unsafe {
-    my ($self) = @_;
-    return $self->{_unsafe};
-}
-
-#-----------------------------------------------------------------------------
-
 sub criticism_fatal {
     my ($self) = @_;
     return $self->{_criticism_fatal};
@@ -928,30 +923,6 @@ sub color_severity_lowest {
     return $self->{_color_severity_lowest};
 }
 
-#-----------------------------------------------------------------------------
-
-sub program_extensions {
-    my ($self) = @_;
-    return @{ $self->{_program_extensions} };
-}
-
-#-----------------------------------------------------------------------------
-
-sub program_extensions_as_regexes {
-    my ($self) = @_;
-
-    return @{ $self->{_program_extensions_as_regexes} }
-        if $self->{_program_extensions_as_regexes};
-
-    my %program_extensions = hashify( $self->program_extensions() );
-    $program_extensions{'.PL'} = 1;
-    return @{
-        $self->{_program_extensions_as_regexes} = [
-            map { qr< @{[quotemeta $_]} \z >smx } sort keys %program_extensions
-        ]
-    };
-}
-
 1;
 
 #-----------------------------------------------------------------------------
@@ -987,10 +958,133 @@ to change without notice.
 
 =over
 
-=item C<< new(...) >>
+=item C<< new( [ -profile => $FILE, -severity => $N, -theme => $string, -include => \@PATTERNS, -exclude => \@PATTERNS, -single-policy => $PATTERN, -top => $N, -only => $B, -profile-strictness => $PROFILE_STRICTNESS_{WARN|FATAL|QUIET}, -force => $B, -verbose => $N, -color => $B, -criticism-fatal => $B] ) >>
 
-Not properly documented because you shouldn't be using this.
+=item C<< new() >>
 
+Returns a reference to a new Perl::Critic::Config object.  The default
+value for all arguments can be defined in your F<.perlcriticrc> file.
+See the L<"CONFIGURATION"> section for more information about that.
+All arguments are optional key-value pairs as follows:
+
+B<-profile> is a path to a configuration file. If C<$FILE> is not
+defined, Perl::Critic::Config attempts to find a F<.perlcriticrc>
+configuration file in the current directory, and then in your home
+directory.  Alternatively, you can set the C<PERLCRITIC> environment
+variable to point to a file in another location.  If a configuration
+file can't be found, or if C<$FILE> is an empty string, then all
+Policies will be loaded with their default configuration.  See
+L<"CONFIGURATION"> for more information.
+
+B<-severity> is the minimum severity level.  Only Policy modules that
+have a severity greater than C<$N> will be loaded into this Config.
+Severity values are integers ranging from 1 (least severe) to 5 (most
+severe).  The default is 5.  For a given C<-profile>, decreasing the
+C<-severity> will usually result in more Policy violations.  Users can
+redefine the severity level for any Policy in their F<.perlcriticrc>
+file.  See L<"CONFIGURATION"> for more information.
+
+B<-theme> is special string that defines a set of Policies based on
+their respective themes.  If C<-theme> is given, only policies that
+are members of that set will be loaded.  See the L<"POLICY THEMES">
+section for more information about themes.  Unless the C<-severity>
+option is explicitly given, setting C<-theme> causes the C<-severity>
+to be set to 1.
+
+B<-include> is a reference to a list of string C<@PATTERNS>.  Policies
+that match at least one C<m/$PATTERN/ixms> will be loaded into this
+Config, irrespective of the severity settings.  You can use it in
+conjunction with the C<-exclude> option.  Note that C<-exclude> takes
+precedence over C<-include> when a Policy matches both patterns.
+
+B<-exclude> is a reference to a list of string C<@PATTERNS>.  Polices
+that match at least one C<m/$PATTERN/ixms> will not be loaded into this
+Config, irrespective of the severity settings.  You can use it in
+conjunction with the C<-include> option.  Note that C<-exclude> takes
+precedence over C<-include> when a Policy matches both patterns.
+
+B<-single-policy> is a string C<PATTERN>.  Only the policy that
+matches C<m/$PATTERN/ixms> will be used.  This value overrides the
+C<-severity>, C<-theme>, C<-include>, C<-exclude>, and C<-only>
+options.
+
+B<-top> is the maximum number of Violations to return when ranked by
+their severity levels.  This must be a positive integer.  Violations
+are still returned in the order that they occur within the file.
+Unless the C<-severity> option is explicitly given, setting C<-top>
+silently causes the C<-severity> to be set to 1.
+
+B<-only> is a boolean value.  If set to a true value, Perl::Critic
+will only choose from Policies that are mentioned in the user's
+profile.  If set to a false value (which is the default), then
+Perl::Critic chooses from all the Policies that it finds at your site.
+
+B<-profile-strictness> is an enumerated value, one of
+L<Perl::Critic::Utils::Constants/"$PROFILE_STRICTNESS_WARN"> (the
+default),
+L<Perl::Critic::Utils::Constants/"$PROFILE_STRICTNESS_FATAL">, and
+L<Perl::Critic::Utils::Constants/"$PROFILE_STRICTNESS_QUIET">.  If set
+to L<Perl::Critic::Utils::Constants/"$PROFILE_STRICTNESS_FATAL">,
+Perl::Critic will make certain warnings about problems found in a
+F<.perlcriticrc> or file specified via the B<-profile> option fatal.
+For example, Perl::Critic normally only C<warn>s about profiles
+referring to non-existent Policies, but this value makes this
+situation fatal.  Correspondingly,
+L<Perl::Critic::Utils::Constants/"$PROFILE_STRICTNESS_QUIET"> makes
+Perl::Critic shut up about these things.
+
+B<-force> controls whether Perl::Critic observes the magical C<"## no
+critic"> annotations in your code.  If set to a true value,
+Perl::Critic will analyze all code.  If set to a false value (which is
+the default) Perl::Critic will ignore code that is tagged with these
+comments.  See L<Perl::Critic/"BENDING THE RULES"> for more
+information.
+
+B<-verbose> can be a positive integer (from 1 to 10), or a literal
+format specification.  See
+L<Perl::Critic::Violations|Perl::Critic::Violations> for an
+explanation of format specifications.
+
+B<-color> and B<-pager> are not used by Perl::Critic but is provided
+for the benefit of L<perlcritic|perlcritic>.
+
+B<-criticism-fatal> is not used by Perl::Critic but is provided for
+the benefit of L<criticism|criticism>.
+
+B<-color-severity-highest> is a string representing the highest
+severity violation color, as expected by Term::ANSIColor. It is not
+used by Perl::Critic, but is provided for the benefit of
+L<perlcritic|perlcritic>. It can also be specified as
+B<-colour-severity-highest>, B<-color-severity-5>, or
+B<-colour-severity-5>.
+
+B<-color-severity-high> is a string representing the high severity
+violation color, as expected by Term::ANSIColor. It is not used by
+Perl::Critic, but is provided for the benefit of
+L<perlcritic|perlcritic>. It can also be specified as
+B<-colour-severity-high>, B<-color-severity-4>, or
+B<-colour-severity-4>.
+
+B<-color-severity-medium> is a string representing the medium
+severity violation color, as expected by Term::ANSIColor. It is not
+used by Perl::Critic, but is provided for the benefit of
+L<perlcritic|perlcritic>. It can also be specified as
+B<-colour-severity-medium>, B<-color-severity-3>, or
+B<-colour-severity-3>.
+
+B<-color-severity-low> is a string representing the low severity
+violation color, as expected by Term::ANSIColor. It is not used by
+Perl::Critic, but is provided for the benefit of
+L<perlcritic|perlcritic>. It can also be specified as
+B<-colour-severity-low>, B<-color-severity-2>, or
+B<-colour-severity-2>.
+
+B<-color-severity-lowest> is a string representing the lowest
+severity violation color, as expected by Term::ANSIColor. It is not
+used by Perl::Critic, but is provided for the benefit of
+L<perlcritic|perlcritic>. It can also be specified as
+B<-colour-severity-lowest>, B<-color-severity-1>, or
+B<-colour-severity-1>.
 
 =back
 
@@ -1091,11 +1185,6 @@ Returns the value of the C<-color> attribute for this Config.
 Returns the value of the C<-pager> attribute for this Config.
 
 
-=item C< unsafe() >
-
-Returns the value of the C<-unsafe> attribute for this Config.
-
-
 =item C< criticism_fatal() >
 
 Returns the value of the C<-criticsm-fatal> attribute for this Config.
@@ -1130,16 +1219,6 @@ Config.
 Returns the value of the C<-color-severity-lowest> attribute for this
 Config.
 
-=item C< program_extensions() >
-
-Returns the value of the C<-program_extensions> attribute for this Config.
-This is an array of the file name extensions that represent program files.
-
-=item C< program_extensions_as_regexes() >
-
-Returns the value of the C<-program_extensions> attribute for this Config, as
-an array of case-sensitive regexes matching the ends of the file names that
-represent program files.
 
 =back
 
@@ -1195,13 +1274,11 @@ corresponding Perl::Critic constructor argument.
     include   = NamingConventions ClassHierarchies    #Space-delimited list
     exclude   = Variables  Modules::RequirePackage    #Space-delimited list
     color     = 1                                     #Zero or One
-    unsafe    = 1                                     #Zero or One
     color-severity-highest = bold red                 #Term::ANSIColor
     color-severity-high = magenta                     #Term::ANSIColor
     color-severity-medium =                           #no coloring
     color-severity-low =                              #no coloring
     color-severity-lowest =                           #no coloring
-    program-extensions =                              #Space-delimited list
 
 The remainder of the configuration file is a series of blocks like
 this:
@@ -1298,7 +1375,7 @@ Each Policy is defined with one or more "themes".  Themes can be used
 to create arbitrary groups of Policies.  They are intended to provide
 an alternative mechanism for selecting your preferred set of Policies.
 For example, you may wish disable a certain subset of Policies when
-analyzing test programs.  Conversely, you may wish to enable only a
+analyzing test scripts.  Conversely, you may wish to enable only a
 specific subset of Policies when analyzing modules.
 
 The Policies that ship with Perl::Critic are have been broken into the
@@ -1315,7 +1392,7 @@ needs.
     cosmetic          Policies that only have a superficial effect
     complexity        Policies that specificaly relate to code complexity
     security          Policies that relate to security issues
-    tests             Policies that are specific to test programs
+    tests             Policies that are specific to test scripts
 
 Say C<`perlcritic -list`> to get a listing of all available policies
 and the themes that are associated with each one.  You can also change
@@ -1369,12 +1446,12 @@ L<Perl::Critic::UserProfile|Perl::Critic::UserProfile>
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/Documentation/RequirePodSections.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Documentation/RequirePodSections.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::RequirePodSections;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :characters :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -317,10 +317,8 @@ sub violates {
     my %found_sections = ();
     my @violations = ();
 
-    my @required_sections =
-        $doc->is_program()
-            ? @{ $self->{_script_sections} }
-            : @{ $self->{_lib_sections} };
+    my @required_sections = is_script($doc) ? @{ $self->{_script_sections} }
+                                            : @{ $self->{_lib_sections} };
 
     my $pods_ref = $doc->find('PPI::Token::Pod');
     return if not $pods_ref;
@@ -464,12 +462,12 @@ appear in any particular order.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2006-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

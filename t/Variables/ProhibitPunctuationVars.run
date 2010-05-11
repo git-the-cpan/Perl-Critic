@@ -405,19 +405,11 @@ sprintf "%-03f\n", $foo;
 
 #-----------------------------------------------------------------------------
 
-## name trailing dollar sign is not a punctuation variable - RT #55604
-## failures 0
-## cut
-
-qr/foo$/
-
-#-----------------------------------------------------------------------------
-
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Variables/ProhibitPunctuationVars.run $
-#     $Date: 2010-03-19 13:28:10 -0700 (Fri, 19 Mar 2010) $
-#   $Author: wyant $
-# $Revision: 3791 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Variables/ProhibitPunctuationVars.run $
+#     $Date: 2009-09-07 15:59:49 -0500 (Mon, 07 Sep 2009) $
+#   $Author: clonezone $
+# $Revision: 3625 $
 ##############################################################################
 
 # Local Variables:

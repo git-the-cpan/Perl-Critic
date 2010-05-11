@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/05_utils.t $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/05_utils.t $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 ## There's too much use of source code in strings.
@@ -28,7 +28,7 @@ use Test::More tests => 125;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -90,11 +90,7 @@ sub test_export {
 #-----------------------------------------------------------------------------
 
 sub count_matches { my $val = shift; return defined $val ? scalar @{$val} : 0; }
-sub make_doc {
-    my $code = shift;
-    return
-        Perl::Critic::Document->new('-source' => ref $code ? $code : \$code);
-}
+sub make_doc { my $code = shift; return PPI::Document->new( ref $code ? $code : \$code); }
 
 sub test_find_keywords {
     my $doc = PPI::Document->new(); #Empty doc
@@ -159,8 +155,6 @@ sub test_is_script {
         "\n#!perl\n",
     );
 
-    no warnings qw< deprecated >;   ## no critic (TestingAndDebugging::ProhibitNoWarnings)
-
     for my $code (@good) {
         my $doc = PPI::Document->new(\$code) or confess;
         $doc->index_locations();
@@ -190,8 +184,7 @@ sub test_is_script_with_PL_files { ## no critic (NamingConventions::Capitalizati
     close $temp_file or confess "Couldn't close $temp_file: $OS_ERROR";
 
     my $doc = PPI::Document::File->new($temp_file->filename());
-
-    no warnings qw< deprecated >;   ## no critic (TestingAndDebugging::ProhibitNoWarnings)
+    $doc->index_locations();
     ok(is_script($doc), 'is_script, false for .PL files');
 
     return;

@@ -44,22 +44,11 @@ $a .= 1;
 
 #-----------------------------------------------------------------------------
 
-## name 'foo' x 15 x 'bar' is OK ( RT #54524 )
-## failures 0
-## cut
-
-'foo' x 15 . 'bar';
-( 'foo' . ' ' ) x 15 . 'bar';
-@foo x 15 . 'bar';
-( 1, 2, 5 ) x 15 . 'bar';
-
-#-----------------------------------------------------------------------------
-
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/ValuesAndExpressions/ProhibitMismatchedOperators.run $
-#     $Date: 2010-02-14 11:10:21 -0800 (Sun, 14 Feb 2010) $
-#   $Author: wyant $
-# $Revision: 3767 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/ValuesAndExpressions/ProhibitMismatchedOperators.run $
+#     $Date: 2008-03-16 17:40:45 -0500 (Sun, 16 Mar 2008) $
+#   $Author: clonezone $
+# $Revision: 2187 $
 ##############################################################################
 
 # Local Variables:

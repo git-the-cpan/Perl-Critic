@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/BuiltinFunctions/RequireGlobFunction.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/BuiltinFunctions/RequireGlobFunction.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::BuiltinFunctions::RequireGlobFunction;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ Instead, he recommends the use of the C<glob()> function as it makes
 it much more obvious what you're attempting to do.
 
     @files = <*.pl>;              # not ok
-    @files = glob '*.pl';         # ok
+    @files = glob( "*.pl" );      # ok
 
 
 =head1 CONFIGURATION
@@ -83,7 +83,7 @@ Graham TerMarsch <graham@howlingfrog.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Graham TerMarsch.  All rights reserved.
+Copyright (c) 2005-2009 Graham TerMarsch.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

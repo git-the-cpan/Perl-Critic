@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Utils/McCabe.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Utils/McCabe.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Utils::McCabe;
@@ -19,7 +19,7 @@ use base 'Exporter';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -156,7 +156,7 @@ Provides approximations of McCabe scores.  The McCabe score of a set
 of code describes the number of possible paths through it.  The
 functions here approximate the McCabe score by summing the number of
 conditional statements and operators within a set of code.  See
-L<http://en.wikipedia.org/wiki/Cyclomatic_complexity> for
+L<http://www.sei.cmu.edu/str/descriptions/cyclomatic_body.html> for
 some discussion about the McCabe number and other complexity metrics.
 
 
@@ -187,12 +187,12 @@ contained in a subroutine.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

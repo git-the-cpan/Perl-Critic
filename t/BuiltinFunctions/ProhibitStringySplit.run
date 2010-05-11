@@ -84,8 +84,8 @@ split( @list );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/BuiltinFunctions/ProhibitStringySplit.run $
-#     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/BuiltinFunctions/ProhibitStringySplit.run $
+#     $Date: 2008-03-16 17:40:45 -0500 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
 # $Revision: 2187 $
 ##############################################################################

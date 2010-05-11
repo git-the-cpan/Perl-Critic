@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars;
@@ -12,13 +12,12 @@ use strict;
 use warnings;
 use Readonly;
 
-use Email::Address;
 use Perl::Critic::Utils qw< :booleans :characters :severities >;
 use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -56,6 +55,11 @@ sub initialize_if_enabled {
     if (@rcs_keywords) {
         my $rcs_regexes = [ map { qr/ \$ $_ [^\n\$]* \$ /xms } @rcs_keywords ];
         $self->{_rcs_regexes} = $rcs_regexes;
+    }
+
+    if ( not eval 'use Email::Address 1.889; 1' ) {
+        no warnings 'redefine'; ## no critic (TestingAndDebugging::ProhibitNoWarnings)
+        *_looks_like_email_address = sub {};
     }
 
     return $TRUE;
@@ -186,14 +190,14 @@ indicate that the string should be interpolated.
 
 =item *
 
-C<${}> and C<@{}> in a C<use overload>:
+C<${}> and C<@{}> in a C<use overload>,
 
     use overload '${}' => \&deref,     # ok
                  '@{}' => \&arrayize;  # ok
 
 =item *
 
-Variable names to C<use vars>:
+Variable names to C<use vars>.
 
     use vars '$x';          # ok
     use vars ('$y', '$z');  # ok
@@ -202,10 +206,8 @@ Variable names to C<use vars>:
 
 =item *
 
-Things that look like e-mail addresses:
+Email addresses, if you have L<Email::Address> installed.
 
-    print 'john@foo.com';           # ok
-    $address = 'suzy.bar@baz.net';  # ok
 
 =back
 
@@ -218,7 +220,7 @@ C<$VERSION> variables.
 
 For example, if you've got code like
 
-    our ($VERSION) = (q<$Revision: 3794 $> =~ m/(\d+)/mx);
+    our ($VERSION) = (q<$Revision: 3809 $> =~ m/(\d+)/mx);
 
 You can specify
 
@@ -233,6 +235,11 @@ in your F<.perlcriticrc> to provide an exemption.
 Perl's own C<warnings> pragma also warns you about this.
 
 
+=head1 TODO
+
+Handle email addresses.
+
+
 =head1 SEE ALSO
 
 L<Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals|Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals>
@@ -240,12 +247,12 @@ L<Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals|Pe
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

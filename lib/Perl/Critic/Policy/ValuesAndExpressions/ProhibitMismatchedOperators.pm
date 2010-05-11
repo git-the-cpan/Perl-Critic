@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators;
@@ -11,10 +11,10 @@ use strict;
 use warnings;
 use Readonly;
 
-use Perl::Critic::Utils qw{ :booleans :severities };
+use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -74,10 +74,6 @@ sub violates {
     return if ( !defined $prev_compat || $prev_compat->[$op_type] )
         && ( !defined $next_compat || $next_compat->[$op_type] );
 
-    return if $op_type && defined $prev_compat &&
-        !  $prev_compat->[$op_type] &&
-        $self->_have_stringy_x( $prev_elem ); # RT 54524
-
     return $self->violation( $DESC, $EXPL, $elem );
 }
 
@@ -91,21 +87,6 @@ sub _get_token_compat {
         return $TOKEN_COMPAT{$class} if $elem->isa($class);
     }
     return;
-}
-
-#-----------------------------------------------------------------------------
-
-# see if we follow a stringy 'x'.
-
-sub _have_stringy_x {
-    my ( $self, $elem ) = @_;
-    $elem or return;
-    my $prev_oper = $elem->sprevious_sibling() or return;
-    $prev_oper->isa( 'PPI::Token::Operator' )
-        and 'x' eq $prev_oper->content()
-        or return;
-    my $prev_elem = $prev_oper->sprevious_sibling() or return;
-    return $TRUE;
 }
 
 1;
@@ -159,7 +140,7 @@ Peter Guzis <pguzis@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2010 Peter Guzis.  All rights reserved.
+Copyright (c) 2006-2009 Peter Guzis.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Utils.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Utils.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 # NOTE: This module is way too large.  Please think about adding new
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use base 'Exporter';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -846,14 +846,6 @@ sub is_function_call {
 sub is_script {
     my $doc = shift;
 
-    warnings::warnif(
-        'deprecated',
-        'Perl::Critic::Utils::is_script($doc) deprecated, use $doc->is_program() instead.',  ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
-    );
-
-    return $doc->is_program()
-        if blessed($doc) && $doc->isa('Perl::Critic::Document');
-
     return 1 if shebang_line($doc);
     return 1 if _is_PL_file($doc);
     return 0;
@@ -1654,8 +1646,14 @@ passed the nodes that represent the interior of a list, like:
 
 =item C<is_script( $document )>
 
-B<This subroutine is deprecated and will be removed in a future release.> You
-should use the L<Perl::Critic::Document/"is_program()"> method instead.
+Given a L<PPI::Document|PPI::Document>, test if it starts with
+C</#!.*/>.  If so, it is judged to be a script instead of a module.
+Also, if the filename of the document ends in ".PL" then it is
+also judged to be a script.  However, this only works if the
+document is a L<PPI::Document::File|PPI::Document::File>.  If it
+isn't, then the filename is not available and it has no bearing on
+how the document is judged.
+See C<shebang_line()>.
 
 
 =item C<is_in_void_context( $token )>
@@ -1967,12 +1965,12 @@ L<Perl::Critic::Utils::PPI|Perl::Critic::Utils::PPI>,
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

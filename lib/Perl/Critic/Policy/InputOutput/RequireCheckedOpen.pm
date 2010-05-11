@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/InputOutput/RequireCheckedOpen.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/InputOutput/RequireCheckedOpen.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::InputOutput::RequireCheckedOpen;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -50,8 +50,6 @@ __END__
 
 =pod
 
-=for stopwords autodie
-
 =head1 NAME
 
 Perl::Critic::Policy::InputOutput::RequireCheckedOpen - Write C<< my $error = open $fh, $mode, $filename; >> instead of C<< open $fh, $mode, $filename; >>.
@@ -76,9 +74,8 @@ was successful.
     use autodie;
     open $filehandle, $mode, $filename;                                 # ok
 
-You can use L<autodie|autodie>, L<Fatal|Fatal>, or
-L<Fatal::Exception|Fatal::Exception> to get around
-this.  Currently, L<autodie|autodie> is not properly treated as a pragma; its
+You can use L<autodie>, L<Fatal>, or L<Fatal::Exception> to get around
+this.  Currently, L<autodie> is not properly treated as a pragma; its
 lexical effects aren't taken into account.
 
 
@@ -94,11 +91,11 @@ Andrew Moore <amoore@mooresystems.com>
 =head1 ACKNOWLEDGMENTS
 
 This policy module is based heavily on policies written by Jeffrey
-Ryan Thalhammer <jeff@imaginative-software.com>.
+Ryan Thalhammer <thaljef@cpan.org>.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2010 Andrew Moore.  All rights reserved.
+Copyright (c) 2007-2009 Andrew Moore.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

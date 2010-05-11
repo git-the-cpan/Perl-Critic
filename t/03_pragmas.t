@@ -1,17 +1,17 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/03_pragmas.t $
-#    $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/03_pragmas.t $
+#    $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 use 5.006001;
 use strict;
 use warnings;
 
-use Test::More (tests => 32);
+use Test::More (tests => 29);
 use Perl::Critic::PolicyFactory (-test => 1);
 
 # common P::C testing tools
@@ -19,7 +19,7 @@ use Perl::Critic::TestUtils qw(critique);
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -883,90 +883,7 @@ is(
         {-profile  => $profile, -severity => 1, -theme => 'core'},
     ),
     1,
-    'no-critic on shebang line'
-);
-
-#-----------------------------------------------------------------------------
-
-$code = <<'END_PERL';
-#line 1
-## no critic;
-
-=pod
-
-=head1 SOME POD HERE
-
-This code has several POD-related violations at line 1.  The "## no critic"
-marker is on the second physical line.  However, the "#line" directive should
-cause it to treat it as if it actually were on the first physical line.  Thus,
-the violations should be supressed.
-
-=cut
-
-END_PERL
-
-is(
-    critique(
-        \$code,
-        {-profile  => $profile, -severity => 1, -theme => 'core'},
-    ),
-    0,
-    'no-critic where logical line == 1, but physical line != 1'
-);
-
-#-----------------------------------------------------------------------------
-
-$code = <<'END_PERL';
-#line 7
-## no critic;
-
-=pod
-
-=head1 SOME POD HERE
-
-This code has several POD-related violations at line 1.  The "## no critic"
-marker is on the second physical line, and the "#line" directive should cause
-it to treat it as if it actually were on the 7th physical line.  Thus, the
-violations should NOT be supressed.
-
-=cut
-
-END_PERL
-
-is(
-    critique(
-        \$code,
-        {-profile  => $profile, -severity => 1, -theme => 'core'},
-    ),
-    2,
-    'no-critic at logical line != 1, and physical line != 1'
-);
-
-#-----------------------------------------------------------------------------
-
-$code = <<'END_PERL';
-#line 1
-#!perl ### no critic;
-
-package Foo;
-use strict;
-use warnings;
-our $VERSION = 1;
-
-# In this case, the "## no critic" marker is on the first logical line, which
-# is also the shebang line.
-
-1;
-
-END_PERL
-
-is(
-    critique(
-        \$code,
-        {-profile  => $profile, -severity => 1, -theme => 'core'},
-    ),
-    0,
-    'no-critic on shebang line, where physical line != 1, but logical line == 1'
+    'no critic on shebang line'
 );
 
 #-----------------------------------------------------------------------------

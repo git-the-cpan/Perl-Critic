@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/RegularExpressions/ProhibitEscapedMetacharacters.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/RegularExpressions/ProhibitEscapedMetacharacters.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitEscapedMetacharacters;
@@ -16,9 +16,10 @@ use English qw(-no_match_vars);
 use List::MoreUtils qw(any);
 
 use Perl::Critic::Utils qw{ :booleans :severities hashify };
+use Perl::Critic::Utils::PPIRegexp qw{ ppiify parse_regexp };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -39,7 +40,7 @@ sub applies_to           { return qw(PPI::Token::Regexp::Match
 #-----------------------------------------------------------------------------
 
 sub initialize_if_enabled {
-    return eval { require PPIx::Regexp; 1 } ? $TRUE : $FALSE;
+    return eval { require Regexp::Parser; 1 } ? $TRUE : $FALSE;
 }
 
 #-----------------------------------------------------------------------------
@@ -50,17 +51,18 @@ sub violates {
     # optimization: don't bother parsing the regexp if there are no escapes
     return if $elem !~ m/\\/xms;
 
-    my $re = PPIx::Regexp->new_from_cache( $elem ) or return;
-    $re->failures() and return;
-    my $qr = $re->regular_expression() or return;
+    my $re = ppiify(parse_regexp($elem));
+    return if !$re;
 
-    my $exacts = $qr->find( 'PPIx::Regexp::Token::Literal' ) or return;
-    foreach my $exact( @{ $exacts } ) {
-        $exact->content() =~ m/ \\ ( . ) /xms or next;
-        return $self->violation( $DESC, $EXPL, $elem ) if $REGEXP_METACHARS{$1};
+    # Must pass a sub to find() because our node classes don't start with PPI::
+    my $exacts = $re->find(sub {$_[1]->isa('Perl::Critic::PPIRegexp::exact')});
+    return if !$exacts;
+    for my $exact (@{$exacts}) {
+       my @escapes = $exact =~ m/\\(.)/gxms;
+       return $self->violation( $DESC, $EXPL, $elem ) if any { $REGEXP_METACHARS{$_} } @escapes;
     }
 
-    return; # OK
+    return;  # OK
 }
 
 1;
@@ -154,7 +156,7 @@ Neither does this:
 
 =head1 PREREQUISITES
 
-This policy will disable itself if L<PPIx::Regexp|PPIx::Regexp> is not
+This policy will disable itself if L<Regexp::Parser|Regexp::Parser> is not
 installed.
 
 
@@ -171,7 +173,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

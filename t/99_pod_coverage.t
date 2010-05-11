@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/xt/author/99_pod_coverage.t $
-#    $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/99_pod_coverage.t $
+#    $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ eval 'use Test::Pod::Coverage 1.04; 1'
     # POD and compare it with the subroutines that are in the symbol
     # table for that module.  For reasons I cannot yet explain, using
     # Pod::Parser twice this way causes the symbol table to get very
-    # wacky and this test program dies with "Can't call method 'OPEN'
+    # wacky and this test script dies with "Can't call method 'OPEN'
     # on IO::String at line 1239 of Pod/Parser.pm".
 
     # For now, my workaround is to temporarily redefine the import()
@@ -59,7 +59,6 @@ sub get_trusted_methods {
         prepare_to_scan_document
         violates
         applies_to
-        is_safe
         default_themes
         default_maximum_violations_per_document
         default_severity

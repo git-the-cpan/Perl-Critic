@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/lib/Perl/Critic/Policy/Miscellanea/ProhibitUselessNoCritic.pm $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Miscellanea/ProhibitUselessNoCritic.pm $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 package Perl::Critic::Policy::Miscellanea::ProhibitUselessNoCritic;
@@ -18,7 +18,7 @@ use List::MoreUtils qw< none >;
 use Perl::Critic::Utils qw{ :severities :classification hashify };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ This Policy is part of the core L<Perl::Critic|Perl::Critic> distribution.
 =head1 DESCRIPTION
 
 Sometimes, you may need to use a C<"## no critic"> annotation to work around
-a false-positive bug in L<Perl::Critic|Perl::Critic>.  But eventually, that bug might get
+a false-positive bug in L<Perl::Critic>.  But eventually, that bug might get
 fixed, leaving your code with extra C<"## no critic"> annotations lying about.
 Or you may use them to locally disable a Policy, but then later decide to
 permanently remove that Policy entirely from your profile, making some of
@@ -143,12 +143,12 @@ L<http://use.perl.org/article.pl?sid=08/09/24/1957256>.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
+Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

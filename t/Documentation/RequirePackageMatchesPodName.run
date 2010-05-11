@@ -5,7 +5,7 @@ print 'Hello World';
 
 #-----------------------------------------------------------------------------
 
-## name Program
+## name Script
 ## failures 0
 ## cut
 #!/usr/bin/perl
@@ -246,10 +246,10 @@ Blah...
 =cut
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/Documentation/RequirePackageMatchesPodName.run $
-#     $Date: 2009-09-29 17:32:43 -0700 (Tue, 29 Sep 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Documentation/RequirePackageMatchesPodName.run $
+#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
 #   $Author: clonezone $
-# $Revision: 3653 $
+# $Revision: 3231 $
 ##############################################################################
 
 # Local Variables:

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/tags/Perl-Critic-1.105_03/t/01_config.t $
-#     $Date: 2010-03-21 18:17:38 -0700 (Sun, 21 Mar 2010) $
-#   $Author: thaljef $
-# $Revision: 3794 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/01_config.t $
+#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#   $Author: clonezone $
+# $Revision: 3809 $
 ##############################################################################
 
 use 5.006001;
@@ -30,7 +30,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.105_03';
+our $VERSION = '1.106';
 
 #-----------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
                 )
                 ->all_policies_enabled_or_not();
 
-    plan tests => 93 + $all_policy_count;
+    plan tests => 84 + $all_policy_count;
 }
 
 #-----------------------------------------------------------------------------
@@ -239,12 +239,6 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
                         'user default color-severity-low from file');
     is($c->color_severity_lowest(), $EMPTY,
                         'user default color-severity-lowest from file');
-
-    is_deeply([$c->program_extensions], [],
-        'user default program-extensions from file');
-    is_deeply([$c->program_extensions_as_regexes],
-        [qr< @{[ quotemeta '.PL' ]} \z >smx ],
-        'user default program-extensions from file, as regexes');
 }
 
 #-----------------------------------------------------------------------------
@@ -331,7 +325,6 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         -force
         -color
         -pager
-        -unsafe
         -criticism-fatal
         -color-severity-highest
         -color-severity-high
@@ -346,15 +339,14 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     my %undef_args = map { $_ => undef } @switches;
     my $c = Perl::Critic::Config->new( %undef_args );
     $c = Perl::Critic::Config->new( %undef_args );
-    is( $c->force(),     0,       'Undefined -force');
-    is( $c->only(),      0,       'Undefined -only');
-    is( $c->severity(),  5,       'Undefined -severity');
+    is( $c->force(),     0,     'Undefined -force');
+    is( $c->only(),      0,     'Undefined -only');
+    is( $c->severity(),  5,     'Undefined -severity');
     is( $c->theme()->rule(),   q{},   'Undefined -theme');
-    is( $c->top(),       0,       'Undefined -top');
-    is( $c->color(),     $color,  'Undefined -color');
-    is( $c->pager(),     q{},     'Undefined -pager');
-    is( $c->unsafe(),    0,       'Undefined -unsafe');
-    is( $c->verbose(),   4,       'Undefined -verbose');
+    is( $c->top(),       0,     'Undefined -top');
+    is( $c->color(),     $color, 'Undefined -color');
+    is( $c->pager(),     q{},   'Undefined -pager');
+    is( $c->verbose(),   4,     'Undefined -verbose');
     is( $c->criticism_fatal(), 0, 'Undefined -criticism-fatal');
     is( $c->color_severity_highest(),
         $PROFILE_COLOR_SEVERITY_HIGHEST_DEFAULT,
@@ -387,8 +379,7 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     is( $c->theme()->rule(),     q{},     'zero -theme');
     is( $c->top(),       0,       'zero -top');
     is( $c->color(),     $FALSE,  'zero -color');
-    is( $c->pager(),     $EMPTY,  'zero -pager');
-    is( $c->unsafe(),    0,       'zero -unsafe');
+    is( $c->pager(),     $EMPTY,  'empty -pager');
     is( $c->verbose(),   4,       'zero -verbose');
     is( $c->criticism_fatal(), 0, 'zero -criticism-fatal');
 
@@ -401,7 +392,6 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
     is( $c->top(),       0,       'empty -top');
     is( $c->color(),     $FALSE,  'empty -color');
     is( $c->pager(),     q{},     'empty -pager');
-    is( $c->unsafe(),    0,       'empty -unsafe');
     is( $c->verbose(),   4,       'empty -verbose');
     is( $c->criticism_fatal(), 0, 'empty -criticism-fatal');
     is( $c->color_severity_highest(), $EMPTY, 'empty -color-severity-highest');
@@ -451,15 +441,14 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 # Test interaction between switches and defaults
 
 {
-    my %true_defaults = ( force => 1, only  => 1, top => 10, unsafe => 1);
+    my %true_defaults = ( force => 1, only  => 1, top => 10 );
     my %profile  = ( '__defaults__' => \%true_defaults );
 
-    my %pc_config = (-force => 0, -only => 0, -top => 0, -unsafe => 0, -profile => \%profile);
+    my %pc_config = (-force => 0, -only => 0, -top => 0, -profile => \%profile);
     my $config = Perl::Critic::Config->new( %pc_config );
     is( $config->force, 0, '-force: default is true, arg is false');
     is( $config->only,  0, '-only: default is true, arg is false');
     is( $config->top,   0, '-top: default is true, arg is false');
-    is( $config->unsafe,   0, '-unsafe: default is true, arg is false');
 }
 
 #-----------------------------------------------------------------------------
@@ -519,31 +508,6 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
         qr/did [ ] not [ ] match [ ] any [ ] policies/xms,
         'invalid -single-policy',
     );
-}
-
-#-----------------------------------------------------------------------------
-# Test the -unsafe switch
-{
-    my %profile = (
-        'NamingConventions::Capitalization' => {},
-        'Miscellanea::RequireRcsKeywords' => {},
-    );
-
-    # Pretend that RequireRcsKeywords is actually unsafe
-    no warnings qw(redefine once);  ## no critic qw(ProhibitNoWarnings)
-    local *Perl::Critic::Policy::Miscellanea::RequireRcsKeywords::is_safe = sub {return 0};
-
-    my %safe_pc_config = (-severity => 1, -only => 1, -profile => \%profile);
-    my @p = Perl::Critic::Config->new( %safe_pc_config )->policies();
-    is(scalar @p, 1, 'Only loaded safe policies without -unsafe switch');
-
-    my %unsafe_pc_config = (%safe_pc_config, -unsafe => 1);
-    @p = Perl::Critic::Config->new( %unsafe_pc_config )->policies();
-    is(scalar @p, 2, 'Also loaded unsafe policies with -unsafe switch');
-
-    my %singular_pc_config = ('-single-policy' => 'RequireRcsKeywords');
-    @p = Perl::Critic::Config->new( %singular_pc_config )->policies();
-    is(scalar @p, 1, '-single-policy always loads Policy, even if unsafe');
 }
 
 #-----------------------------------------------------------------------------
