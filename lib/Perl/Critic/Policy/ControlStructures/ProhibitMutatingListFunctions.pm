@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/ControlStructures/ProhibitMutatingListFunctions.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitMutatingListFunctions.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitMutatingListFunctions;
@@ -17,13 +17,10 @@ use List::MoreUtils qw( none any );
 use Perl::Critic::Utils qw{
     :booleans :characters :severities :data_conversion :classification :ppi
 };
-use Perl::Critic::Utils::PPIRegexp qw{
-    get_match_string get_substitute_string get_modifiers
-};
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -161,12 +158,12 @@ sub _is_topic_mutating_regex {
     # replacement string equals the match string AND neither the /c or /s
     # flags are specified. RT 44515.
     if ( $elem->isa( 'PPI::Token::Regexp::Transliterate') ) {
-        my $subs = get_substitute_string( $elem );
+        my $subs = $elem->get_substitute_string();
         if ( $EMPTY eq $subs ) {
-            my %mods = get_modifiers( $elem );
+            my %mods = $elem->get_modifiers();
             $mods{d} or $mods{s} or return;
-        } elsif ( get_match_string( $elem ) eq $subs ) {
-            my %mods = get_modifiers( $elem );
+        } elsif ( $elem->get_match_string() eq $subs ) {
+            my %mods = $elem->get_modifiers();
             $mods{c} or $mods{s} or return;
         }
     }
@@ -322,7 +319,7 @@ Michael Wolf <MichaelRWolf@att.net>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2009 Chris Dolan.
+Copyright (c) 2006-2010 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

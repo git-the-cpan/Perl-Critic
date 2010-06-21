@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/15_statistics.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/15_statistics.t $
+#     $Date: 2010-06-20 17:30:21 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3830 $
 ##############################################################################
 
 use 5.006001;
@@ -14,13 +14,14 @@ use warnings;
 use English qw(-no_match_vars);
 
 use Perl::Critic::PolicyFactory (-test => 1);
+use Perl::Critic::Statistics;
 use Perl::Critic::TestUtils;
 
-use Test::More (tests => 25);
+use Test::More tests => 24;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -28,8 +29,7 @@ Perl::Critic::TestUtils::block_perlcriticrc();
 
 #-----------------------------------------------------------------------------
 
-my $pkg = 'Perl::Critic::Statistics';
-use_ok( $pkg );
+my $package = 'Perl::Critic::Statistics';
 
 my @methods = qw(
     average_sub_mccabe
@@ -48,7 +48,7 @@ my @methods = qw(
 );
 
 for my $method ( @methods ) {
-    can_ok( $pkg, $method );
+    can_ok( $package, $method );
 }
 
 #-----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ my %expected_stats = (
 );
 
 my $stats = $critic->statistics();
-isa_ok($stats, $pkg);
+isa_ok($stats, $package);
 
 while ( my($method, $expected) = each %expected_stats) {
     is( $stats->$method, $expected, "Statistics: $method");

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseStrict.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/TestingAndDebugging/RequireUseStrict.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict;
@@ -10,17 +10,21 @@ package Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict;
 use 5.006001;
 use strict;
 use warnings;
+use version 0.77;
 use Readonly;
+use Scalar::Util qw{ blessed };
 
 use Perl::Critic::Utils qw{ :severities $EMPTY };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => q{Code before strictures are enabled};
 Readonly::Scalar my $EXPL => [ 429 ];
+
+Readonly::Scalar my $PERL_VERSION_WHICH_IMPLIES_STRICTURE => qv('v5.11.0');
 
 #-----------------------------------------------------------------------------
 
@@ -93,6 +97,18 @@ sub _generate_is_use_strict {
         }
         elsif ( my $module = $elem->module() ) {
             return 1 if $self->{_equivalent_modules}{$module};
+        }
+        elsif ( my $version = $elem->version() ) {
+            # Currently Adam returns a string here. He has said he may return
+            # a version object in the future, so best be prepared.
+            if ( not blessed( $version ) or not $version->isa( 'version' ) ) {
+                if ( 'v' ne substr $version, 0, 1
+                    and ( $version =~ tr/././ ) > 1 ) {
+                    $version = 'v' . $version;
+                }
+                $version = version->parse( $version );
+            }
+            return 1 if $PERL_VERSION_WHICH_IMPLIES_STRICTURE <= $version;
         }
 
         return 0;
@@ -176,12 +192,12 @@ L<Perl::Critic::Policy::TestingAndDebugging::ProhibitNoStrict|Perl::Critic::Poli
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.  The full text of this license can be found in

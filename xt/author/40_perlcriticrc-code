@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/xt/author/40_perlcriticrc-code $
-#     $Date: 2009-08-08 22:36:47 -0500 (Sat, 08 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3529 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/40_perlcriticrc-code $
+#     $Date: 2009-10-31 15:12:55 -0500 (Sat, 31 Oct 2009) $
+#   $Author: wyant $
+# $Revision: 3697 $
 ##############################################################################
 
 profile-strictness = fatal
@@ -45,6 +45,10 @@ allow_all_brackets = 1
 
 [RegularExpressions::RequireBracesForMultiline]
 allow_all_brackets = 1
+
+[Subroutines::ProhibitUnusedPrivateSubroutines]
+private_name_regex = _(?!_)\w+
+allow = _get_behavior_values _get_description_with_trailing_period
 
 [Subroutines::ProtectPrivateSubs]
 private_name_regex = _(?!_)\w+

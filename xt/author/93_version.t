@@ -1,10 +1,10 @@
 #!perl -w
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/xt/author/93_version.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/93_version.t $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use strict;
@@ -19,7 +19,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -43,12 +43,12 @@ sub check_version {
     # Skip POD
     $content =~ s/^__END__.*//xms;
 
-    # only look at perl scripts, not sh scripts
+    # only look at perl programs, not sh scripts
     return if (m{blib/script/}xms && $content !~ m/\A \#![^\r\n]+?perl/xms);
 
     my @version_lines = $content =~ m/ ( [^\n]* \$VERSION\b [^\n]* ) /gxms;
     # Special cases for printing/documenting version numbers
-    @version_lines = grep {! m/(?:\\|\"|\'|C<|v)\$VERSION/xms} @version_lines;
+    @version_lines = grep {! m/(?:[\\\"\'v]|C<)\$VERSION/xms} @version_lines;
     @version_lines = grep {! m/^\s*\#/xms} @version_lines;
     if (@version_lines == 0) {
         fail($_);

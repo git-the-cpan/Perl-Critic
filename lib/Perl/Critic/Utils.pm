@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Utils.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Utils.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 # NOTE: This module is way too large.  Please think about adding new
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use base 'Exporter';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -846,6 +846,14 @@ sub is_function_call {
 sub is_script {
     my $doc = shift;
 
+    warnings::warnif(
+        'deprecated',
+        'Perl::Critic::Utils::is_script($doc) deprecated, use $doc->is_program() instead.',  ## no critic (ValuesAndExpressions::RequireInterpolationOfMetachars)
+    );
+
+    return $doc->is_program()
+        if blessed($doc) && $doc->isa('Perl::Critic::Document');
+
     return 1 if shebang_line($doc);
     return 1 if _is_PL_file($doc);
     return 0;
@@ -1216,18 +1224,19 @@ sub is_unchecked_call {
     return 1;
 }
 
-# Based upon autodie 1.994.
+# Based upon autodie 2.10.
 Readonly::Hash my %AUTODIE_PARAMETER_TO_AFFECTED_BUILTINS_MAP => (
     # Map builtins to themselves.
     (
         map { $_ => { hashify( $_ ) } }
             qw<
-                accept bind binmode chdir close closedir connect dbmclose
-                dbmopen exec fcntl fileno flock fork getsockopt ioctl link
-                listen mkdir msgctl msgget msgrcv msgsnd open opendir pipe
-                read readlink recv rename rmdir seek semctl semget semop send
-                setsockopt shmctl shmget shmread shutdown socketpair symlink
-                sysopen sysread sysseek system syswrite truncate umask unlink
+                accept bind binmode chdir chmod close closedir connect
+                dbmclose dbmopen exec fcntl fileno flock fork getsockopt ioctl
+                link listen mkdir msgctl msgget msgrcv msgsnd open opendir
+                pipe read readlink recv rename rmdir seek semctl semget semop
+                send setsockopt shmctl shmget shmread shutdown socketpair
+                symlink sysopen sysread sysseek system syswrite truncate umask
+                unlink
             >
     ),
 
@@ -1241,7 +1250,8 @@ Readonly::Hash my %AUTODIE_PARAMETER_TO_AFFECTED_BUILTINS_MAP => (
     ':file'     => {
         hashify(
             qw<
-                binmode close fcntl fileno flock ioctl open sysopen truncate
+                binmode chmod close fcntl fileno flock ioctl open sysopen
+                truncate
             >
         )
     },
@@ -1272,22 +1282,22 @@ Readonly::Hash my %AUTODIE_PARAMETER_TO_AFFECTED_BUILTINS_MAP => (
     ':io'       => {
         hashify(
             qw<
-                accept bind binmode chdir close closedir connect dbmclose
-                dbmopen fcntl fileno flock getsockopt ioctl link listen mkdir
-                msgctl msgget msgrcv msgsnd open opendir pipe read readlink
-                recv rename rmdir seek semctl semget semop send setsockopt
-                shmctl shmget shmread shutdown socketpair symlink sysopen
-                sysread sysseek syswrite truncate umask unlink
+                accept bind binmode chdir chmod close closedir connect
+                dbmclose dbmopen fcntl fileno flock getsockopt ioctl link
+                listen mkdir msgctl msgget msgrcv msgsnd open opendir pipe
+                read readlink recv rename rmdir seek semctl semget semop send
+                setsockopt shmctl shmget shmread shutdown socketpair symlink
+                sysopen sysread sysseek syswrite truncate umask unlink
             >
         )
     },
     ':default'      => {
         hashify(
             qw<
-                accept bind binmode chdir close closedir connect dbmclose
-                dbmopen fcntl fileno flock fork getsockopt ioctl link listen
-                mkdir msgctl msgget msgrcv msgsnd open opendir pipe read
-                readlink recv rename rmdir seek semctl semget semop send
+                accept bind binmode chdir chmod close closedir connect
+                dbmclose dbmopen fcntl fileno flock fork getsockopt ioctl link
+                listen mkdir msgctl msgget msgrcv msgsnd open opendir pipe
+                read readlink recv rename rmdir seek semctl semget semop send
                 setsockopt shmctl shmget shmread shutdown socketpair symlink
                 sysopen sysread sysseek syswrite truncate umask unlink
             >
@@ -1296,12 +1306,13 @@ Readonly::Hash my %AUTODIE_PARAMETER_TO_AFFECTED_BUILTINS_MAP => (
     ':all'      => {
         hashify(
             qw<
-                accept bind binmode chdir close closedir connect dbmclose
-                dbmopen exec fcntl fileno flock fork getsockopt ioctl link
-                listen mkdir msgctl msgget msgrcv msgsnd open opendir pipe
-                read readlink recv rename rmdir seek semctl semget semop send
-                setsockopt shmctl shmget shmread shutdown socketpair symlink
-                sysopen sysread sysseek system syswrite truncate umask unlink
+                accept bind binmode chdir chmod close closedir connect
+                dbmclose dbmopen exec fcntl fileno flock fork getsockopt ioctl
+                link listen mkdir msgctl msgget msgrcv msgsnd open opendir
+                pipe read readlink recv rename rmdir seek semctl semget semop
+                send setsockopt shmctl shmget shmread shutdown socketpair
+                symlink sysopen sysread sysseek system syswrite truncate umask
+                unlink
             >
         )
     },
@@ -1646,14 +1657,8 @@ passed the nodes that represent the interior of a list, like:
 
 =item C<is_script( $document )>
 
-Given a L<PPI::Document|PPI::Document>, test if it starts with
-C</#!.*/>.  If so, it is judged to be a script instead of a module.
-Also, if the filename of the document ends in ".PL" then it is
-also judged to be a script.  However, this only works if the
-document is a L<PPI::Document::File|PPI::Document::File>.  If it
-isn't, then the filename is not available and it has no bearing on
-how the document is judged.
-See C<shebang_line()>.
+B<This subroutine is deprecated and will be removed in a future release.> You
+should use the L<Perl::Critic::Document/"is_program()"> method instead.
 
 
 =item C<is_in_void_context( $token )>
@@ -1965,12 +1970,12 @@ L<Perl::Critic::Utils::PPI|Perl::Critic::Utils::PPI>,
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

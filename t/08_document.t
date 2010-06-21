@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/08_document.t $
-#    $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/08_document.t $
+#    $Date: 2010-06-20 17:30:21 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3830 $
 ##############################################################################
 
 use 5.006001;
@@ -15,17 +15,19 @@ use Carp qw< carp >;
 
 use version;
 
+
+use Perl::Critic::Document;
 use Perl::Critic::Utils::DataConversion qw< dor >;
 
-use Test::More tests => 27;
+
+use Test::More tests => 33;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
-use_ok('Perl::Critic::Document');
 can_ok('Perl::Critic::Document', 'new');
 can_ok('Perl::Critic::Document', 'filename');
 can_ok('Perl::Critic::Document', 'find');
@@ -33,12 +35,17 @@ can_ok('Perl::Critic::Document', 'find_first');
 can_ok('Perl::Critic::Document', 'find_any');
 can_ok('Perl::Critic::Document', 'highest_explicit_perl_version');
 can_ok('Perl::Critic::Document', 'ppi_document');
+can_ok('Perl::Critic::Document', 'is_program');
+can_ok('Perl::Critic::Document', 'is_module');
 
 {
     my $code = q{'print 'Hello World';};  #Has 6 PPI::Element
     my $ppi_doc = PPI::Document->new( \$code );
-    my $pc_doc  = Perl::Critic::Document->new( $ppi_doc );
+    my $pc_doc  = Perl::Critic::Document->new( '-source' => $ppi_doc );
     isa_ok($pc_doc, 'Perl::Critic::Document');
+    isa_ok($pc_doc, 'PPI::Document');
+    isa_ok($pc_doc, 'PPI::Node');
+    isa_ok($pc_doc, 'PPI::Element');
 
 
     my $nodes_ref = $pc_doc->find('PPI::Element');
@@ -89,6 +96,12 @@ can_ok('Perl::Critic::Document', 'ppi_document');
         is( $found, undef, 'find_any by empty class name');
 
     }
+
+    #-------------------------------------------------------------------------
+
+    ok( $pc_doc->is_module(), q{document type 'module' is a module});
+    ok( ! $pc_doc->is_program(), q{document type 'module' is not a program});
+
 }
 
 #-----------------------------------------------------------------------------
@@ -112,7 +125,7 @@ sub test_version {
 
     my $document =
         Perl::Critic::Document->new(
-            PPI::Document->new( \$code )
+            '-source' => PPI::Document->new( \$code )
         );
 
     is(

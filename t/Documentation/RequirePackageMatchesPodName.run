@@ -5,7 +5,7 @@ print 'Hello World';
 
 #-----------------------------------------------------------------------------
 
-## name Script
+## name Program
 ## failures 0
 ## cut
 #!/usr/bin/perl
@@ -183,8 +183,8 @@ Blah...
 
 #-----------------------------------------------------------------------------
 
-## name Multiple packages and bad
-## failures 1
+## name Multiple packages and not first (RT #49501)
+## failures 0
 ## cut
 package Foo;
 package Bar;
@@ -246,10 +246,10 @@ Blah...
 =cut
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Documentation/RequirePackageMatchesPodName.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Documentation/RequirePackageMatchesPodName.run $
+#     $Date: 2010-05-07 13:41:54 -0500 (Fri, 07 May 2010) $
+#   $Author: wyant $
+# $Revision: 3806 $
 ##############################################################################
 
 # Local Variables:

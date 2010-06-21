@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/xt/author/80_policysummary.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/80_policysummary.t $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use strict;
@@ -23,7 +23,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ if (open my ($fh), '<', $summary_file) {
     close $fh or confess "Couldn't close $summary_file: $OS_ERROR";
 
     my @policy_names = bundled_policy_names();
-    my @summaries    = $content =~ m/^=head2 [ ]+ L<([\w:]+)>/gxms;
+    my @summaries    = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>/gxms;
     plan( tests => 2 + 2 * @policy_names );
 
     my %num_summaries;
@@ -53,7 +53,7 @@ if (open my ($fh), '<', $summary_file) {
     my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
     my %found_policies = map { ref $_ => $_ } $factory->create_all_policies();
 
-    my %descriptions = $content =~ m/^=head2 [ ]+ L<([\w:]+)>\n\n([^\n]+)/gxms;
+    my %descriptions = $content =~ m/^=head2 [ ]+ L<[\w:]+[|]([\w:]+)>\n\n([^\n]+)/gxms;
     for my $policy_name (keys %descriptions) {
         my $severity;
         if (

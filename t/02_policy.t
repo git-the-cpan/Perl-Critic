@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/02_policy.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/02_policy.t $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use 5.006001;
@@ -13,12 +13,12 @@ use warnings;
 
 use English qw<-no_match_vars>;
 
-use Test::More tests => 28;
+use Test::More tests => 29;
 
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -43,7 +43,8 @@ my $p = PolicyTest->new();
 isa_ok($p, 'PolicyTest');
 
 
-eval { $p->violates(); };
+local $EVAL_ERROR = undef;
+eval { $p->violates(); 1 };
 ok($EVAL_ERROR, 'abstract violates() throws exception');
 
 
@@ -52,6 +53,9 @@ is(
     undef,
     'is_enabled() initially returns undef',
 );
+
+
+ok( !! $p->is_safe(), 'is_safe() returns a true value by default.' );
 
 
 # Test default application...

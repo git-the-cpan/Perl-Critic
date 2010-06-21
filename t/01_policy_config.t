@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/01_policy_config.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/01_policy_config.t $
+#     $Date: 2010-06-20 17:30:21 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3830 $
 ##############################################################################
 
 use 5.006001;
@@ -13,17 +13,15 @@ use warnings;
 
 use Carp qw< confess >;
 
-use Test::More tests => 29;
+use Perl::Critic::PolicyConfig;
+
+use Test::More tests => 28;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
-
-BEGIN {
-    use_ok('Perl::Critic::PolicyConfig') or confess 'No point in continuing.';
-}
 
 
 {

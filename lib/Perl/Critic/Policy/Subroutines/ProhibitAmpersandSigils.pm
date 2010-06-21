@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm $
+#     $Date: 2010-06-20 18:53:51 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3834 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitAmpersandSigils;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities hashify };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -38,35 +38,47 @@ sub applies_to           { return 'PPI::Token::Symbol'     }
 sub violates {
     my ( $self, $elem, undef ) = @_;
 
-    my $psib = $elem->sprevious_sibling();
-    if ( $psib ) {
+    my $previous = $elem->sprevious_sibling();
+    if ( $previous ) {
         #Sigil is allowed if taking a reference, e.g. "\&my_sub"
-        return if $psib->isa('PPI::Token::Cast') && $psib eq q{\\};
+        return if $previous->isa('PPI::Token::Cast') && $previous eq q{\\};
     }
 
     return if ( $elem !~ m{\A [&] }xms ); # ok
 
     # look up past parens to get say the "defined" in "defined(&foo)" or
     # "defined((&foo))" etc
-    if (! $psib) {
+    if (not $previous) {
         my $up = $elem;
-      PARENT:
-        while (($up = $up->parent)
-               && ($up->isa('PPI::Statement::Expression')
-                   || $up->isa('PPI::Structure::List')
-                   || $up->isa('PPI::Statement'))) {
+
+        PARENT:
+        while (
+                ($up = $up->parent)
+            and (
+                    $up->isa('PPI::Statement::Expression')
+                or  $up->isa('PPI::Structure::List')
+                or  $up->isa('PPI::Statement')
+            )
+        ) {
             if (my $word = $up->sprevious_sibling) {
-                # For a word set $psib to have it checked against %EXEMPTIONS
-                # below.  For a non-word it's a violation, leave $psib false
+                # Since backslashes distribute over lists (per perlref), if
+                # we have a list and the previous is a backslash, we're cool.
+                return if
+                        $up->isa('PPI::Structure::List')
+                    &&  $word->isa('PPI::Token::Cast')
+                    &&  $word->content() eq q{\\};
+
+                # For a word set $previous to have it checked against %EXEMPTIONS
+                # below.  For a non-word it's a violation, leave $previous false
                 # to get there.
                 if ($word->isa('PPI::Token::Word')) {
-                    $psib = $word;
+                    $previous = $word;
                 }
                 last PARENT;
             }
         }
     }
-    return if $psib and $EXEMPTIONS{$psib};
+    return if $previous and $EXEMPTIONS{$previous};
 
     return $self->violation( $DESC, $EXPL, $elem );
 }
@@ -92,11 +104,11 @@ distribution.
 =head1 DESCRIPTION
 
 Since Perl 5, the ampersand sigil is completely optional when invoking
-subroutines.  And it's easily confused with the bitwise 'and'
-operator.
+subroutines.  It also turns off checking of subroutine prototypes.
+It's easily confused with the bitwise 'and' operator.
 
-  @result = &some_function(); #Not ok
-  @result = some_function();  #ok
+  @result = &some_function(); # not ok
+  @result = some_function();  # ok
 
 
 =head1 CONFIGURATION
@@ -106,11 +118,11 @@ This Policy is not configurable except for the standard options.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

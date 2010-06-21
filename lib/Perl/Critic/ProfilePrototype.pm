@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/ProfilePrototype.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/ProfilePrototype.pm $
+#     $Date: 2010-06-20 19:10:20 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3835 $
 ##############################################################################
 
 package Perl::Critic::ProfilePrototype;
@@ -18,7 +18,7 @@ use Perl::Critic::Policy qw{};
 use Perl::Critic::Utils qw{ :characters };
 use overload ( q{""} => 'to_string' );
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -99,6 +99,11 @@ sub to_string {
     $prototype .= "\n";
 
     $prototype .= $prefix;
+    $prototype .= q{allow-unsafe = };
+    $prototype .= $configuration->unsafe_allowed();
+    $prototype .= "\n";
+
+    $prototype .= $prefix;
     $prototype .= q{profile-strictness = };
     $prototype .= $configuration->profile_strictness();
     $prototype .= "\n";
@@ -157,9 +162,13 @@ sub to_string {
         $prototype .= "\n";
     }
 
+    $prototype .= $prefix;
+    $prototype .= q{program-extensions = };
+    $prototype .= join $SPACE, $configuration->program_extensions();
+
     Perl::Critic::Policy::set_format( $self->_proto_format() );
 
-    return $prototype . "\n" . join q{}, map { "$_" } @{ $self->_get_policies() };
+    return $prototype . "\n\n" . join q{}, map { "$_" } @{ $self->_get_policies() };
 }
 
 #-----------------------------------------------------------------------------
@@ -262,12 +271,12 @@ file.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

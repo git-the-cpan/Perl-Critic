@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Subroutines/ProhibitManyArgs.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitManyArgs.run $
+#     $Date: 2010-04-16 00:48:57 -0500 (Fri, 16 Apr 2010) $
+#   $Author: wyant $
+# $Revision: 3798 $
 ##############################################################################
 
 ## name basic passes
@@ -93,6 +93,16 @@ sub foo_ok($$$) {
    print $_[0];
    return;
 }
+
+#-----------------------------------------------------------------------------
+
+## name RT56627: prototype interpretation
+## failures 0
+## parms {max_arguments => 3}
+## cut
+
+sub foo ($;$) { return 1 }
+sub bar ( $ ; $ ) { return 1 }
 
 #-----------------------------------------------------------------------------
 # Local Variables:

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Variables/ProhibitPunctuationVars.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/ProhibitPunctuationVars.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::ProhibitPunctuationVars;
@@ -21,7 +21,7 @@ use Perl::Critic::Utils qw<
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ Readonly::Scalar my $MAGIC_REGEX => _create_magic_detector();
 # The magic vars in this array will be ignored in interpolated strings
 # in simple mode. See CONFIGURATION in the pod.
 Readonly::Array my @IGNORE_FOR_INTERPOLATION =>
-    ( q{$'}, q{$$}, q{$#}, q{$:}, );    ## no critic ( RequireInterpolationOfMetachars )
+    ( q{$'}, q{$$}, q{$#}, q{$:}, );    ## no critic ( RequireInterpolationOfMetachars, ProhibitQuotedWordLists )
 
 #-----------------------------------------------------------------------------
 
@@ -136,7 +136,28 @@ sub _violates_magic {
 sub _violates_string {
     my ( $self, $elem, undef ) = @_;
 
-    my %matches = _strings_helper( $self, $elem->content() );
+    # RT #55604: Variables::ProhibitPunctuationVars gives false-positive on
+    # qr// regexp's ending in '$'
+    # We want to analyze the content of the string in the dictionary sense of
+    # the word 'content'. We can not simply use the PPI content() method to
+    # get this, because content() includes the delimiters.
+    my $string;
+    if ( $elem->can( 'string' ) ) {
+        # If we have a string() method (currently only the PPI::Token::Quote
+        # classes) use it to extract the content of the string.
+        $string = $elem->string();
+    } else {
+        # Lacking string(), we fake it under the assumption that the content
+        # of our element represents one of the 'normal' Perl strings, with a
+        # single-character delimiter, possibly preceded by an operator like
+        # 'qx' or 'qr'. If there is a leading operator, spaces may appear
+        # after it.
+        $string = $elem->content();
+        $string =~ s/ \A \w* \s* . //smx;
+        chop $string;
+    }
+
+    my %matches = _strings_helper( $self, $string );
     if (%matches) {
         my $DESC = qq<$DESC in interpolated string>;
         return $self->violation( $DESC, $EXPL, $elem );
@@ -199,7 +220,7 @@ sub _strings_thorough {
         # $c is so named by analogy to that module.
 
         # possibly *not* a magic variable
-        if ($c =~ m/ ^  \$  .*  [  \w  :  \$  \{  ]  $ /xms) {
+        if ($c =~ m/ ^  \$  .*  [  \w  :  \$  {  ]  $ /xms) {
             ## no critic (RequireInterpolationOfMetachars)
 
             if (
@@ -226,7 +247,7 @@ sub _strings_thorough {
             # if ( $c =~ m/^\$\^\w{2}$/xms ) {
             # }
 
-            next MATCH if $c =~ m/ ^\$\#\{ /xms;    # It's a $#{...} cast
+            next MATCH if $c =~ m/ ^ \$ \# [{] /xms;    # It's a $#{...} cast
         }
 
         # The additional checking that PPI::Token::Magic does at this point
@@ -257,7 +278,7 @@ sub _create_magic_detector {
                 q<|>,
                 map          { quotemeta $_ }
                 reverse sort { length $a <=> length $b }
-                grep         { '%' ne substr $_, 0, 1 }
+                grep         { q<%> ne substr $_, 0, 1 }
                 @MAGIC_VARIABLES
         )
         .   ')';
@@ -365,12 +386,12 @@ interpolating  and  the  C<string_mode>   option   will   go   away.
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

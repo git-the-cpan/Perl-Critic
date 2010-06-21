@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/InputOutput/RequireBriefOpen.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/InputOutput/RequireBriefOpen.run $
+#     $Date: 2009-12-03 07:52:50 -0600 (Thu, 03 Dec 2009) $
 #   $Author: clonezone $
-# $Revision: 3231 $
+# $Revision: 3730 $
 ##############################################################################
 
 ## name open .. close
@@ -332,6 +332,44 @@ $hash->{close};
 open @foo, '<', $filename; # nonsense
 open @$foo, '<', $filename; # nonsense
 open my @bar, '<', $filename; # nonsense
+
+#-----------------------------------------------------------------------------
+
+## name CORE::close() - RT #52391
+## failures 0
+## cut
+
+open( my $fh, '<', $filename );
+my $value = <$fh>;
+CORE::close($fh);
+
+#-----------------------------------------------------------------------------
+
+## name CORE::GLOBAL::close()
+## failures 0
+## cut
+
+open my $fh, '<', $filename;
+my $value = <$fh>;
+CORE::GLOBAL::close($fh);
+
+#-----------------------------------------------------------------------------
+
+## name CORE::open()
+## failures 1
+## cut
+
+CORE::open my $fh, '<', $filename;
+
+#-----------------------------------------------------------------------------
+
+# Local Variables:
+
+## name CORE::GLOBAL::open()
+## failures 1
+## cut
+
+CORE::GLOBAL::open(my $fh, '<', $filename);
 
 #-----------------------------------------------------------------------------
 

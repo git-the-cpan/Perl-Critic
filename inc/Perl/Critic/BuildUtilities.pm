@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/BuildUtilities.pm $
+#     $Date: 2010-06-20 19:21:58 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3837 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -13,7 +13,7 @@ use warnings;
 
 use English q<-no_match_vars>;
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 use base qw{ Exporter };
 
@@ -33,45 +33,48 @@ use Devel::CheckOS qw< os_is >;
 
 sub required_module_versions {
     return (
-        'B::Keywords'               => 1.05,
-        'Carp'                      => 0,
-        'Config::Tiny'              => 2,
-        'English'                   => 0,
-        'Exception::Class'          => 1.23,
-        'Exporter'                  => 0,
-        'File::Basename'            => 0,
-        'File::Find'                => 0,
-        'File::Path'                => 0,
-        'File::Spec'                => 0,
-        'File::Spec::Unix'          => 0,
-        'File::Temp'                => 0,
-        'Getopt::Long'              => 0,
-        'IO::String'                => 0,
-        'List::MoreUtils'           => 0.19,
-        'List::Util'                => 0,
-        'Module::Pluggable'         => 3.1,
-        'PPI'                       => '1.205',
-        'PPI::Document'             => '1.205',
-        'PPI::Document::File'       => '1.205',
-        'PPI::Node'                 => '1.205',
-        'PPI::Token::Quote::Single' => '1.205',
-        'PPI::Token::Whitespace'    => '1.205',
-        'Pod::PlainText'            => 0,
-        'Pod::Select'               => 0,
-        'Pod::Usage'                => 0,
-        'Readonly'                  => 1.03,
-        'Scalar::Util'              => 0,
-        'String::Format'            => 1.13,
-        'base'                      => 0,
-        'charnames'                 => 0,
-        'overload'                  => 0,
-        'strict'                    => 0,
-        'version'                   => 0,
-        'warnings'                  => 0,
-        'overload'                  => 0,
-        'strict'                    => 0,
-        'version'                   => 0,
-        'warnings'                  => 0,
+        'B::Keywords'                   => 1.05,
+        'Carp'                          => 0,
+        'Config::Tiny'                  => 2,
+        'Email::Address'                => 1.889,
+        'English'                       => 0,
+        'Exception::Class'              => 1.23,
+        'Exporter'                      => 0,
+        'File::Basename'                => 0,
+        'File::Find'                    => 0,
+        'File::Path'                    => 0,
+        'File::Spec'                    => 0,
+        'File::Spec::Unix'              => 0,
+        'File::Temp'                    => 0,
+        'Getopt::Long'                  => 0,
+        'IO::String'                    => 0,
+        'List::MoreUtils'               => 0.19,
+        'List::Util'                    => 0,
+        'Module::Pluggable'             => 3.1,
+        'PPI'                           => '1.208',
+        'PPI::Document'                 => '1.208',
+        'PPI::Document::File'           => '1.208',
+        'PPI::Node'                     => '1.208',
+        'PPI::Token::Quote::Single'     => '1.208',
+        'PPI::Token::Whitespace'        => '1.208',
+        'PPIx::Utilities::Statement'    => '1.000',
+        'Pod::PlainText'                => 0,
+        'Pod::Select'                   => 0,
+        'Pod::Usage'                    => 0,
+        'Readonly'                      => 1.03,
+        'Scalar::Util'                  => 0,
+        'String::Format'                => 1.13,
+        'Task::Weaken'                  => 0,
+        'Test::Builder'                 => 0.92,
+        'base'                          => 0,
+        'charnames'                     => 0,
+        'overload'                      => 0,
+        'strict'                        => 0,
+        'version'                       => 0,
+        'overload'                      => 0,
+        'strict'                        => 0,
+        'version'                       => 0,
+        'warnings'                      => 0,
     );
 }
 
@@ -86,12 +89,14 @@ sub build_required_module_versions {
 
 sub recommended_module_versions {
     return (
-        'Email::Address'        => '1.889',
         'File::HomeDir'         => 0,
         'Perl::Tidy'            => 0,
         'Readonly::XS'          => 0,
-        'Regexp::Parser'        => '0.20',
-        'Term::ANSIColor'       => 0,
+        'PPIx::Regexp'          => 0,
+
+        # If the following changes, the corresponding change needs to be made
+        # in $Perl::Critic::Utils::Constants::_MODULE_VERSION_TERM_ANSICOLOR.
+        'Term::ANSIColor'       => '2.02',
 
         # All of these are for Documentation::PodSpelling
         'File::Which'           => 0,
@@ -132,7 +137,6 @@ sub test_wrappers_to_generate {
         t/20_policy_prohibit_hard_tabs.t
         t/20_policy_prohibit_trailing_whitespace.t
         t/20_policy_require_consistent_newlines.t
-        t/20_policy_require_interpolation_of_metachars.t
         t/20_policy_require_tidy_code.t
         xt/author/80_policysummary.t
         t/92_memory_leaks.t
@@ -146,7 +150,6 @@ sub test_wrappers_to_generate {
 }
 
 my @TARGET_FILES = qw<
-    lib/Perl/Critic/PolicySummary.pod
     t/ControlStructures/ProhibitNegativeExpressionsInUnlessAndUntilConditions.run
     t/NamingConventions/Capitalization.run
     t/Variables/RequireLocalizedPunctuationVars.run
@@ -206,6 +209,9 @@ extracted the Perl::Critic tarball using GNU tar.
 END_OF_TAR_WARNING
     }
 }
+
+
+
 
 1;
 
@@ -273,8 +279,7 @@ Elliot Shank  C<< <perl@galumph.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007-2009, Elliot Shank C<< <perl@galumph.com> >>. All
-rights reserved.
+Copyright (c) 2007-2010, Elliot Shank.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

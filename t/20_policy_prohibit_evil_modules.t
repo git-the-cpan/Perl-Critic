@@ -1,24 +1,24 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/20_policy_prohibit_evil_modules.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/20_policy_prohibit_evil_modules.t $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use 5.006001;
 use strict;
 use warnings;
 
-# common P::C testing tools
-use Perl::Critic::TestUtils qw(pcritique);
+use Perl::Critic::TestUtils qw< pcritique >;
+use Perl::Critic::Utils     qw< $EMPTY >;
 
 use Test::More tests => 1;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ use Super::Evil::Module;
 
 END_PERL
 
-my $result = eval { pcritique($policy, \$code); 1; };
+my $result = eval { pcritique( $policy, \$code, {modules => $EMPTY} ); 1; };
 ok(
     ! $result,
     "$policy does not run if there are no evil modules configured.",

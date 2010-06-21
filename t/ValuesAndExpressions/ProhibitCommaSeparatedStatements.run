@@ -266,8 +266,7 @@ $self->DoSomething
 
 #-----------------------------------------------------------------------------
 
-## name RT #33935
-## TODO PPI sees the hash slice as a block
+## name RT #33935 and 49679
 ## failures 0
 ## cut
 
@@ -276,10 +275,10 @@ func( @{ $href }{'1', '2'} );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
+#     $Date: 2010-02-14 14:31:47 -0600 (Sun, 14 Feb 2010) $
+#   $Author: wyant $
+# $Revision: 3768 $
 ##############################################################################
 
 # Local Variables:

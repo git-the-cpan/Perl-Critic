@@ -1,3 +1,35 @@
+## name Deprecated Class::ISA
+## failures 1
+## cut
+
+use Class::ISA;
+
+#-----------------------------------------------------------------------------
+
+## name Deprecated Pod::Plainer
+## failures 1
+## cut
+
+use Pod::Plainer;
+
+#-----------------------------------------------------------------------------
+
+## name Deprecated Shell
+## failures 1
+## cut
+
+use Shell;
+
+#-----------------------------------------------------------------------------
+
+## name Deprecated Switch
+## failures 1
+## cut
+
+use Switch;
+
+#-----------------------------------------------------------------------------
+
 ## name 2 evil modules
 ## parms {modules => 'Evil::Module Super::Evil::Module'}
 ## failures 2
@@ -103,10 +135,10 @@ use Getopt::Std;
 
 #-----------------------------------------------------------------------------
 
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Modules/ProhibitEvilModules.run $
-#     $Date: 2009-01-18 17:15:39 -0600 (Sun, 18 Jan 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/ProhibitEvilModules.run $
+#     $Date: 2010-06-13 14:20:19 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3004 $
+# $Revision: 3820 $
 
 ##############################################################################
 # Local Variables:

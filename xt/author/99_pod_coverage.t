@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/99_pod_coverage.t $
-#    $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/99_pod_coverage.t $
+#    $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use 5.006001;
@@ -17,12 +17,11 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
-eval 'use Test::Pod::Coverage 1.04; 1'
-    or plan skip_all => 'Test::Pod::Coverage 1.00 requried to test POD';
+use Test::Pod::Coverage 1.04;
 
 {
     # HACK: Perl::Critic::Violation uses Pod::Parser to extract the
@@ -32,7 +31,7 @@ eval 'use Test::Pod::Coverage 1.04; 1'
     # POD and compare it with the subroutines that are in the symbol
     # table for that module.  For reasons I cannot yet explain, using
     # Pod::Parser twice this way causes the symbol table to get very
-    # wacky and this test script dies with "Can't call method 'OPEN'
+    # wacky and this test program dies with "Can't call method 'OPEN'
     # on IO::String at line 1239 of Pod/Parser.pm".
 
     # For now, my workaround is to temporarily redefine the import()
@@ -59,6 +58,7 @@ sub get_trusted_methods {
         prepare_to_scan_document
         violates
         applies_to
+        is_safe
         default_themes
         default_maximum_violations_per_document
         default_severity

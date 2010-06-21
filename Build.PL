@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/Build.PL $
-#     $Date: 2009-08-08 10:49:22 -0500 (Sat, 08 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Build.PL $
+#     $Date: 2010-06-20 17:53:38 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3483 $
+# $Revision: 3831 $
 ########################################################################
 
 use 5.006001;
@@ -29,7 +29,7 @@ emit_tar_warning_if_necessary();
 
 my $builder = Perl::Critic::Module::Build->new(
     module_name         => 'Perl::Critic',
-    dist_author         => 'Jeffrey Thalhammer <thaljef@cpan.org>',
+    dist_author         => 'Jeffrey Thalhammer <jeff@imaginative-software.com>',
     dist_abstract       => 'Critique Perl source code for best-practices.',
     license             => 'perl',
     dynamic_config      => 1,
@@ -62,12 +62,12 @@ my $builder = Perl::Critic::Module::Build->new(
             file        => [
                 qw<
                     TODO.pod
-                    lib/Perl/Critic/PolicySummary.pod.PL
                 >
             ],
             directory   => [
                 qw<
                     doc
+                    inc
                     tools
                     xt
                 >

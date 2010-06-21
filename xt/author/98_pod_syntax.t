@@ -1,17 +1,15 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/98_pod_syntax.t $
-#    $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/98_pod_syntax.t $
+#    $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use 5.006001;
 use strict;
 use warnings;
-
-use English qw< -no_match_vars >;
 
 use Perl::Critic::TestUtils qw{ starting_points_including_examples };
 
@@ -19,12 +17,12 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
-eval 'use Test::Pod 1.00';
-plan skip_all => 'Test::Pod 1.00 required for testing POD' if $EVAL_ERROR;
+use Test::Pod 1.00;
+
 all_pod_files_ok( all_pod_files( starting_points_including_examples() ) );
 
 # Local Variables:

@@ -83,15 +83,15 @@ $sigil_as_delimiter = q    @blah@;
 ## failures 7
 ## cut
 
-$VERSION = q<$Revision: 3547 $>;
-($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx;
-our $VERSION = substr(q/$Revision: 3547 $/, 10);
-our ($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx;
-our ($VERSION) = (q<$Revision: 3547 $> =~ m/(\d+)/mx);
-our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3547 $>;
+$VERSION = q<$Revision: 3793 $>;
+($VERSION) = q<$Revision: 3793 $> =~ m/(\d+)/mx;
+our $VERSION = substr(q/$Revision: 3793 $/, 10);
+our ($VERSION) = q<$Revision: 3793 $> =~ m/(\d+)/mx;
+our ($VERSION) = (q<$Revision: 3793 $> =~ m/(\d+)/mx);
+our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: thaljef $ $Revision: 3793 $>;
 
 # Yes, silly example, but still need to check it.
-if ( ($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx ) {}
+if ( ($VERSION) = q<$Revision: 3793 $> =~ m/(\d+)/mx ) {}
 
 #-----------------------------------------------------------------------------
 
@@ -100,15 +100,15 @@ if ( ($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx ) {}
 ## parms { rcs_keywords => 'Revision Author' }
 ## cut
 
-$VERSION = q<$Revision: 3547 $>;
-($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx;
-our $VERSION = substr(q/$Revision: 3547 $/, 10);
-our ($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx;
-our ($VERSION) = (q<$Revision: 3547 $> =~ m/(\d+)/mx);
-our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3547 $>;
+$VERSION = q<$Revision: 3793 $>;
+($VERSION) = q<$Revision: 3793 $> =~ m/(\d+)/mx;
+our $VERSION = substr(q/$Revision: 3793 $/, 10);
+our ($VERSION) = q<$Revision: 3793 $> =~ m/(\d+)/mx;
+our ($VERSION) = (q<$Revision: 3793 $> =~ m/(\d+)/mx);
+our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: thaljef $ $Revision: 3793 $>;
 
 # Yes, silly example, but still need to check it.
-if ( ($VERSION) = q<$Revision: 3547 $> =~ m/(\d+)/mx ) {}
+if ( ($VERSION) = q<$Revision: 3793 $> =~ m/(\d+)/mx ) {}
 
 #-----------------------------------------------------------------------------
 
@@ -165,11 +165,38 @@ use Generic::Module '$FOO';
 
 #-----------------------------------------------------------------------------
 
+## name Things that look like email addresses.
+## failures 0
+## cut
+
+$simple  = 'me@foo.bar';
+$complex = q{don-quixote@man-from.lamancha.org};
+
+#-----------------------------------------------------------------------------
+## name More things that look like email addresses.
+## failures 0
+## cut
+
+$simple  = 'Email: me@foo.bar';
+$complex = q{"don-quixote@man-from.lamancha.org" is my address};
+send_email_to ('foo@bar.com', ...);
+
+#-----------------------------------------------------------------------------
+## name Email addresses with emedded violations.
+## TODO Policy is not smart enough to handle this yet.
+## failures 2
+## cut
+
+$simple  = 'Email: $name@$company.$domain';
+send_email_to('$some_var: foo@bar.com', ...);
+
+
+
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
-#     $Date: 2009-08-09 16:06:04 -0500 (Sun, 09 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3547 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
+#     $Date: 2010-03-21 20:08:59 -0500 (Sun, 21 Mar 2010) $
+#   $Author: thaljef $
+# $Revision: 3793 $
 ##############################################################################
 
 # Local Variables:

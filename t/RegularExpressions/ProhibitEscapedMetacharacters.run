@@ -1,11 +1,11 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/RegularExpressions/ProhibitEscapedMetacharacters.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitEscapedMetacharacters.run $
+#     $Date: 2009-11-07 09:50:02 -0600 (Sat, 07 Nov 2009) $
+#   $Author: wyant $
+# $Revision: 3705 $
 ##############################################################################
 
-## global prerequisites Regexp::Parser
+## global prerequisites PPIx::Regexp
 
 ## name basic passes
 ## failures 0
@@ -18,7 +18,7 @@ $name =~ m{ harry [ ] s [ ] truman
 
 ## name basic failures
 ## failures 2
-## optional_modules Regexp::Parser
+## optional_modules PPIx::Regexp
 ## cut
 
 m/ \{ . \. \d{2} \} /xms;
@@ -54,8 +54,7 @@ m/ \[\] /x;
 s{\%[fF]}{STDIN}mx;
 
 ## name escaped characters in character classes
-## TODO haven't fixed these bugs yet
-## failures 0
+## failures 2
 ## cut
 
 m/ ([\)]) /xms;

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Subroutines/ProhibitNestedSubs.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitNestedSubs.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitNestedSubs;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -36,7 +36,15 @@ sub applies_to           { return 'PPI::Statement::Sub' }
 sub violates {
     my ($self, $elem, $doc) = @_;
 
-    my $inner = $elem->find_first('PPI::Statement::Sub');
+    return if $elem->isa('PPI::Statement::Scheduled');
+
+    my $inner = $elem->find_first(
+        sub {
+            return
+                    $_[1]->isa('PPI::Statement::Sub')
+                &&  ! $_[1]->isa('PPI::Statement::Scheduled');
+        }
+    );
     return if not $inner;
 
     # Must be a violation...
@@ -98,7 +106,7 @@ Ricardo SIGNES <rjbs@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Ricardo SIGNES.
+Copyright (c) 2007-2010 Ricardo SIGNES.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

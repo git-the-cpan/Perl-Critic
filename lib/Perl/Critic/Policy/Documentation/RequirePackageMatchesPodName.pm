@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::RequirePackageMatchesPodName;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -35,8 +35,8 @@ sub applies_to           { return 'PPI::Document'         }
 sub prepare_to_scan_document {
     my ( $self, $document ) = @_;
 
-    # idea: force NAME to match the file name in scripts?
-    return not is_script($document); # mismatch is normal in program entry points
+    # idea: force NAME to match the file name in programs?
+    return $document->is_module(); # mismatch is normal in program entry points
 }
 
 sub violates {
@@ -61,12 +61,12 @@ sub violates {
         $pod_pkg =~ s{\A [CL]<(.*)>\z}{$1}gxms; # unwrap
         $pod_pkg =~ s{\'}{::}gxms;              # perl4 -> perl5
 
-        my $pkgs = $doc->find('PPI::Statement::Package');
-        # no package statement means no possible match
-        my $pkg = $pkgs ? $pkgs->[0]->namespace : q{};
-        $pkg =~ s{\'}{::}gxms;
+        foreach my $stmt ( @{ $doc->find('PPI::Statement::Package') || [] } ) {
+            my $pkg = $stmt->namespace();
+            $pkg =~ s{\'}{::}gxms;
+            return if $pkg eq $pod_pkg;
+        }
 
-        return if $pkg eq $pod_pkg;
         return $self->violation( $DESC, $EXPL, $pod );
     }
 
@@ -106,7 +106,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008-2009 Chris Dolan
+Copyright (c) 2008-2010 Chris Dolan
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

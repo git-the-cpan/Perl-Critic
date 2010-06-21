@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/DEVELOPER.pod $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/DEVELOPER.pod $
+#     $Date: 2010-06-20 18:35:42 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3833 $
 ##############################################################################
 
 =pod
@@ -96,7 +96,7 @@ what's wrong."  The explanation can be either a string with further
 details, or a reference to an array of integers that correspond to
 page numbers in I<PBP>.  We make them read-only because they never
 change.  (See
-L<Perl::Critic::ValuesAndExpressions::ProhibitConstantPragma|Perl::Critic::ValuesAndExpressions::ProhibitConstantPragma>
+L<Perl::Critic::Policy::ValuesAndExpressions::ProhibitConstantPragma|Perl::Critic::Policy::ValuesAndExpressions::ProhibitConstantPragma>
 for why we don't C<use constant>.)
 
     Readonly::Scalar my $DESC => q{Expression form of "grep"};
@@ -920,6 +920,20 @@ L<Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings|Perl::Critic::Po
 for examples.
 
 
+=head2 C<is_safe()>
+
+Most L<Perl::Critic> Policies are purely I<static>.  In other words,
+they never compile or execute any of the source code that they
+analyze.  However it is possible to write I<dynamic> Policies that do
+compile or execute code, which may result in unsafe operations (see
+L<Perl::Critic::Dynamic|Perl::Critic::Dynamic> for an example).  So
+the C<is_safe()> method is used to indicate whether a Policy can be
+trusted to not cause mischief.  By default, C<is_safe()> returns true.
+But if you are writing a Policy that will compile or execute any of
+the source code that it analyzes, then you should override the
+C<is_safe()> method to return false.
+
+
 =head1 DISTRIBUTING YOUR POLICIES
 
 =head2 Create a Distribution
@@ -1031,6 +1045,10 @@ only to say:
 
     This Policy is not configurable except for the standard options.
 
+=head1 TESTING YOUR POLICY
+
+The L<Perl::Critic> distribution also contains a framework for testing your
+Policy.  See L<Test::Perl::Critic::Policy> for the details.
 
 =head1 HINT
 
@@ -1056,17 +1074,23 @@ L<http://search.cpan.org/dist/PPI-Tester/lib/PPI/Tester.pm>.
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.106.
+This is part of L<Perl::Critic|Perl::Critic> version 1.107_001.
+
+
+=head1 SEE ALSO
+
+Chas. Owens has a blog post about developing in-house policies at
+L<http://svok.blogspot.com/2009/09/adding-house-policies-to-perlcritic.html>.
 
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

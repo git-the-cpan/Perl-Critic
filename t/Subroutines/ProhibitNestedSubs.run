@@ -16,11 +16,51 @@ sub foo { if (1) { do { sub bar { 1 } } } }
 
 #-----------------------------------------------------------------------------
 
+## name Subroutine declarations inside scheduled blocks used for lexical scope restriction.
+## failures 0
+## cut
+
+CHECK {
+    my $foo = 1;
+
+    sub bar { return $foo }
+}
+
+#-----------------------------------------------------------------------------
+
+## name Scheduled blocks inside subroutine declarations.
+## failures 0
+## cut
+
+sub quack {
+    state $foo;
+
+    UNITCHECK {
+        $foo = 1;
+    }
+}
+
+#-----------------------------------------------------------------------------
+
+## name Subroutine declarations inside scheduled blocks inside subroutine declarations.
+## failures 1
+## cut
+
+sub quack {
+    INIT {
+        my $foo = 1;
+
+        sub bar { return $foo }
+    }
+}
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/Subroutines/ProhibitNestedSubs.run $
-#     $Date: 2008-03-16 17:40:45 -0500 (Sun, 16 Mar 2008) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitNestedSubs.run $
+#     $Date: 2009-12-23 18:30:42 -0600 (Wed, 23 Dec 2009) $
 #   $Author: clonezone $
-# $Revision: 2187 $
+# $Revision: 3738 $
 ##############################################################################
 
 # Local Variables:

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/Objects/ProhibitIndirectSyntax.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Objects/ProhibitIndirectSyntax.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::Objects::ProhibitIndirectSyntax;
@@ -18,7 +18,7 @@ use Readonly;
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -140,8 +140,9 @@ The general situation can not be handled via static analysis.
 
 =head1 SEE ALSO
 
-L<Perl::Critic::Policy::Dynamic::NoIndirect> and L<indirect> both do a better
-job with this, but they require that you compile/execute your code.
+L<Perl::Critic::Policy::Dynamic::NoIndirect|Perl::Critic::Policy::Dynamic::NoIndirect>
+and L<indirect|indirect> both do a better job with this, but they require that you
+compile/execute your code.
 
 
 =head1 AUTHOR
@@ -151,7 +152,7 @@ Thomas R. Wyant, III F<wyant at cpan dot org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009 Tom Wyant.
+Copyright (c) 2009-2010 Tom Wyant.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

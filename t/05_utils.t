@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/05_utils.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/05_utils.t $
+#     $Date: 2010-06-20 17:30:21 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3830 $
 ##############################################################################
 
 ## There's too much use of source code in strings.
@@ -23,19 +23,13 @@ use PPI::Document::File qw< >;
 
 use Perl::Critic::PolicyFactory;
 use Perl::Critic::TestUtils qw(bundled_policy_names);
+use Perl::Critic::Utils;
 
-use Test::More tests => 125;
-
-#-----------------------------------------------------------------------------
-
-our $VERSION = '1.106';
+use Test::More tests => 124;
 
 #-----------------------------------------------------------------------------
 
-BEGIN {
-    # Needs to be in BEGIN for global vars
-    use_ok('Perl::Critic::Utils', qw{ :all } ) or confess;
-}
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -90,7 +84,11 @@ sub test_export {
 #-----------------------------------------------------------------------------
 
 sub count_matches { my $val = shift; return defined $val ? scalar @{$val} : 0; }
-sub make_doc { my $code = shift; return PPI::Document->new( ref $code ? $code : \$code); }
+sub make_doc {
+    my $code = shift;
+    return
+        Perl::Critic::Document->new('-source' => ref $code ? $code : \$code);
+}
 
 sub test_find_keywords {
     my $doc = PPI::Document->new(); #Empty doc
@@ -155,6 +153,8 @@ sub test_is_script {
         "\n#!perl\n",
     );
 
+    no warnings qw< deprecated >;   ## no critic (TestingAndDebugging::ProhibitNoWarnings)
+
     for my $code (@good) {
         my $doc = PPI::Document->new(\$code) or confess;
         $doc->index_locations();
@@ -184,7 +184,8 @@ sub test_is_script_with_PL_files { ## no critic (NamingConventions::Capitalizati
     close $temp_file or confess "Couldn't close $temp_file: $OS_ERROR";
 
     my $doc = PPI::Document::File->new($temp_file->filename());
-    $doc->index_locations();
+
+    no warnings qw< deprecated >;   ## no critic (TestingAndDebugging::ProhibitNoWarnings)
     ok(is_script($doc), 'is_script, false for .PL files');
 
     return;

@@ -1,11 +1,11 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/RegularExpressions/ProhibitEnumeratedClasses.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitEnumeratedClasses.run $
+#     $Date: 2009-11-07 09:50:02 -0600 (Sat, 07 Nov 2009) $
+#   $Author: wyant $
+# $Revision: 3705 $
 ##############################################################################
 
-## global prerequisites Regexp::Parser
+## global prerequisites PPIx::Regexp
 
 ## name basic passes
 ## failures 0
@@ -28,7 +28,7 @@ m/[\x{ffef}]/; # for code coverage
 
 ## name basic failures
 ## failures 8
-## optional_modules Regexp::Parser
+## optional_modules PPIx::Regexp
 ## cut
 
 m/[A-Z]/;      # \p{Uppercase}
@@ -44,7 +44,7 @@ m/[\ \t\r\n]/; # \s
 
 ## name alterate representations of line endings
 ## failures 3
-## optional_modules Regexp::Parser
+## optional_modules PPIx::Regexp
 ## cut
 
 m/[\ \t\012\015]/; # \s
@@ -55,7 +55,7 @@ m/[\ \t\x{0a}\x{0d}]/; # \s
 
 ## name negative failures
 ## failures 8
-## optional_modules Regexp::Parser
+## optional_modules PPIx::Regexp
 ## cut
 
 m/[^\w]/;       # \W

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/05_utils_pod.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/05_utils_pod.t $
+#     $Date: 2010-06-20 17:30:21 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3830 $
 ##############################################################################
 
 use 5.006001;
@@ -15,23 +15,20 @@ use English qw< -no_match_vars >;
 use Readonly;
 use Carp qw< confess >;
 
-use Test::More tests => 62;
+
+use Perl::Critic::Utils::POD qw< :all >;
+
+
+use Test::More tests => 61;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $EXCEPTION_MESSAGE_REGEX =>
     qr<malformed [ ] name [ ] section>xmsi;
-
-#-----------------------------------------------------------------------------
-
-BEGIN {
-    use_ok('Perl::Critic::Utils::POD', qw< :all >)
-        or confess 'No point in continuing.';
-}
 
 
 can_ok('main', 'get_pod_file_for_module');

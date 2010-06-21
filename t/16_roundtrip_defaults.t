@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/t/16_roundtrip_defaults.t $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/16_roundtrip_defaults.t $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 use 5.006001;
@@ -22,7 +22,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ foreach my $policy (@default_policies) {
         $policy_test_count += scalar @{$policy->get_parameters()};
     }
 }
-my $test_count = 17 + $policy_test_count;
+my $test_count = 18 + $policy_test_count;
 plan tests => $test_count;
 
 #-----------------------------------------------------------------------------
@@ -201,6 +201,16 @@ is(
     $derived_configuration->color_severity_lowest(),
     $default_configuration->color_severity_lowest(),
     'color_severity_lowest',
+);
+
+#-----------------------------------------------------------------------------
+
+my @derived_program_extensions = $derived_configuration->program_extensions();
+my @default_program_extensions = $default_configuration->program_extensions();
+cmp_deeply(
+    \@derived_program_extensions,
+    \@default_program_extensions,
+    'program_extensions',
 );
 
 #-----------------------------------------------------------------------------

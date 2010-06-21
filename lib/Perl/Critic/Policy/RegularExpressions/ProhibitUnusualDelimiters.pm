@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusualDelimiters.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusualDelimiters.pm $
+#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3824 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitUnusualDelimiters;
@@ -16,10 +16,10 @@ use English qw(-no_match_vars);
 use Carp;
 
 use Perl::Critic::Utils qw{ :booleans :severities hashify };
-use Perl::Critic::Utils::PPIRegexp qw{ get_delimiters };
+
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ sub violates {
     my ( $self, $elem, undef ) = @_;
 
     my $allowed_delimiters = $self->{_allowed_delimiters};
-    foreach my $delimiter (get_delimiters($elem)) {
+    foreach my $delimiter ($elem->get_delimiters()) {
         next if $allowed_delimiters->{$delimiter};
         return $self->violation( $DESC, $EXPL, $elem );
     }
@@ -127,7 +127,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007-2009 Chris Dolan.  Many rights reserved.
+Copyright (c) 2007-2010 Chris Dolan.  Many rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

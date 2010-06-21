@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.106/lib/Perl/Critic/OptionsProcessor.pm $
-#     $Date: 2010-05-10 22:15:46 -0500 (Mon, 10 May 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/OptionsProcessor.pm $
+#     $Date: 2010-06-20 18:35:42 -0400 (Sun, 20 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3809 $
+# $Revision: 3833 $
 ##############################################################################
 
 package Perl::Critic::OptionsProcessor;
@@ -24,7 +24,7 @@ use Perl::Critic::Utils::Constants qw<
     >;
 use Perl::Critic::Utils::DataConversion qw< dor >;
 
-our $VERSION = '1.106';
+our $VERSION = '1.107_001';
 
 #-----------------------------------------------------------------------------
 
@@ -43,8 +43,12 @@ sub _init {
     # Multi-value defaults
     my $exclude = dor(delete $args{exclude}, $EMPTY);
     $self->{_exclude}    = [ words_from_string( $exclude ) ];
+
     my $include = dor(delete $args{include}, $EMPTY);
     $self->{_include}    = [ words_from_string( $include ) ];
+
+    my $program_extensions = dor(delete $args{'program-extensions'}, $EMPTY);
+    $self->{_program_extensions} = [ words_from_string( $program_extensions) ];
 
     # Single-value defaults
     $self->{_force}           = dor(delete $args{force},              $FALSE);
@@ -58,6 +62,8 @@ sub _init {
     $self->{_verbose}         = dor(delete $args{verbose},            $DEFAULT_VERBOSITY);
     $self->{_criticism_fatal} = dor(delete $args{'criticism-fatal'},  $FALSE);
     $self->{_pager}           = dor(delete $args{pager},              $EMPTY);
+    $self->{_allow_unsafe}    = dor(delete $args{'allow-unsafe'},     $FALSE);
+
     $self->{_color_severity_highest} = dor(
         delete $args{'color-severity-highest'},
         delete $args{'colour-severity-highest'},
@@ -200,6 +206,13 @@ sub pager {
 
 #-----------------------------------------------------------------------------
 
+sub allow_unsafe {
+    my ($self) = @_;
+    return $self->{_allow_unsafe};
+}
+
+#-----------------------------------------------------------------------------
+
 sub criticism_fatal {
     my ($self) = @_;
     return $self->{_criticism_fatal};
@@ -252,6 +265,13 @@ sub color_severity_low {
 sub color_severity_lowest {
     my ($self) = @_;
     return $self->{_color_severity_lowest};
+}
+
+#-----------------------------------------------------------------------------
+
+sub program_extensions {
+    my ($self) = @_;
+    return $self->{_program_extensions};
 }
 
 #-----------------------------------------------------------------------------
@@ -370,6 +390,11 @@ Returns the default C<pager> setting. (Either empty string or the pager
 command string).
 
 
+=item C< allow_unsafe() >
+
+Returns the default C<allow-unsafe> setting. (Either 1 or 0).
+
+
 =item C< criticism_fatal() >
 
 Returns the default C<criticism-fatal> setting (Either 1 or 0).
@@ -394,6 +419,11 @@ Returns the color to be used for coloring low severity violations.
 
 Returns the color to be used for coloring lowest severity violations.
 
+=item C< program_extensions() >
+
+Returns a reference to the array of file name extensions to be interpreted as
+representing Perl programs.
+
 =back
 
 
@@ -405,12 +435,12 @@ L<Perl::Critic::UserProfile|Perl::Critic::UserProfile>
 
 =head1 AUTHOR
 
-Jeffrey Ryan Thalhammer <thaljef@cpan.org>
+Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2009 Jeffrey Ryan Thalhammer.  All rights reserved.
+Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license
