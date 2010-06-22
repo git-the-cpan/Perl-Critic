@@ -579,7 +579,7 @@ Negative array index should be used. [Severity 4]
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.107_001.
+This is part of L<Perl::Critic|Perl::Critic> version 1.108.
 
 
 =head1 AUTHOR

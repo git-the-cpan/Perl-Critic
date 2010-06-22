@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/DEVELOPER.pod $
-#     $Date: 2010-06-20 18:35:42 -0400 (Sun, 20 Jun 2010) $
+#     $Date: 2010-06-22 16:14:07 -0400 (Tue, 22 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3833 $
+# $Revision: 3843 $
 ##############################################################################
 
 =pod
@@ -1074,7 +1074,7 @@ L<http://search.cpan.org/dist/PPI-Tester/lib/PPI/Tester.pm>.
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.107_001.
+This is part of L<Perl::Critic|Perl::Critic> version 1.108.
 
 
 =head1 SEE ALSO

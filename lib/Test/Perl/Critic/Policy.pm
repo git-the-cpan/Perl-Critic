@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Test/Perl/Critic/Policy.pm $
-#     $Date: 2010-06-13 18:26:31 -0500 (Sun, 13 Jun 2010) $
+#     $Date: 2010-06-22 16:14:07 -0400 (Tue, 22 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3824 $
+# $Revision: 3843 $
 ##############################################################################
 
 package Test::Perl::Critic::Policy;
@@ -26,7 +26,7 @@ use Perl::Critic::TestUtils qw<pcritique_with_violations fcritique_with_violatio
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.107_001';
+our $VERSION = '1.108';
 
 #-----------------------------------------------------------------------------
 

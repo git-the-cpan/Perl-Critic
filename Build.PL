@@ -1,8 +1,8 @@
 #######################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Build.PL $
-#     $Date: 2010-06-20 17:53:38 -0400 (Sun, 20 Jun 2010) $
+#     $Date: 2010-06-21 10:10:33 -0400 (Mon, 21 Jun 2010) $
 #   $Author: clonezone $
-# $Revision: 3831 $
+# $Revision: 3840 $
 ########################################################################
 
 use 5.006001;
@@ -55,7 +55,7 @@ my $builder = Perl::Critic::Module::Build->new(
         resources   => {
             homepage    => 'http://perlcritic.com',
             license     => 'http://dev.perl.org/licenses/',
-            Repository  => 'http://guest@perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/',
+            repository  => 'http://guest@perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/',
             MailingList => 'http://perlcritic.tigris.org/servlets/SummarizeList?listName=users',
         },
         no_index        => {
