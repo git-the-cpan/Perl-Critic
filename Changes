@@ -1,3 +1,10 @@
+[1.109] Released on 2010-08-29
+
+    Bug Fixes:
+    * ValuesAndExpressions::RequireInterpolationOfMetachars fix due to changes
+      in Email::Address 1.890.  Note that this may find problems in code that
+      it didn't before, e.g. q<'@foo'>.
+
 [1.108] Released on 2010-06-22
 
     This is the "Give Shawn Moore what we promised him a year ago and hurry up
@@ -1839,10 +1846,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2010-06-22 16:20:13 -0400 (Tue, 22 Jun 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/Changes $
+#     $Date: 2010-08-29 20:49:10 -0500 (Sun, 29 Aug 2010) $
 #   $Author: clonezone $
-# $Revision: 3844 $
+# $Revision: 3910 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

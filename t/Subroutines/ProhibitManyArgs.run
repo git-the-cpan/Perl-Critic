@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitManyArgs.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/Subroutines/ProhibitManyArgs.run $
 #     $Date: 2010-04-16 00:48:57 -0500 (Fri, 16 Apr 2010) $
 #   $Author: wyant $
 # $Revision: 3798 $

@@ -1,5 +1,5 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitComplexRegexes.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/RegularExpressions/ProhibitComplexRegexes.run $
 #     $Date: 2009-11-07 09:50:02 -0600 (Sat, 07 Nov 2009) $
 #   $Author: wyant $
 # $Revision: 3705 $

@@ -158,8 +158,8 @@ print $^S ? 'Executing eval' : defined $^S ? 'Otherwise' : 'Parsing';
 
 #-----------------------------------------------------------------------------
 
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitEvilVariables.run $
-#     $Date: 2009-10-02 15:56:30 -0700 (Fri, 02 Oct 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/Variables/ProhibitEvilVariables.run $
+#     $Date: 2009-10-02 17:56:30 -0500 (Fri, 02 Oct 2009) $
 #   $Author: clonezone $
 # $Revision: 3681 $
 

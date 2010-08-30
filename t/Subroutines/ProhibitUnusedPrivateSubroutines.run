@@ -185,7 +185,7 @@ sub _Foo::_foo {}
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitUnusedPrivateSubroutines.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/Subroutines/ProhibitUnusedPrivateSubroutines.run $
 #     $Date: 2009-10-31 15:19:11 -0500 (Sat, 31 Oct 2009) $
 #   $Author: wyant $
 # $Revision: 3698 $

@@ -170,7 +170,7 @@ our $VERSION = do { (my $v = q%version: 123 %) =~ s/.*://; sprintf("%d.%d", spli
 our $VERSION = do { q $Revision: 3792 $ =~ /(\d+)/; sprintf "%4.2f", $1 / 100 };
 our $VERSION = do { q$Revision: 3792 $ =~ /Revision: (\d+)/; sprintf "1.%d", $1; };
 our $VERSION = do { require mod_perl2; $mod_perl2::VERSION };
-our $VERSION = do {(q$URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireConstantVersion.run $=~ m$.*/(?:tags|branches)/([^/ \t]+)$)[0] || "0.0"};
+our $VERSION = do {(q$URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/ValuesAndExpressions/RequireConstantVersion.run $=~ m$.*/(?:tags|branches)/([^/ \t]+)$)[0] || "0.0"};
 our $VERSION = eval { require version; version::qv((qw$Revision: 3792 $)[1] / 1000) };
 # Should the following be allowed? I really don't know what 'qv' means without
 # the leading 'use version;'.
@@ -287,7 +287,7 @@ sprintf( q{%s/%s}, __PACKAGE__, $VERSION ) =~ s{ o \z }{}xms;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireConstantVersion.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/ValuesAndExpressions/RequireConstantVersion.run $
 #     $Date: 2010-03-19 21:27:04 -0500 (Fri, 19 Mar 2010) $
 #   $Author: wyant $
 # $Revision: 3792 $

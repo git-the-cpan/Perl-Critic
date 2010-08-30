@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
-#     $Date: 2010-06-22 16:14:07 -0400 (Tue, 22 Jun 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
+#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
 #   $Author: clonezone $
-# $Revision: 3843 $
+# $Revision: 3911 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars;
@@ -10,15 +10,17 @@ package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetach
 use 5.006001;
 use strict;
 use warnings;
+
 use Readonly;
 
 use Email::Address;
+
 use Perl::Critic::Utils qw< :booleans :characters :severities >;
 use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.108';
+our $VERSION = '1.109';
 
 #-----------------------------------------------------------------------------
 
@@ -68,7 +70,6 @@ sub violates {
     my $string = $elem->string();
     return if not _needs_interpolation($string);
     return if _looks_like_email_address($string);
-    return if _looks_like_use_overload($elem);
     return if _looks_like_use_vars($elem);
 
     my $rcs_regexes = $self->{_rcs_regexes};
@@ -83,8 +84,10 @@ sub _needs_interpolation {
     my ($string) = @_;
 
     return
-            $string =~ m< [\$\@] \S+ >xms              # Contains a $ or @
-        ||  $string =~ m<                              # Contains metachars
+            # Contains a $ or @ not followed by "{}".
+            $string =~ m< [\$\@] (?! [{] [}] ) \S+ >xms
+            # Contains metachars
+        ||  $string =~ m<
                 (?: \A | [^\\] )
                 (?: \\{2} )*
                 \\ [tnrfae0xcNLuLUEQ]
@@ -96,7 +99,9 @@ sub _needs_interpolation {
 sub _looks_like_email_address {
     my ($string) = @_;
 
+    return if index ($string, q<@>) < 0;
     return if $string =~ m< \W \@ >xms;
+    return if $string =~ m< \A \@ \w+ \b >xms;
 
     return $string =~ $Email::Address::addr_spec;
 }
@@ -111,26 +116,6 @@ sub _contains_rcs_variable {
     }
 
     return;
-}
-
-#-----------------------------------------------------------------------------
-
-sub _looks_like_use_overload {
-    my ($elem) = @_;
-
-    my $string = $elem->string();
-
-    $string eq q<@{}>           ## no critic (RequireInterpolationOfMetachars)
-        or $string eq q<${}>    ## no critic (RequireInterpolationOfMetachars)
-        or return;
-
-    my $statement = $elem;
-    while ( not $statement->isa('PPI::Statement::Include') ) {
-        $statement = $statement->parent() or return;
-    }
-
-    return if $statement->type() ne q<use>;
-    return $statement->module() eq q<overload>;
 }
 
 #-----------------------------------------------------------------------------
@@ -186,13 +171,6 @@ indicate that the string should be interpolated.
 
 =item *
 
-C<${}> and C<@{}> in a C<use overload>:
-
-    use overload '${}' => \&deref,     # ok
-                 '@{}' => \&arrayize;  # ok
-
-=item *
-
 Variable names to C<use vars>:
 
     use vars '$x';          # ok
@@ -218,7 +196,7 @@ C<$VERSION> variables.
 
 For example, if you've got code like
 
-    our ($VERSION) = (q<$Revision: 3843 $> =~ m/(\d+)/mx);
+    our ($VERSION) = (q<$Revision: 3911 $> =~ m/(\d+)/mx);
 
 You can specify
 

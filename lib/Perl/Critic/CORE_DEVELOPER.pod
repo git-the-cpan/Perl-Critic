@@ -1,6 +1,6 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/CORE_DEVELOPER.pod $
-#     $Date: 2010-06-22 15:38:35 -0400 (Tue, 22 Jun 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/CORE_DEVELOPER.pod $
+#     $Date: 2010-06-22 14:38:35 -0500 (Tue, 22 Jun 2010) $
 #   $Author: clonezone $
 # $Revision: 3842 $
 ##############################################################################

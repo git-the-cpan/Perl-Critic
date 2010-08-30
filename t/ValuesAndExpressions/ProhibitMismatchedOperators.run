@@ -56,7 +56,7 @@ $a .= 1;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitMismatchedOperators.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/ValuesAndExpressions/ProhibitMismatchedOperators.run $
 #     $Date: 2010-02-14 13:10:21 -0600 (Sun, 14 Feb 2010) $
 #   $Author: wyant $
 # $Revision: 3767 $
