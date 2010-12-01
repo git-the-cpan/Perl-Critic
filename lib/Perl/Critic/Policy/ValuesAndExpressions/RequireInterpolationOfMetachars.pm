@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars;
@@ -20,7 +20,7 @@ use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -87,10 +87,14 @@ sub _needs_interpolation {
             # Contains a $ or @ not followed by "{}".
             $string =~ m< [\$\@] (?! [{] [}] ) \S+ >xms
             # Contains metachars
+            # Note that \1 ... are not documented (that I can find), but are
+            # treated the same way as \0 by S_scan_const in toke.c, at least
+            # for regular double-quotish strings. Not, obviously, where
+            # regexes are involved.
         ||  $string =~ m<
                 (?: \A | [^\\] )
                 (?: \\{2} )*
-                \\ [tnrfae0xcNLuLUEQ]
+                \\ [tnrfbae01234567xcNluLUEQ]
             >xms;
 }
 
@@ -196,7 +200,7 @@ C<$VERSION> variables.
 
 For example, if you've got code like
 
-    our ($VERSION) = (q<$Revision: 3911 $> =~ m/(\d+)/mx);
+    our ($VERSION) = (q<$Revision: 3998 $> =~ m/(\d+)/mx);
 
 You can specify
 

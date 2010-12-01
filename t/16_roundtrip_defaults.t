@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/16_roundtrip_defaults.t $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/16_roundtrip_defaults.t $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 use 5.006001;
@@ -18,16 +18,12 @@ use Perl::Critic::Config;
 use Perl::Critic::ProfilePrototype;
 use Perl::Critic::Utils qw{ :characters :severities };
 
+use Test::Deep;
 use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.109';
-
-#-----------------------------------------------------------------------------
-
-eval 'use Test::Deep; 1'
-    or plan skip_all => 'Test::Deep required to test round-trip of default values';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 

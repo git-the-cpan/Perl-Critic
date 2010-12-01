@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/15_statistics.t $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/15_statistics.t $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 use 5.006001;
@@ -21,7 +21,7 @@ use Test::More tests => 24;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ END_PERL
 
 #-----------------------------------------------------------------------------
 
-# User may not have Perl::Tidy installed...
+# Just don't get involved with Perl::Tidy.
 my $profile = { '-CodeLayout::RequireTidyCode' => {} };
 my $critic =
     Perl::Critic->new(

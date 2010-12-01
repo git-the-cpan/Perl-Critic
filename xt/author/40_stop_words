@@ -89,6 +89,7 @@ STDIN
 STDOUT
 stringification
 subdirectories
+subscripted
 superclass
 superclasses
 TerMarsch
@@ -104,7 +105,7 @@ vice-versa
 whitespace
 Wyant
 
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/xt/author/40_stop_words $
-#     $Date: 2010-08-29 20:44:54 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/40_stop_words $
+#     $Date: 2010-08-22 21:09:56 -0500 (Sun, 22 Aug 2010) $
 #   $Author: clonezone $
-# $Revision: 3909 $
+# $Revision: 3901 $

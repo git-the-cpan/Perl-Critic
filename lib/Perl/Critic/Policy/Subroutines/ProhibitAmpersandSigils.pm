@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitAmpersandSigils.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitAmpersandSigils;
@@ -16,7 +16,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities hashify };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -25,6 +25,9 @@ Readonly::Scalar my $EXPL  => [ 175 ];
 
 Readonly::Hash my %EXEMPTIONS =>
     hashify( qw< defined exists goto sort > );
+
+Readonly::Hash my %IS_COMMA =>
+    hashify( q{,}, q{=>} );
 
 #-----------------------------------------------------------------------------
 
@@ -48,7 +51,9 @@ sub violates {
 
     # look up past parens to get say the "defined" in "defined(&foo)" or
     # "defined((&foo))" etc
-    if (not $previous) {
+    if (not $previous or
+            $previous->isa( 'PPI::Token::Operator' ) and
+            $IS_COMMA{ $previous->content() } ) {
         my $up = $elem;
 
         PARENT:

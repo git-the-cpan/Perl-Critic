@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMagicNumbers.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMagicNumbers.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers;
@@ -17,14 +17,14 @@ use Perl::Critic::Utils qw{ :booleans :characters :severities :data_conversion }
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #----------------------------------------------------------------------------
 
 Readonly::Scalar my $EXPL =>
     q{Unnamed numeric literals make code less maintainable};
 Readonly::Scalar my $USE_READONLY_OR_CONSTANT =>
-    ' Use the Readonly module or the "constant" pragma instead';
+    ' Use the Readonly or Const::Fast module or the "constant" pragma instead';
 Readonly::Scalar my $TYPE_NOT_ALLOWED_SUFFIX =>
     ") are not allowed.$USE_READONLY_OR_CONSTANT";
 
@@ -51,11 +51,6 @@ Readonly::Scalar my $RANGE =>
 
 Readonly::Scalar my $SPECIAL_ARRAY_SUBSCRIPT_EXEMPTION => -1;
 
-Readonly::Hash my %READONLY_SUBROUTINES =>
-    hashify(
-        qw{ Readonly Readonly::Scalar Readonly::Array Readonly::Hash }
-    );
-
 #----------------------------------------------------------------------------
 
 sub supported_parameters {
@@ -80,6 +75,17 @@ sub supported_parameters {
                 q[Should anything to the right of a "=>" be allowed?],
             default_string => '1',
             behavior           => 'boolean',
+        },
+        {
+            name            => 'constant_creator_subroutines',
+            description     => q{Names of subroutines that create constants},
+            behavior        => 'string list',
+            list_always_present_values => [
+                qw<
+                    Readonly Readonly::Scalar Readonly::Array Readonly::Hash
+                    const
+                >,
+            ],
         },
     );
 }
@@ -219,7 +225,9 @@ sub violates {
         return if _element_is_to_the_right_of_a_fat_comma($elem);
     }
 
-    return if _element_is_in_an_include_readonly_or_version_statement($elem);
+    return if _element_is_in_an_include_readonly_or_version_statement(
+        $self, $elem,
+    );
     return if _element_is_in_a_plan_statement($elem);
     return if _element_is_in_a_constant_subroutine($elem);
 
@@ -295,7 +303,7 @@ sub _element_is_sole_component_of_a_subscript {
 }
 
 sub _element_is_in_an_include_readonly_or_version_statement {
-    my ($elem) = @_;
+    my ($self, $elem) = @_;
 
     my $parent = $elem->parent();
     while ($parent) {
@@ -318,7 +326,8 @@ sub _element_is_in_an_include_readonly_or_version_statement {
 
             my $first_token = $parent->first_token();
             if ( $first_token->isa('PPI::Token::Word') ) {
-                if ( exists $READONLY_SUBROUTINES{$first_token} ) {
+                if ( $self->{_constant_creator_subroutines}{
+                        $first_token->content() } ) {
                     return 1;
                 }
             } elsif ($parent->isa('PPI::Structure::Block')) {
@@ -425,9 +434,9 @@ code without any explanation; e.g.  C<$bank_account_balance *=
 number came from.  Since you don't understand the significance of the
 number, you don't understand the code.
 
-In general, numeric literals other than C<0> or C<1> in should not be
-used.  Use the L<constant|constant> pragma or the L<Readonly|Readonly>
-module to give a descriptive name to the number.
+In general, numeric literals other than C<0> or C<1> in should not be used.
+Use the L<constant|constant> pragma or the L<Readonly|Readonly> or
+L<Const::Fast|Const::Fast> modules to give a descriptive name to the number.
 
 There are, of course, exceptions to when this rule should be applied.
 One good example is positioning of objects in some container like
@@ -460,36 +469,36 @@ There is a special exemption for accessing the last element of an
 array, i.e. C<$x[-1]>.
 
 
-    $x = 0;                                   #ok
-    $x = 0.0;                                 #ok
-    $x = 1;                                   #ok
-    $x = 1.0;                                 #ok
-    $x = 1.5;                                 #not ok
-    $x = 0b0                                  #not ok
-    $x = 0b1                                  #not ok
-    $x = 0x00                                 #not ok
-    $x = 0x01                                 #not ok
-    $x = 000                                  #not ok
-    $x = 001                                  #not ok
-    $x = 0e1                                  #not ok
-    $x = 1e1                                  #not ok
+    $x = 0;                                   # ok
+    $x = 0.0;                                 # ok
+    $x = 1;                                   # ok
+    $x = 1.0;                                 # ok
+    $x = 1.5;                                 # not ok
+    $x = 0b0                                  # not ok
+    $x = 0b1                                  # not ok
+    $x = 0x00                                 # not ok
+    $x = 0x01                                 # not ok
+    $x = 000                                  # not ok
+    $x = 001                                  # not ok
+    $x = 0e1                                  # not ok
+    $x = 1e1                                  # not ok
 
-    $frobnication_factor = 42;                #not ok
-    use constant FROBNICATION_FACTOR => 42;   #ok
-
-
-    use 5.6.1;                                #ok
-    use Test::More plan => 57;                #ok
-    plan tests => 39;                         #ok
-    our $VERSION = 0.22;                      #ok
+    $frobnication_factor = 42;                # not ok
+    use constant FROBNICATION_FACTOR => 42;   # ok
 
 
-    $x = $y[-1]                               #ok
-    $x = $y[-2]                               #not ok
+    use 5.6.1;                                # ok
+    use Test::More plan => 57;                # ok
+    plan tests => 39;                         # ok
+    our $VERSION = 0.22;                      # ok
+
+
+    $x = $y[-1]                               # ok
+    $x = $y[-2]                               # not ok
 
 
 
-    foreach my $solid (1..5) {                #not ok
+    foreach my $solid (1..5) {                # not ok
         ...
     }
 
@@ -505,8 +514,8 @@ array, i.e. C<$x[-1]>.
 
 =head1 CONFIGURATION
 
-This policy has three options: C<allowed_values>, C<allowed_types>, and
-C<allow_to_the_right_of_a_fat_comma>.
+This policy has four options: C<allowed_values>, C<allowed_types>,
+C<allow_to_the_right_of_a_fat_comma>, and C<constant_creator_subroutines>.
 
 
 =head2 C<allowed_values>
@@ -608,10 +617,31 @@ Currently, this only means I<directly> to the right of the fat comma.  By
 default, this value is I<true>.
 
 
+=head2 C<constant_creator_subroutines>
+
+This parameter allows you to specify the names of subroutines that create
+constants, in addition to C<Readonly>, C<Const::Fast>, and friends.  For
+example, if you use a custom C<Const::Fast>-like module that supports a
+C<create_constant> subroutine to create constants, you could add something
+like the following to your F<.perlcriticrc>:
+
+    [ValuesAndExpressions::ProhibitMagicNumbers]
+    constant_creator_subroutines = create_constant
+
+If you have more than one name to add, separate them by whitespace.
+
+The subroutine name should appear exactly as it is in your code.  For example,
+if your code does not import the creating subroutine
+subroutine, you would need to configure this policy as something like
+
+    [ValuesAndExpressions::ProhibitMagicNumbers]
+    constant_creator_subroutines = create_constant Constant::Create::create_constant
+
+
 =head1 BUGS
 
 There is currently no way to permit version numbers in regular code,
-even if you include them in the allowed_types.  Some may actually
+even if you include them in the C<allowed_types>.  Some may actually
 consider this a feature.
 
 

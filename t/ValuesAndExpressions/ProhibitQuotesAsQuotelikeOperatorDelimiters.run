@@ -165,7 +165,7 @@ $x =~ y```;
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/ValuesAndExpressions/ProhibitQuotesAsQuotelikeOperatorDelimiters.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitQuotesAsQuotelikeOperatorDelimiters.run $
 #     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
 #   $Author: clonezone $
 # $Revision: 3231 $

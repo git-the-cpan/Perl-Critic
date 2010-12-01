@@ -10,10 +10,10 @@ Perl::Critic::TODO - Things for Perl::Critic developers to do
 
 =head1 SOURCE
 
-         $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/TODO.pod $
-        $Date: 2010-06-20 16:12:17 -0500 (Sun, 20 Jun 2010) $
-      $Author: clonezone $
-    $Revision: 3829 $
+         $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/TODO.pod $
+        $Date: 2010-11-23 10:51:04 -0600 (Tue, 23 Nov 2010) $
+      $Author: wyant $
+    $Revision: 3997 $
 
 
 =head1 SEE ALSO
@@ -143,6 +143,22 @@ perl5111delta. PPI seems to parse this sanely as of 1.206.
 
 Nothing additional found in perl5112delta, which is the most recent as of the
 addition of this item.
+
+=item * Detect 5.14 source and enable stuff for that.
+
+The s///r and tr///r operators return a new string rather than modifying
+their operands.
+
+5.13.7 allows references in many places where arrays or hashes used to
+be required (e.g. C<push $stack, 'foo'> where C<$stack> is an array
+ref). Not sure what policies are affected, but it appears this implies
+
+A new prototype character '+' which acts like C<(\[@%])> if the actual
+argument is a scalar (C<Subroutines::ProhibitManyArgs>). 5.13.7.
+
+Lexical regular expression modifier defaults via (e.g.)
+C<use re '/smx'>). This also interacts with
+C<use feature 'unicode_strings'>. 5.13.7.
 
 =item * Support a means of failing if a Policy isn't installed.
 

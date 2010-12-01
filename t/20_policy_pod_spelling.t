@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/20_policy_pod_spelling.t $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/20_policy_pod_spelling.t $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 =for stopwords arglbargl
@@ -25,7 +25,7 @@ plan( tests => $NUMBER_OF_TESTS );
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -33,10 +33,7 @@ Perl::Critic::TestUtils::block_perlcriticrc();
 
 my $code;
 my $policy = 'Documentation::PodSpelling';
-my $can_podspell =
-        eval {require Pod::Spell}
-    &&  can_determine_spell_command()
-    &&  can_run_spell_command();
+my $can_podspell = can_determine_spell_command() && can_run_spell_command();
 
 sub can_determine_spell_command {
     my $pol = Perl::Critic::Policy::Documentation::PodSpelling->new();

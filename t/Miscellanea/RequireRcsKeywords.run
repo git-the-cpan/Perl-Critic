@@ -6,7 +6,7 @@
 
   $Revision: 3550 $
   $Source$
-  $Date: 2009-08-09 16:51:07 -0500 (Sun, 09 Aug 2009) $
+  $Date: 2009-08-09 14:51:07 -0700 (Sun, 09 Aug 2009) $
 
 =cut
 
@@ -28,7 +28,7 @@ $baz = qq{nuts};
 
 # $Revision: 3550 $
 # $Source$
-# $Date: 2009-08-09 16:51:07 -0500 (Sun, 09 Aug 2009) $
+# $Date: 2009-08-09 14:51:07 -0700 (Sun, 09 Aug 2009) $
 
 #-----------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ END_PERL
 
 '$Revision: 3550 $'
 '$Source: foo/bar $'
-'$Date: 2009-08-09 16:51:07 -0500 (Sun, 09 Aug 2009) $'
+'$Date: 2009-08-09 14:51:07 -0700 (Sun, 09 Aug 2009) $'
 
 #-----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ END_PERL
 
 q{$Revision: 3550 $}
 q{$Source: foo/bar $}
-q{$Date: 2009-08-09 16:51:07 -0500 (Sun, 09 Aug 2009) $}
+q{$Date: 2009-08-09 14:51:07 -0700 (Sun, 09 Aug 2009) $}
 
 #-----------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ is( pcritique($policy, \$code, \%config), 1, $policy);
 __END__
 # $Revision: 3550 $
 # $Source$
-# $Date: 2009-08-09 16:51:07 -0500 (Sun, 09 Aug 2009) $
+# $Date: 2009-08-09 14:51:07 -0700 (Sun, 09 Aug 2009) $
 
 #-----------------------------------------------------------------------------
 
@@ -119,8 +119,8 @@ use version; our $VERSION = qv( '1.0.' . qw{ $Revision: 3550 $ } );
 # case may be).
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/Miscellanea/RequireRcsKeywords.run $
-#     $Date: 2009-08-09 16:51:07 -0500 (Sun, 09 Aug 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Miscellanea/RequireRcsKeywords.run $
+#     $Date: 2009-08-09 14:51:07 -0700 (Sun, 09 Aug 2009) $
 #   $Author: clonezone $
 # $Revision: 3550 $
 ##############################################################################

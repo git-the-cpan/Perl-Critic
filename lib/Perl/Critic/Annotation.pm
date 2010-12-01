@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Annotation.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Annotation.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Annotation;
@@ -20,7 +20,7 @@ use Readonly;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 Readonly::Scalar my $LAST_ELEMENT => -1;
 
@@ -108,6 +108,19 @@ sub _init {
     while ( my $esib = $end->next_sibling() ) {
         $end = $esib; # keep track of last sibling encountered in this scope
         last SIB if $esib->isa('PPI::Token::Comment') && $esib =~ $use_critic;
+    }
+
+    # PPI parses __END__ as a PPI::Statement::End, and everything following is
+    # a child of that statement. That means if we encounter an __END__, we
+    # need to descend into it and continue the analysis.
+    if ( $end->isa( 'PPI::Statement::End' ) and my $kid = $end->child( 0 ) ) {
+        $end = $kid;
+      SIB:
+        while ( my $esib = $end->next_sibling() ) {
+            $end = $esib;
+            last SIB if $esib->isa( 'PPI::Token::Comment' ) &&
+                $esib->content() =~ $use_critic;
+        }
     }
 
     # We either found an end or hit the end of the scope.

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/08_document.t $
-#    $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/08_document.t $
+#    $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 use 5.006001;
@@ -16,15 +16,17 @@ use Carp qw< carp >;
 use version;
 
 
-use Perl::Critic::Document;
+use Perl::Critic::Document qw< >;
+use Perl::Critic::Utils qw< $EMPTY >;
 use Perl::Critic::Utils::DataConversion qw< dor >;
 
 
-use Test::More tests => 33;
+use Test::Deep;
+use Test::More tests => 43;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -33,7 +35,10 @@ can_ok('Perl::Critic::Document', 'filename');
 can_ok('Perl::Critic::Document', 'find');
 can_ok('Perl::Critic::Document', 'find_first');
 can_ok('Perl::Critic::Document', 'find_any');
+can_ok('Perl::Critic::Document', 'namespaces');
+can_ok('Perl::Critic::Document', 'subdocuments_for_namespace');
 can_ok('Perl::Critic::Document', 'highest_explicit_perl_version');
+can_ok('Perl::Critic::Document', 'uses_module');
 can_ok('Perl::Critic::Document', 'ppi_document');
 can_ok('Perl::Critic::Document', 'is_program');
 can_ok('Perl::Critic::Document', 'is_module');
@@ -99,12 +104,53 @@ can_ok('Perl::Critic::Document', 'is_module');
 
     #-------------------------------------------------------------------------
 
+    cmp_deeply(
+        [ $pc_doc->namespaces() ],
+        ['main'],
+        q<everything is in the "main" namespace>,
+    );
+
     ok( $pc_doc->is_module(), q{document type 'module' is a module});
     ok( ! $pc_doc->is_program(), q{document type 'module' is not a program});
 
 }
 
 #-----------------------------------------------------------------------------
+
+{
+    my $ppi_document = PPI::Document->new(\'foo(); package Foo; package Bar');
+    my $critic_document =
+        Perl::Critic::Document->new(-source => $ppi_document);
+
+    cmp_deeply(
+        [ $critic_document->namespaces() ],
+        bag( qw< main Foo Bar > ),
+        'Got expected namespaces',
+    );
+}
+
+#-----------------------------------------------------------------------------
+
+{
+    my $ppi_document = PPI::Document->new(\'use Moose');
+    my $critic_document =
+        Perl::Critic::Document->new(-source => $ppi_document);
+
+    ok(!! $critic_document->uses_module('Moose'),       'Moose is used.');
+    ok( ! $critic_document->uses_module('Moose::Role'), 'Moose::Role is not used.');
+
+    $ppi_document = PPI::Document->new( \q{ } );
+    $critic_document =
+        Perl::Critic::Document->new(-source => $ppi_document);
+
+    ok(
+        ! $critic_document->uses_module('Blah'),
+        q<uses_module() doesn't barf when there are no include statements.>,
+    );
+}
+
+#-----------------------------------------------------------------------------
+
 
 {
     test_version( 'sub { 1 }', undef );
@@ -136,6 +182,20 @@ sub test_version {
 
     return;
 }
+
+#-----------------------------------------------------------------------------
+
+my $nameless_code = 'use strict';
+my $nameless_doc = Perl::Critic::Document->new(
+    '-source'               => \$nameless_code,
+    '-filename-override'    => 'Build.PL'
+);
+
+is($nameless_doc->filename(), 'Build.PL', 'Got filename override.');
+ok(
+    ! $nameless_doc->is_module(),
+    'Overridden file name affects module determination.'
+);
 
 #-----------------------------------------------------------------------------
 

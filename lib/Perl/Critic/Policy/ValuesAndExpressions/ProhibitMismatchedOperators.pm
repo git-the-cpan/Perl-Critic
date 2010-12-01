@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators;
@@ -14,98 +14,147 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
-Readonly::Scalar my $DESC => q{Mismatched operator};
-Readonly::Scalar my $EXPL => q{Numeric/string operators and operands should match};
-
-# operator types
-
-Readonly::Hash my %OP_TYPES => (
-    # numeric
-    (map { $_ => 0 } qw( == != > >= < <= + - * / += -= *= /= )),
-    # string
-    (map { $_ => 1 } qw( eq ne lt gt le ge . .= )),
-);
+Readonly::Scalar my $DESC => q<Mismatched operator>;
+Readonly::Scalar my $EXPL => q<Numeric/string operators and operands should match>;
 
 # token compatibility [ numeric, string ]
+Readonly::Hash my %TOKEN_COMPATIBILITY => (
+    'PPI::Token::Number' => [$TRUE,  $FALSE],
+    'PPI::Token::Symbol' => [$TRUE,  $TRUE ],
+    'PPI::Token::Quote'  => [$FALSE, $TRUE ],
+);
 
-Readonly::Hash my %TOKEN_COMPAT => (
-    'PPI::Token::Number' => [ 1, 0 ],
-    'PPI::Token::Symbol' => [ 1, 1 ],
-    'PPI::Token::Quote'  => [ 0, 1 ],
+Readonly::Hash my %FILE_OPERATOR_COMPATIBILITY =>
+    map {; "-$_" => [$TRUE, $FALSE] }
+        qw< r w x o R W X O e z s f d l p S b c t u g k T B M A >;
+
+Readonly::Scalar my $TOKEN_COMPATIBILITY_INDEX_NUMERIC => 0;
+Readonly::Scalar my $TOKEN_COMPATIBILITY_INDEX_STRING  => 1;
+
+Readonly::Hash my %OPERATOR_TYPES => (
+    # numeric
+    (
+        map { $_ => $TOKEN_COMPATIBILITY_INDEX_NUMERIC }
+            qw[ == != > >= < <= + - * / += -= *= /= ]
+    ),
+    # string
+    map { $_ => $TOKEN_COMPATIBILITY_INDEX_STRING }
+        qw< eq ne lt gt le ge . .= >,
 );
 
 #-----------------------------------------------------------------------------
 
 sub supported_parameters { return ()                     }
 sub default_severity     { return $SEVERITY_MEDIUM       }
-sub default_themes       { return qw( core bugs )        }
+sub default_themes       { return qw< core bugs >        }
 sub applies_to           { return 'PPI::Token::Operator' }
 
 #-----------------------------------------------------------------------------
 
 sub violates {
-    my ( $self, $elem ) = @_;
+    my ($self, $elem) = @_;
 
-    my $elem_text = $elem->content;
+    my $elem_text = $elem->content();
 
-    return if !exists $OP_TYPES{$elem_text};
+    return if not exists $OPERATOR_TYPES{$elem_text};
 
-    my $prev_elem = $elem->sprevious_sibling();
-    return if not $prev_elem;
+    my $leading_operator = $self->_get_potential_leading_operator($elem)
+        or return;
 
-    my $next_elem = $elem->snext_sibling();
-    return if not $next_elem;
+    my $next_elem = $elem->snext_sibling() or return;
 
     if ( $next_elem->isa('PPI::Token::Operator') ) {
-        $elem_text .= $next_elem;
+        $elem_text .= $next_elem->content();
         $next_elem = $next_elem->snext_sibling();
     }
 
-    return if !exists $OP_TYPES{$elem_text};
-    my $op_type = $OP_TYPES{$elem_text};
+    return if not exists $OPERATOR_TYPES{$elem_text};
+    my $operator_type = $OPERATOR_TYPES{$elem_text};
 
-    my $prev_compat = $self->_get_token_compat( $prev_elem );
-    my $next_compat = $self->_get_token_compat( $next_elem );
+    my $leading_operator_compatibility =
+        $self->_get_token_compatibility($leading_operator);
+    my $next_compatibility = $self->_get_token_compatibility($next_elem);
 
-    return if ( !defined $prev_compat || $prev_compat->[$op_type] )
-        && ( !defined $next_compat || $next_compat->[$op_type] );
+    return if
+            (
+                    ! defined $leading_operator_compatibility
+                ||  $leading_operator_compatibility->[$operator_type]
+            )
+        &&  (
+                    ! defined $next_compatibility
+                ||  $next_compatibility->[$operator_type]
+            );
 
-    return if $op_type && defined $prev_compat &&
-        !  $prev_compat->[$op_type] &&
-        $self->_have_stringy_x( $prev_elem ); # RT 54524
+    return if
+            $operator_type
+        &&  defined $leading_operator_compatibility
+        &&  ! $leading_operator_compatibility->[$operator_type]
+        &&  $self->_have_stringy_x($leading_operator); # RT 54524
 
-    return $self->violation( $DESC, $EXPL, $elem );
+    return $self->violation($DESC, $EXPL, $elem);
 }
 
 #-----------------------------------------------------------------------------
 
-# get token value compatibility
+sub _get_token_compatibility {
+    my ($self, $elem) = @_;
 
-sub _get_token_compat {
-    my ( $self, $elem ) = @_;
-    for my $class ( keys %TOKEN_COMPAT ) {
-        return $TOKEN_COMPAT{$class} if $elem->isa($class);
+    return $FILE_OPERATOR_COMPATIBILITY{ $elem->content() }
+        if $self->_is_file_operator($elem);
+
+    for my $class (keys %TOKEN_COMPATIBILITY) {
+        return $TOKEN_COMPATIBILITY{$class} if $elem->isa($class);
     }
+
     return;
 }
 
 #-----------------------------------------------------------------------------
 
-# see if we follow a stringy 'x'.
-
 sub _have_stringy_x {
-    my ( $self, $elem ) = @_;
-    $elem or return;
+    my ($self, $elem) = @_;
+
+    return if not $elem;
+
     my $prev_oper = $elem->sprevious_sibling() or return;
-    $prev_oper->isa( 'PPI::Token::Operator' )
-        and 'x' eq $prev_oper->content()
-        or return;
-    my $prev_elem = $prev_oper->sprevious_sibling() or return;
-    return $TRUE;
+
+    return if not $prev_oper->isa('PPI::Token::Operator');
+    return if 'x' ne $prev_oper->content();
+
+    return !! $prev_oper->sprevious_sibling();
+}
+
+#-----------------------------------------------------------------------------
+
+sub _get_potential_leading_operator {
+    my ($self, $elem) = @_;
+
+    my $previous_element = $elem->sprevious_sibling() or return;
+
+    if ( $self->_get_token_compatibility($previous_element) ) {
+        my $previous_sibling = $previous_element->sprevious_sibling();
+        if (
+            $previous_sibling and $self->_is_file_operator($previous_sibling)
+        ) {
+            $previous_element = $previous_sibling;
+        }
+    }
+
+    return $previous_element;
+}
+
+#-----------------------------------------------------------------------------
+
+sub _is_file_operator {
+    my ($self, $elem) = @_;
+
+    return if not $elem;
+    return if not $elem->isa('PPI::Token::Operator');
+    return !! $FILE_OPERATOR_COMPATIBILITY{ $elem->content() }
 }
 
 1;
@@ -149,7 +198,7 @@ This Policy is not configurable except for the standard options.
 If L<warnings|warnings> are enabled, the Perl interpreter usually
 warns you about using mismatched operators at run-time.  This Policy
 does essentially the same thing, but at author-time.  That way, you
-can find our about them sooner.
+can find out about them sooner.
 
 
 =head1 AUTHOR

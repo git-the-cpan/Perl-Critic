@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/RegularExpressions/ProhibitSingleCharAlternation.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitSingleCharAlternation.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitSingleCharAlternation;
@@ -11,15 +11,15 @@ use 5.006001;
 use strict;
 use warnings;
 
-use English qw(-no_match_vars);
-use Readonly;
 use Carp;
+use English qw(-no_match_vars);
 use List::MoreUtils qw(all);
+use Readonly;
 
 use Perl::Critic::Utils qw{ :booleans :characters :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -36,19 +36,13 @@ sub applies_to           { return qw(PPI::Token::Regexp::Match
 
 #-----------------------------------------------------------------------------
 
-sub initialize_if_enabled {
-    return eval { require PPIx::Regexp; 1 } ? $TRUE : $FALSE;
-}
-
-#-----------------------------------------------------------------------------
-
 sub violates {
-    my ( $self, $elem, undef ) = @_;
+    my ( $self, $elem, $document ) = @_;
 
     # optimization: don't bother parsing the regexp if there are no pipes
     return if $elem !~ m/[|]/xms;
 
-    my $re = PPIx::Regexp->new_from_cache( $elem ) or return;
+    my $re = $document->ppix_regexp_from_element( $elem ) or return;
     $re->failures() and return;
 
     my @violations;
@@ -124,12 +118,6 @@ exclusively on 5.10, yo might consider ignoring this policy.
 =head1 CONFIGURATION
 
 This Policy is not configurable except for the standard options.
-
-
-=head1 PREREQUISITES
-
-This policy will disable itself if L<PPIx::Regexp|PPIx::Regexp> is not
-installed.
 
 
 =head1 CREDITS

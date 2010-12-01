@@ -132,11 +132,41 @@ my $x = 2;
 
 #-----------------------------------------------------------------------------
 
+## name Interpolation in replacement portion of s/.../.../smx
+## failures 0
+## cut
+
+my %foo;
+
+s/ ( \w+ ) /$foo{$1}/smx;
+
+#-----------------------------------------------------------------------------
+
+## name Interpolation in replacement portion of s/.../.../smxe
+## failures 0
+## cut
+
+my %foo;
+
+s/ ( \w+ ) / $foo{$1} /smxe;
+
+#-----------------------------------------------------------------------------
+
+## name Variable used in regexp embedded code
+## failures 0
+## cut
+
+my %foo;
+
+m/ (?{ $foo{bar} }) /smx;
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/Variables/ProhibitUnusedVariables.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitUnusedVariables.run $
+#     $Date: 2010-08-23 13:08:06 -0500 (Mon, 23 Aug 2010) $
+#   $Author: wyant $
+# $Revision: 3903 $
 ##############################################################################
 
 # Local Variables:

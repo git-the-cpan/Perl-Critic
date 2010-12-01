@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/ControlStructures/ProhibitMutatingListFunctions.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitMutatingListFunctions.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitMutatingListFunctions;
@@ -20,7 +20,7 @@ use Perl::Critic::Utils qw{
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -166,6 +166,16 @@ sub _is_topic_mutating_regex {
             my %mods = $elem->get_modifiers();
             $mods{c} or $mods{s} or return;
         }
+    }
+
+    # As of 5.13.2, the substitute built-in supports the /r modifier, which
+    # causes the operation to return the modified string and leave the
+    # original unmodified. This does not parse under earlier Perls, so there
+    # is no version check.
+
+    if ( $elem->isa( 'PPI::Token::Regexp::Substitute' ) ) {
+        my %mods = $elem->get_modifiers();
+        $mods{r} and return;
     }
 
     # If the previous sibling does not exist, then

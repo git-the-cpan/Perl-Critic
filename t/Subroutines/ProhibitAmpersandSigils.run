@@ -40,6 +40,7 @@ exists( &function_call );
 ## cut
 
 \( &function_call );
+\( &function_call, &another_function );
 
 #-----------------------------------------------------------------------------
 
@@ -66,10 +67,10 @@ sort &foo($x)
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/t/Subroutines/ProhibitAmpersandSigils.run $
-#     $Date: 2009-10-02 16:41:49 -0500 (Fri, 02 Oct 2009) $
-#   $Author: clonezone $
-# $Revision: 3670 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitAmpersandSigils.run $
+#     $Date: 2010-10-11 01:32:23 -0500 (Mon, 11 Oct 2010) $
+#   $Author: wyant $
+# $Revision: 3964 $
 ##############################################################################
 
 # Local Variables:

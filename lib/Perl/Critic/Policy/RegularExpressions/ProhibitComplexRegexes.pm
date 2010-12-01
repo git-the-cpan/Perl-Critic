@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitComplexRegexes.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitComplexRegexes;
@@ -10,17 +10,17 @@ package Perl::Critic::Policy::RegularExpressions::ProhibitComplexRegexes;
 use 5.006001;
 use strict;
 use warnings;
-use Readonly;
 
-use English qw(-no_match_vars);
 use Carp;
+use English qw(-no_match_vars);
 use List::Util qw{ min };
+use Readonly;
 
 use Perl::Critic::Utils qw{ :booleans :severities };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -53,19 +53,13 @@ sub applies_to           { return qw(PPI::Token::Regexp::Match
 
 #-----------------------------------------------------------------------------
 
-sub initialize_if_enabled {
-    return eval { require PPIx::Regexp; 1 } ? $TRUE : $FALSE;
-}
-
-#-----------------------------------------------------------------------------
-
 sub violates {
-    my ( $self, $elem, undef ) = @_;
+    my ( $self, $elem, $document ) = @_;
 
     # Optimization: if its short enough now, parsing won't make it longer
     return if $self->{_max_characters} >= length $elem->get_match_string();
 
-    my $re = PPIx::Regexp->new( $elem )
+    my $re = $document->ppix_regexp_from_element( $elem )
         or return;  # Abort on syntax error.
     $re->failures()
         and return; # Abort if parse errors found.
@@ -201,12 +195,6 @@ F<.perlcriticrc> file like this:
 
     [RegularExpressions::ProhibitComplexRegexes]
     max_characters = 40
-
-
-=head1 PREREQUISITES
-
-This policy will disable itself if L<PPIx::Regexp|PPIx::Regexp> is not
-installed.
 
 
 =head1 CREDITS

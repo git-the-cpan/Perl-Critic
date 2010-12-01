@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Violation.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Violation.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Violation;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils::POD qw<
 >;
 use Perl::Critic::Exception::Fatal::Internal qw< throw_internal >;
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 
 Readonly::Scalar my $LOCATION_LINE_NUMBER               => 0;
@@ -76,9 +76,12 @@ sub new {
     $self->{_explanation} = $expl;
     $self->{_severity}    = $sev;
     $self->{_policy}      = caller;
-    $self->{_elem}        = $elem;
 
-    # Do these now before the weakened $doc gets garbage collected
+    # PPI eviscerates the Elements in a Document when the Document gets
+    # DESTROY()ed, and thus they aren't useful after it is gone.  So we have
+    # to preemptively grab everything we could possibly want.
+    $self->{_element_class} = blessed $elem;
+
     my $top = $elem->top();
     $self->{_filename} = $top->can('filename') ? $top->filename() : undef;
     $self->{_source}   = _first_line_of_source( $elem );
@@ -246,7 +249,7 @@ sub source {
 sub element_class {
     my ($self) = @_;
 
-    return blessed $self->{_elem};
+    return $self->{_element_class};
 }
 
 #-----------------------------------------------------------------------------

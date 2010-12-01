@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.109/lib/Perl/Critic/Policy/Subroutines/ProhibitUnusedPrivateSubroutines.pm $
-#     $Date: 2010-08-29 20:53:20 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitUnusedPrivateSubroutines.pm $
+#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
 #   $Author: clonezone $
-# $Revision: 3911 $
+# $Revision: 3998 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitUnusedPrivateSubroutines;
@@ -21,7 +21,7 @@ use Perl::Critic::Utils qw{
 };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.109';
+our $VERSION = '1.110_001';
 
 #-----------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ sub supported_parameters {
         {
             name            => 'private_name_regex',
             description     => 'Pattern that determines what a private subroutine is.',
-            default_string  => '\b_\w+\b',
+            default_string  => '\b_\w+\b',  ## no critic (RequireInterpolationOfMetachars)
             behavior        => 'string',
             parser          => \&_parse_private_name_regex,
         },
@@ -144,6 +144,53 @@ sub _find_sub_call_in_document {
         }
     }
 
+    foreach my $regexp ( _find_regular_expressions( $document ) ) {
+
+        _compare_token_locations( $regexp, $start_token ) >= 0
+            and _compare_token_locations( $finish_token, $regexp ) >= 0
+            and next;
+        _find_sub_usage_in_regexp( $name, $regexp, $document )
+            and return $TRUE;
+
+    }
+
+    return;
+}
+
+# Find analyzable regular expressions in the given document. This means
+# matches, substitutions, and the qr{} operator.
+sub _find_regular_expressions {
+    my ( $document ) = @_;
+
+    return ( map { @{ $document->find( $_ ) || [] } } qw{
+        PPI::Token::Regexp::Match
+        PPI::Token::Regexp::Substitute
+        PPI::Token::QuoteLike::Regexp
+    } );
+}
+
+# Find out if the subroutine named in $name is called in the given $regexp.
+# This could happen either by an explicit s/.../.../e, or by interpolation
+# (i.e. @{[...]} ).
+sub _find_sub_usage_in_regexp {
+    my ( $name, $regexp, $document ) = @_;
+
+    my $ppix = $document->ppix_regexp_from_element( $regexp ) or return;
+    $ppix->failures() and return;
+
+    foreach my $code ( @{ $ppix->find( 'PPIx::Regexp::Token::Code' ) || [] } ) {
+        my $doc = $code->ppi() or next;
+
+        foreach my $word ( @{ $doc->find( 'PPI::Token::Word' ) || [] } ) {
+            $name eq $word->content() or next;
+            is_function_call( $word )
+                or is_method_call( $word )
+                or next;
+            return $TRUE;
+        }
+
+    }
+
     return;
 }
 
@@ -193,13 +240,13 @@ sub _find_sub_reference_in_document {
             $symbol eq $usage->content() or next;
 
             my $prior = $usage->sprevious_sibling();
-            defined $prior
+            $prior
                 and $prior->isa( 'PPI::Token::Cast' )
                 and q<\\> eq $prior->content()
                 and return $TRUE;
 
             is_function_call( $usage )
-                or defined $prior
+                or $prior
                     and $prior->isa( 'PPI::Token::Word' )
                     and 'goto' eq $prior->content()
                 or next;
