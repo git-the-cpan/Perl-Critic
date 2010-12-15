@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/RegularExpressions/ProhibitEnumeratedClasses.pm $
-#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitEnumeratedClasses.pm $
+#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 4008 $
+# $Revision: 4011 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitEnumeratedClasses;
@@ -10,17 +10,17 @@ package Perl::Critic::Policy::RegularExpressions::ProhibitEnumeratedClasses;
 use 5.006001;
 use strict;
 use warnings;
-use Readonly;
 
+use Carp qw(carp);
 use English qw(-no_match_vars);
 use List::MoreUtils qw(all);
-use Carp qw(carp);
+use Readonly;
 
 use Perl::Critic::Utils qw{ :booleans :severities hashify };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.111';
+our $VERSION = '1.112_001';
 
 #-----------------------------------------------------------------------------
 
@@ -49,19 +49,14 @@ sub applies_to           { return qw(PPI::Token::Regexp::Match
 
 #-----------------------------------------------------------------------------
 
-sub initialize_if_enabled {
-    return eval { require PPIx::Regexp; 1 } ? $TRUE : $FALSE;
-}
-
-#-----------------------------------------------------------------------------
 
 sub violates {
-    my ( $self, $elem, undef ) = @_;
+    my ( $self, $elem, $document ) = @_;
 
     # optimization: don't bother parsing the regexp if there are no character classes
     return if $elem !~ m/\[/xms;
 
-    my $re = PPIx::Regexp->new_from_cache( $elem ) or return;
+    my $re = $document->ppix_regexp_from_element( $elem ) or return;
     $re->failures() and return;
 
     my $anyofs = $re->find( 'PPIx::Regexp::Structure::CharClass' )
@@ -177,12 +172,6 @@ B<C<[^\s]>> vs. B<C<\S>>
 =head1 CONFIGURATION
 
 This Policy is not configurable except for the standard options.
-
-
-=head1 PREREQUISITES
-
-This policy will disable itself if L<PPIx::Regexp|PPIx::Regexp> is not
-installed.
 
 
 =head1 CREDITS

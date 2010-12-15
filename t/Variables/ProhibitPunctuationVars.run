@@ -10,7 +10,6 @@ $> = 3;
 
 ## name Basic failure (needs to be merged into prior test once PPI knows how to parse '%-'
 ## failures 1
-## TODO PPI doesn't know how to parse '%-'.
 ## cut
 
 %- = (foo => 1);
@@ -414,10 +413,10 @@ qr/foo$/
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/Variables/ProhibitPunctuationVars.run $
-#     $Date: 2010-03-19 15:28:10 -0500 (Fri, 19 Mar 2010) $
-#   $Author: wyant $
-# $Revision: 3791 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitPunctuationVars.run $
+#     $Date: 2010-10-31 20:07:54 -0500 (Sun, 31 Oct 2010) $
+#   $Author: clonezone $
+# $Revision: 3984 $
 ##############################################################################
 
 # Local Variables:

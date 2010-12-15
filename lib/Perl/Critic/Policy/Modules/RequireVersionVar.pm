@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm $
-#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm $
+#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 4008 $
+# $Revision: 4011 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireVersionVar;
@@ -17,7 +17,7 @@ use List::MoreUtils qw(any);
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.111';
+our $VERSION = '1.112_001';
 
 #-----------------------------------------------------------------------------
 
@@ -143,10 +143,10 @@ Perl's version system does not recognize lexical variables such as
 
 so they are not accepted by this policy.
 
-A common practice is to use the C<$Revision: 4008 $> keyword to
+A common practice is to use the C<$Revision: 4011 $> keyword to
 automatically define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 4008 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 4011 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION

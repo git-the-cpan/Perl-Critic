@@ -275,7 +275,7 @@ func( @{ $href }{'1', '2'} );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
 #     $Date: 2010-02-14 14:31:47 -0600 (Sun, 14 Feb 2010) $
 #   $Author: wyant $
 # $Revision: 3768 $

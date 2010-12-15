@@ -1,6 +1,6 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/Makefile.PL $
-#     $Date: 2009-09-30 19:35:26 -0500 (Wed, 30 Sep 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Makefile.PL $
+#     $Date: 2009-09-30 17:35:26 -0700 (Wed, 30 Sep 2009) $
 #   $Author: clonezone $
 # $Revision: 3661 $
 ########################################################################

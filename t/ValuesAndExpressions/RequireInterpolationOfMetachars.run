@@ -50,7 +50,6 @@ print '$!';
 
 ## name Failure of @+ & @-.
 ## failures 2
-## TODO Actually, should probably throw all the "unusual" punctuation variables in here.  Probably want to use B::Keywords, but should ignore variable type since the magic really affects the typeglob, not just a single slot.
 ## cut
 
 print '@+';
@@ -60,7 +59,6 @@ print '@-';
 
 ## name Failure of @^H.
 ## failures 1
-## TODO Really, this is about all the caret variables.  Probably want to use B::Keywords, but should ignore variable type since the magic really affects the typeglob, not just a single slot.
 ## cut
 
 print '@^H';
@@ -129,15 +127,15 @@ $sigil_as_delimiter = q    @blah@;
 ## failures 7
 ## cut
 
-$VERSION = q<$Revision: 3909 $>;
-($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx;
-our $VERSION = substr(q/$Revision: 3909 $/, 10);
-our ($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx;
-our ($VERSION) = (q<$Revision: 3909 $> =~ m/(\d+)/mx);
-our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3909 $>;
+$VERSION = q<$Revision: 3984 $>;
+($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
+our $VERSION = substr(q/$Revision: 3984 $/, 10);
+our ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
+our ($VERSION) = (q<$Revision: 3984 $> =~ m/(\d+)/mx);
+our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3984 $>;
 
 # Yes, silly example, but still need to check it.
-if ( ($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx ) {}
+if ( ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx ) {}
 
 #-----------------------------------------------------------------------------
 
@@ -146,15 +144,15 @@ if ( ($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx ) {}
 ## parms { rcs_keywords => 'Revision Author' }
 ## cut
 
-$VERSION = q<$Revision: 3909 $>;
-($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx;
-our $VERSION = substr(q/$Revision: 3909 $/, 10);
-our ($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx;
-our ($VERSION) = (q<$Revision: 3909 $> =~ m/(\d+)/mx);
-our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3909 $>;
+$VERSION = q<$Revision: 3984 $>;
+($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
+our $VERSION = substr(q/$Revision: 3984 $/, 10);
+our ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
+our ($VERSION) = (q<$Revision: 3984 $> =~ m/(\d+)/mx);
+our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3984 $>;
 
 # Yes, silly example, but still need to check it.
-if ( ($VERSION) = q<$Revision: 3909 $> =~ m/(\d+)/mx ) {}
+if ( ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx ) {}
 
 #-----------------------------------------------------------------------------
 
@@ -219,7 +217,7 @@ $complex = q{"don-quixote@man-from.lamancha.org" is my address};
 send_email_to ('foo@bar.com', ...);
 
 #-----------------------------------------------------------------------------
-## name Email addresses with emedded violations.
+## name Email addresses with embedded violations.
 ## TODO Policy is not smart enough to handle this yet.
 ## failures 2
 ## cut
@@ -227,13 +225,93 @@ send_email_to ('foo@bar.com', ...);
 $simple  = 'Email: $name@$company.$domain';
 send_email_to('$some_var: foo@bar.com', ...);
 
+#-----------------------------------------------------------------------------
+## name Confirm we flag all defined backslashed interpolations. RT #61970
+## failures 26
+## cut
+
+'\t';          # tab             (HT, TAB)
+'\n';          # newline         (NL)
+'\r';          # return          (CR)
+'\f';          # form feed       (FF)
+'\b';          # backspace       (BS)
+'\a';          # alarm (bell)    (BEL)
+'\e';          # escape          (ESC)
+'\033';        # octal char      (example: ESC)
+'\x1b';        # hex char        (example: ESC)
+'\x{263a}';    # wide hex char   (example: SMILEY)
+'\c[';         # control char    (example: ESC)
+'\N{name}';    # named Unicode character
+'\N{U+263D}';  # Unicode character (example: FIRST QUARTER MOON)
+'\l';          # lowercase next char
+'\u';          # uppercase next char
+'\L';          # lowercase till \E
+'\U';          # uppercase till \E
+'\E';          # end case modification
+'\Q';          # quote non-word characters till \E
+'\1';          # See note 1, below
+'\2';          # See note 1, below
+'\3';          # See note 1, below
+'\4';          # See note 1, below
+'\5';          # See note 1, below
+'\6';          # See note 1, below
+'\7';          # See note 1, below
+
+# Note 1: These are not documented in perop that I can find, but the code in
+#         toke.c makes them equivalent to \0 for interpolated strings (though
+#         not, of course, for regular expressions or the substitution portion
+#         of s///).
+
+#-----------------------------------------------------------------------------
+## name Confirm we ignore all non-special backslashed word characters. RT #61970
+## failures 0
+## cut
+
+'\8';
+'\9';
+'\A';
+'\B';
+'\C';
+'\D';
+'\F';
+'\G';
+'\H';
+'\I';
+'\J';
+'\K';
+'\M';
+'\O';
+'\P';
+'\R';
+'\S';
+'\T';
+'\V';
+'\W';
+'\X';
+'\Y';
+'\Z';
+'\d';
+'\g';
+'\h';
+'\i';
+'\j';
+'\k';
+'\m';
+'\o';
+'\p';
+'\q';
+'\s';
+'\v';
+'\w';
+'\y';
+'\z';
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
-#     $Date: 2010-08-29 20:44:54 -0500 (Sun, 29 Aug 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
+#     $Date: 2010-10-31 20:07:54 -0500 (Sun, 31 Oct 2010) $
 #   $Author: clonezone $
-# $Revision: 3909 $
+# $Revision: 3984 $
 ##############################################################################
 
 # Local Variables:

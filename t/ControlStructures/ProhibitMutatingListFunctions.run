@@ -178,11 +178,19 @@
 
 #-----------------------------------------------------------------------------
 
+## name Recognize non-mutating s///r function introduced in 5.13.2.
+## failures 0
+## cut
+
+@bar = map { s/cat/dog/r } @foo;
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/ControlStructures/ProhibitMutatingListFunctions.run $
-#     $Date: 2009-08-08 18:51:10 -0500 (Sat, 08 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3509 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ControlStructures/ProhibitMutatingListFunctions.run $
+#     $Date: 2010-06-25 14:35:59 -0500 (Fri, 25 Jun 2010) $
+#   $Author: wyant $
+# $Revision: 3854 $
 ##############################################################################
 
 # Local Variables:

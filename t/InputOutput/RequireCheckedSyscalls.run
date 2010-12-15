@@ -387,8 +387,8 @@ say 'The sun is a mass of incandessent gas';
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/InputOutput/RequireCheckedSyscalls.run $
-#     $Date: 2009-09-07 16:08:20 -0500 (Mon, 07 Sep 2009) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/InputOutput/RequireCheckedSyscalls.run $
+#     $Date: 2009-09-07 14:08:20 -0700 (Mon, 07 Sep 2009) $
 #   $Author: clonezone $
 # $Revision: 3626 $
 ##############################################################################

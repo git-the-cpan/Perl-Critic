@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/NamingConventions/Capitalization.run.PL $
+#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 4008 $
+# $Revision: 4011 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Carp qw< confess >;
 use Carp qw< confess >;
 use Fatal qw< open close >;
 
-our $VERSION = '1.111';
+our $VERSION = '1.112_001';
 
 
 
@@ -122,7 +122,7 @@ our($Bar, $foo);
 
 #-----------------------------------------------------------------------------
 
-## name Variables from other packages should pass 
+## name Variables from other packages should pass
 ## failures 0
 ## cut
 
@@ -144,6 +144,7 @@ $Foo = 42;
 ## cut
 
 Readonly::Scalar my $CONSTANT = 23;
+const my $CONSTANT = 23;
 use constant FOO => 42;
 use constant { BAR => 3, BAZ => 7 };
 use constant 1.16 FOO => 42;
@@ -157,7 +158,7 @@ use constant 1.16 { BAR => 3, BAZ => 7 };
 
 Readonly::Scalar my $Foo = 23;
 Readonly::Scalar my $foo = 23;
-Readonly::Scalar my $fooBAR = 23;
+const my $fooBAR = 23;
 
 #-----------------------------------------------------------------------------
 
@@ -835,10 +836,10 @@ our @THING;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/NamingConventions/Capitalization.run.PL $
+#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 4008 $
+# $Revision: 4011 $
 ##############################################################################
 
 # Local Variables:

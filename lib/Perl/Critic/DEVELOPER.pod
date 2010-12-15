@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/DEVELOPER.pod $
-#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/DEVELOPER.pod $
+#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 4008 $
+# $Revision: 4011 $
 ##############################################################################
 
 =pod
@@ -315,7 +315,9 @@ returns a boolean stating whether the Policy should continue to be
 enabled.  Generally, the only reason to return C<$FALSE> is when some
 external requirement is missing.  For example,
 L<Perl::Critic::Policy::CodeLayout::RequireTidyCode|Perl::Critic::Policy::CodeLayout::RequireTidyCode>
-disables itself if L<Perl::Tidy|Perl::Tidy> is not installed.
+used to disable itself if L<Perl::Tidy|Perl::Tidy> was not installed
+(that is until we made it no longer optional for the Perl-Critic
+distribution).
 
 A basic, do-nothing implementation of C<initialize_if_enabled()> would
 be:
@@ -988,12 +990,12 @@ A typical implementation will look like:
 
     =item L<Perl::Critic::Policy::Documentation::Example|Perl::Critic::Policy::Documentation::Example>
 
-    Complains about some example documentation issues.  [Severity: 3]
+    Complains about some example documentation issues.  [Default severity: 3]
 
 
     =item L<Perl::Critic::Policy::Variables::Example|Perl::Critic::Policy::Variables::Example>
 
-    All modules must have at least one variable.  [Severity: 3]
+    All modules must have at least one variable.  [Default severity: 3]
 
 
     =back
@@ -1074,7 +1076,7 @@ L<http://search.cpan.org/dist/PPI-Tester/lib/PPI/Tester.pm>.
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.111.
+This is part of L<Perl::Critic|Perl::Critic> version 1.112_001.
 
 
 =head1 SEE ALSO

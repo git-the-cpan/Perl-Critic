@@ -129,7 +129,7 @@ L<critique()/critique> critiques a file, returning any violations found.
 =cut
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/Documentation/RequirePodLinksIncludeText.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Documentation/RequirePodLinksIncludeText.run $
 #     $Date: 2009-11-08 02:10:37 -0600 (Sun, 08 Nov 2009) $
 #   $Author: thaljef $
 # $Revision: 3718 $
