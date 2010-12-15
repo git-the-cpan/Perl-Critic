@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitNoStrict.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitNoStrict.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::TestingAndDebugging::ProhibitNoStrict;
@@ -17,7 +17,7 @@ use List::MoreUtils qw(all);
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ sub violates {
     return if !$stmnt;
     my @words = $stmnt =~ m/ ([[:lower:]]+) /gxms;
     @words = grep { $_ ne 'qw' && $_ ne 'no' && $_ ne 'strict' } @words;
-    return if all { exists $self->{_allow}->{$_} } @words;
+    return if @words && all { exists $self->{_allow}->{$_} } @words;
 
     #If we get here, then it must be a violation
     return $self->violation( $DESC, $EXPL, $elem );

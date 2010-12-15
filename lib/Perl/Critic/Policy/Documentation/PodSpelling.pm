@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Documentation/PodSpelling.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/Documentation/PodSpelling.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::PodSpelling;
@@ -16,10 +16,7 @@ use Readonly;
 
 use File::Spec;
 use File::Temp;
-use IO::String qw< >;
 use List::MoreUtils qw(uniq);
-use Pod::Spell qw< >;
-use Text::ParseWords qw< >;
 
 use Perl::Critic::Utils qw{
     :characters
@@ -31,7 +28,7 @@ use Perl::Critic::Exception::Fatal::Generic qw{ throw_generic };
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -80,7 +77,13 @@ sub got_sigpipe {
 sub initialize_if_enabled {
     my ( $self, $config ) = @_;
 
-    eval { require File::Which; 1 } or return $FALSE;
+    eval {
+        require File::Which;
+        require Text::ParseWords;
+        require Pod::Spell;
+        require IO::String;
+    }
+        or return $FALSE;
 
     return $FALSE if not $self->_derive_spell_command_line();
 
@@ -311,8 +314,9 @@ passing it to an external spell checker.  It skips over words you
 flagged to ignore.  If the spell checker returns any misspelled words,
 this policy emits a violation.
 
-If anything else goes wrong -- we can't locate the spell checking program or
-(gasp!) your module has no POD -- then this policy passes.
+If anything else goes wrong -- you don't have Pod::Spell installed or
+we can't locate the spell checking program or (gasp!) your module has
+no POD -- then this policy passes.
 
 To add exceptions on a module-by-module basis, add "stopwords" as
 described in L<Pod::Spell|Pod::Spell>.  For example:
@@ -363,7 +367,8 @@ together into a single list of exemptions.
 
 =head1 NOTES
 
-A spell checking program is not included with Perl::Critic.
+L<Pod::Spell|Pod::Spell> is not included with Perl::Critic, nor is a
+spell checking program.
 
 The results of failures for this policy can be confusing when F<aspell>
 complains about words containing punctuation such as hyphens and apostrophes.
@@ -379,8 +384,9 @@ actually being checked for spelling.
 
 =head1 PREREQUISITES
 
-This policy will disable itself if L<File::Which|File::Which> is not
-available.
+This policy will disable itself if any of the following are
+unavailable: L<File::Which|File::Which>, L<IO::String|IO::String>,
+L<Pod::Spell|Pod::Spell>, or L<Text::ParseWords|Text::ParseWords>.
 
 
 =head1 CREDITS

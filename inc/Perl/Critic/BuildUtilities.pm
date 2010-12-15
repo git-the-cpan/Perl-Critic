@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/inc/Perl/Critic/BuildUtilities.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -13,7 +13,7 @@ use warnings;
 
 use English q<-no_match_vars>;
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 use base qw{ Exporter };
 
@@ -39,7 +39,7 @@ sub required_module_versions {
         'Email::Address'                => 1.889,
         'English'                       => 0,
         'Exception::Class'              => 1.23,
-        'Exporter'                      => 5.63,
+        'Exporter'                      => 0,
         'File::Basename'                => 0,
         'File::Find'                    => 0,
         'File::Path'                    => 0,
@@ -48,7 +48,6 @@ sub required_module_versions {
         'File::Temp'                    => 0,
         'Getopt::Long'                  => 0,
         'IO::String'                    => 0,
-        'IPC::Open2'                    => 1,
         'List::MoreUtils'               => 0.19,
         'List::Util'                    => 0,
         'Module::Pluggable'             => 3.1,
@@ -58,25 +57,23 @@ sub required_module_versions {
         'PPI::Node'                     => '1.208',
         'PPI::Token::Quote::Single'     => '1.208',
         'PPI::Token::Whitespace'        => '1.208',
-        'PPIx::Regexp'                  => 0.010,
-        'PPIx::Utilities::Node'         => '1.001',
-        'PPIx::Utilities::Statement'    => '1.001',
-        'Perl::Tidy'                    => 0,
+        'PPIx::Utilities::Statement'    => '1.000',
         'Pod::PlainText'                => 0,
         'Pod::Select'                   => 0,
-        'Pod::Spell'                    => 1,
         'Pod::Usage'                    => 0,
         'Readonly'                      => 1.03,
         'Scalar::Util'                  => 0,
         'String::Format'                => 1.13,
         'Task::Weaken'                  => 0,
         'Test::Builder'                 => 0.92,
-        'Text::ParseWords'              => 3,
         'base'                          => 0,
         'charnames'                     => 0,
         'overload'                      => 0,
         'strict'                        => 0,
-        'version'                       => 0.77,
+        'version'                       => 0,
+        'overload'                      => 0,
+        'strict'                        => 0,
+        'version'                       => 0,
         'warnings'                      => 0,
     );
 }
@@ -85,7 +82,6 @@ sub required_module_versions {
 sub build_required_module_versions {
     return (
         'lib'           => 0,
-        'Test::Deep'    => 0,
         'Test::More'    => 0,
     );
 }
@@ -94,7 +90,9 @@ sub build_required_module_versions {
 sub recommended_module_versions {
     return (
         'File::HomeDir'         => 0,
+        'Perl::Tidy'            => 0,
         'Readonly::XS'          => 0,
+        'PPIx::Regexp'          => 0,
 
         # If the following changes, the corresponding change needs to be made
         # in $Perl::Critic::Utils::Constants::_MODULE_VERSION_TERM_ANSICOLOR.
@@ -102,6 +100,9 @@ sub recommended_module_versions {
 
         # All of these are for Documentation::PodSpelling
         'File::Which'           => 0,
+        'IPC::Open2'            => 1,
+        'Pod::Spell'            => 1,
+        'Text::ParseWords'      => 3,
     );
 }
 

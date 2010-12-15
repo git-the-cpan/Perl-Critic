@@ -1,5 +1,5 @@
 ##############################################################################
-#     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/RequireFinalReturn.run $
+#     $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/Subroutines/RequireFinalReturn.run $
 #    $Date: 2010-05-30 23:34:52 -0500 (Sun, 30 May 2010) $
 #   $Author: wyant $
 # $Revision: 3819 $

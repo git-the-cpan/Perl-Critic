@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ErrorHandling/RequireCheckingReturnValueOfEval.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/ErrorHandling/RequireCheckingReturnValueOfEval.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::ErrorHandling::RequireCheckingReturnValueOfEval;
@@ -18,7 +18,7 @@ use Scalar::Util qw< refaddr >;
 use Perl::Critic::Utils qw< :booleans :characters :severities hashify >;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -360,17 +360,6 @@ true value and to test that value:
 Unfortunately, you can't use the C<defined> function to test the
 result; C<eval> returns an empty string on failure.
 
-Various modules have been written to take some of the pain out of
-properly localizing and checking C<$@>/C<$EVAL_ERROR>. For example:
-
-    use Try::Tiny;
-    try {
-        ...
-    } catch {
-        # Error handling here;
-        # The exception is in $_/$ARG, not $@/$EVAL_ERROR.
-    };  # Note semicolon.
-
 "But we don't use DESTROY() anywhere in our code!" you say.  That may
 be the case, but do any of the third-party modules you use have them?
 What about any you may use in the future or updated versions of the
@@ -386,9 +375,6 @@ This Policy is not configurable except for the standard options.
 
 See thread on perl5-porters starting here:
 L<http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2008-06/msg00537.html>.
-
-For a nice, easy, non-magical way of properly handling exceptions, see
-L<Try::Tiny|Try::Tiny>.
 
 
 =head1 AUTHOR

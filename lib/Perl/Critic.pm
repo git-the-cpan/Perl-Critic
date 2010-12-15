@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic;
@@ -17,19 +17,19 @@ use Readonly;
 use base qw(Exporter);
 
 use File::Spec;
-use List::MoreUtils qw< firstidx >;
-use Scalar::Util qw< blessed >;
+use Scalar::Util qw(blessed);
+use List::MoreUtils qw(firstidx);
 
 use Perl::Critic::Exception::Configuration::Generic;
 use Perl::Critic::Config;
 use Perl::Critic::Violation;
 use Perl::Critic::Document;
 use Perl::Critic::Statistics;
-use Perl::Critic::Utils qw< :characters hashify shebang_line >;
+use Perl::Critic::Utils qw{ :characters hashify shebang_line };
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -121,6 +121,11 @@ sub critique {  ## no critic (ArgUnpacking)
 #=============================================================================
 # PRIVATE methods
 
+my $regexp_cleanup = eval {
+    require PPIx::Regexp;
+    sub { PPIx::Regexp->flush_cache() };
+} || sub {};
+
 sub _gather_violations {
     my ($self, $doc) = @_;
 
@@ -133,6 +138,9 @@ sub _gather_violations {
     my @policies = $self->config->policies();
     my @ordered_policies = _futz_with_policy_order(@policies);
     my @violations = map { _critique($_, $doc) } @ordered_policies;
+
+    # Flush PPIx::Regexp cache.
+    $regexp_cleanup->();
 
     # Accumulate statistics
     $self->statistics->accumulate( $doc, \@violations );
@@ -200,6 +208,7 @@ sub _critique {
 #-----------------------------------------------------------------------------
 
 sub _futz_with_policy_order {
+
     # The ProhibitUselessNoCritic policy is another special policy.  It
     # deals with the violations that *other* Policies produce.  Therefore
     # it needs to be run *after* all the other Policies.  TODO: find
@@ -886,10 +895,6 @@ L<List::Util|List::Util>
 
 L<Module::Pluggable|Module::Pluggable>
 
-L<Perl::Tidy|Perl::Tidy>
-
-L<Pod::Spell|Pod::Spell>
-
 L<PPI|PPI>
 
 L<Pod::PlainText|Pod::PlainText>
@@ -906,7 +911,7 @@ L<String::Format|String::Format>
 
 L<Task::Weaken|Task::Weaken>
 
-L<Text::ParseWords|Text::ParseWords>
+L<Test::Builder|Test::Builder>
 
 L<version|version>
 
@@ -917,6 +922,20 @@ functionality:
 L<File::HomeDir|File::HomeDir>
 
 L<File::Which|File::Which>
+
+L<IO::String|IO::String>
+
+L<IPC::Open2|IPC::Open2>
+
+L<Perl::Tidy|Perl::Tidy>
+
+L<Pod::Spell|Pod::Spell>
+
+L<Test::Pod|Test::Pod>
+
+L<Test::Pod::Coverage|Test::Pod::Coverage>
+
+L<Text::ParseWords|Text::ParseWords>
 
 
 =head1 CONTACTING THE DEVELOPMENT TEAM

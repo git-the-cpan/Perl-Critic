@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/82_optional_modules.t $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/xt/author/82_optional_modules.t $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 use 5.006001;
@@ -20,7 +20,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -30,6 +30,7 @@ our $VERSION = '1.110_001';
 
 my %module_versions = (
     recommended_module_versions(),
+    'Test::Deep'            => 0,
     'Test::Memory::Cycle'   => 0,
     'Test::Without::Module' => 0,
 );

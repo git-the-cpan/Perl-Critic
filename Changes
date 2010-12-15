@@ -1,80 +1,12 @@
-[1.110_001] Released on 2010-11-30
-
-    New Features:
-    * uses_module(), namespaces(), and subdocuments_for_namespace() methods on
-      Perl::Critic::Document.
-    * Perl::Critic::Document->new() now accepts a -filename-override argument
-      for setting the filename when the source code comes from something
-      other than an actual file.
-    * New policy InputOutput::RequireEncodingWithUTF8Layer to recommend
-      ':encoding(utf8)' over ':utf8' in open() and binmode(). It is
-      severity 5 because of the bad things that can happen if invalid
-      UTF8 gets loose in your code.
-    * New policy Modules::ProhibitConditionalUseStatements to prohibit
-      'use module' inside a conditional, since the statement is executed
-      unconditionally at compile time.  Thanks to Peter Guzis for
-      submitting the policy and tests in RT #59065.
-
-    Policy Changes:
-    * ControlStructures::ProhibitMutatingListFunctions allows s///r,
-      which was introduced in 5.13.2.
-    * ControlStructures::ProhibitPostfixControls now looks for "when".  It is
-      treated in the same way as "if".
-    * Documentation::RequirePodSections now honors '## no critic'
-      annotation anywhere before the '__END__', '__DATA__', or first
-      '=head1', whichever comes first.  The line number of the offending
-      '=head1 NAME' was added to the violation description.  RT #59268.
-    * RegularExpressions::ProhibitUnusedCapture now takes account of the
-      use of $- and $+ (and their English equivalents under 'use
-      English') provided the subscripts are literal integers.
-    * RegularExpressions::ProhibitUnusedCapture now takes account of the
-      use of capture variables in the replacement portion of
-      s/.../.../e.
-    * Subroutines::ProhibitUnusedPrivateSubroutines now looks inside
-      regular expressions.
-    * ValuesAndExpressions::ProhibitMagicNumbers now supports Const::Fast.
-    * ValuesAndExpressions::ProhibitMagicNumbers now has a
-      constant_creator_subroutines parameter to allow the user to
-      configure the names of subroutines that create constants. RT #62562.
-    * ValuesAndExpressions::ProhibitMismatchedOperators didn't handle file
-      test operators properly.  Patch by H.Merijn Brand.  RT #58751
-    * Variables::ProhibitUnusedVariables now looks inside regular
-      expressions.
-    * ValuesAndExpressions::RequireInterpolationOfMetachars now detects
-      and complains about "\b" and "\l" as documented in perlop, and
-      "\1" through "\7", which are not documented there, but were found
-      in toke.c.
-
-    Other Changes:
-    * Test::Perl::Critic::Policy no longer exports by default.
-    * Build phase now requires Test::Deep.
-    * Added example using Try::Tiny to documentation of
-      ErrorHandling::RequireCheckingReturnValueOfEval. Suggested by Andy
-      Lester on the developers mailing list.
-    * In order to get more consistent behavior across all installations of
-      Perl::Critic, IPC::Open2 (which actually is part of core), PPIx::Regexp,
-      Perl::Tidy, Pod::Spell, and Text::ParseWords are no longer optional
-      prerequisites.
-    * Now depends upon PPIx::Utilities v1.1.0.
+[1.111] Released on 2010-12-14
 
     Bug Fixes:
-    * Build.PL/Makefile.PL didn't specify a minimum version of version.pm, but
-      TestingAndDebugging::RequireUseStrict did.  RT #58952
-    * Perl::Critic::Annotation needs to look inside the __END__ statement to
-      find the true end of the document, otherwise POD policies may give false
-      positives.  RT #59176
-    * BuiltinFunctions::ProhibitStringyEval no longer dies on eval
-      "#...".  RT #60179
-    * RegularExpressions::ProhibitUnusedCapture now takes account of the
-      %LAST_PAREN_MATCH as well as %+ if English has been loaded.  RT #60002
-    * Subroutines::ProhibitManyArgs now interprets prototype groups (e.g.
-      \[$@%]) as representing a single argument.
-    * Require Exporter version 5.63 (versus version 0) to get sane handling of
-      export tags.  RT# 61071
-    * Prevent Subroutines::ProhibitUnusedPrivateSubroutines from failing
-      on &_subroutine().  RT #61311
-    * Subroutines::ProhibitAmpersandSigils now allows references of the
-      form \( &sub1, &sub2 ).  RT #49609
+    * Work around change in List::MoreUtils 0.28 that broke ProhibitNoStrict
+      and ProhibitNoWarnings.  RT #63816
+
+[1.110_001] Released on 2010-11-30
+
+    Development release.
 
 [1.109] Released on 2010-08-29
 
@@ -1924,10 +1856,10 @@
     Initial version.
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/Changes $
+#     $Date: 2010-12-14 20:03:00 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4007 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

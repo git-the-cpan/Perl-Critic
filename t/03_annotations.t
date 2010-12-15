@@ -22,7 +22,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ Perl::Critic::TestUtils::block_perlcriticrc();
 
 my @bundled_policy_names = bundled_policy_names();
 
-plan( tests => 85 );
+plan( tests => 82 );
 
 #-----------------------------------------------------------------------------
 # Test Perl::Critic::Annotation module interface
@@ -192,29 +192,6 @@ SKIP: {
     is( $finish, 3,
         'Split statement annotation runs through line 3' );
 }
-
-annotate (<<'EOD', 1, 'Ensure annotations can span __END__' );
-## no critic (RequirePackageMatchesPodName)
-
-package Foo;
-
-__END__
-
-=head1 NAME
-
-Bar - The wrong name for this package
-
-=cut
-EOD
-$note = choose_annotation( 0 );
-ok( $note, 'Annotation (hopefully spanning __END__) found' );
-SKIP: {
-    skip( 'Annotation (hopefully spanning __END__) not found', 1 )
-    if !$note;
-    ok( $note->disables_line( 7 ),
-        'Annotation disables the POD after __END__' );
-}
-
 
 #-----------------------------------------------------------------------------
 

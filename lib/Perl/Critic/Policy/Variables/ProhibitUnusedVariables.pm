@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/ProhibitUnusedVariables.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/Variables/ProhibitUnusedVariables.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::ProhibitUnusedVariables;
@@ -12,14 +12,14 @@ use strict;
 use warnings;
 
 use Readonly;
-use List::MoreUtils qw< any >;
 
+use List::MoreUtils qw< any >;
 use PPI::Token::Symbol;
 
 use Perl::Critic::Utils qw< :characters :severities >;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -38,9 +38,7 @@ sub applies_to           { return qw< PPI::Document >    }
 sub violates {
     my ( $self, $elem, $document ) = @_;
 
-    my %symbol_usage;
-    _get_symbol_usage( \%symbol_usage, $document );
-    _get_regexp_symbol_usage( \%symbol_usage, $document );
+    my %symbol_usage = _get_symbol_usage($document);
     return if not %symbol_usage;
 
     my $declarations = $document->find('PPI::Statement::Variable');
@@ -75,43 +73,17 @@ sub violates {
 }
 
 sub _get_symbol_usage {
-    my ( $symbol_usage, $document ) = @_;
+    my ($document) = @_;
 
     my $symbols = $document->find('PPI::Token::Symbol');
     return if not $symbols;
 
+    my %symbol_usage;
     foreach my $symbol ( @{$symbols} ) {
-        $symbol_usage->{ $symbol->symbol() }++;
+        $symbol_usage{ $symbol->symbol() }++;
     }
 
-    return;
-}
-
-sub _get_regexp_symbol_usage {
-    my ( $symbol_usage, $document ) = @_;
-
-    foreach my $class ( qw{
-        PPI::Token::Regexp::Match
-        PPI::Token::Regexp::Substitute
-        PPI::Token::QuoteLike::Regexp
-        } ) {
-
-        foreach my $regex ( @{ $document->find( $class ) || [] } ) {
-
-            my $ppix = $document->ppix_regexp_from_element( $regex ) or next;
-            $ppix->failures() and next;
-
-            foreach my $code ( @{
-                $ppix->find( 'PPIx::Regexp::Token::Code' ) || [] } ) {
-                my $subdoc = $code->ppi() or next;
-                _get_symbol_usage( $symbol_usage, $subdoc );
-            }
-
-        }
-
-    }
-
-    return;
+    return %symbol_usage;
 }
 
 #-----------------------------------------------------------------------------

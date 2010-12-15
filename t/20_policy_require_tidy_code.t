@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/20_policy_require_tidy_code.t $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/20_policy_require_tidy_code.t $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Test::More tests => 6;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -35,10 +35,11 @@ $bar   =56;
 $baz   =   67;
 END_PERL
 
+my $has_perltidy = eval {require Perl::Tidy};
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
-    1,
+    eval { pcritique($policy, \$code, \%config) },
+    $has_perltidy ? 1 : undef,
     'Untidy code',
 );
 
@@ -52,8 +53,8 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
-    0,
+    eval { pcritique($policy, \$code, \%config) },
+    $has_perltidy ? 0 : undef,
     'Tidy with one trailing newline',
 );
 
@@ -68,8 +69,8 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
-    0,
+    eval { pcritique($policy, \$code, \%config) },
+    $has_perltidy ? 0 : undef,
     'Tidy with two trailing newlines',
 );
 
@@ -91,8 +92,8 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
-    0,
+    eval { pcritique($policy, \$code, \%config) },
+    $has_perltidy ? 0 : undef,
     'Tidy with several trailing newlines',
 );
 
@@ -109,8 +110,8 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
-    0,
+    eval { pcritique($policy, \$code, \%config) },
+    $has_perltidy ? 0 : undef,
     'Tidy with heredoc',
 );
 
@@ -127,8 +128,8 @@ END_PERL
 
 %config = (perltidyrc => q{});
 is(
-    pcritique($policy, \$code, \%config),
-    0,
+    eval { pcritique($policy, \$code, \%config) },
+    $has_perltidy ? 0 : undef,
     'Tidy with shell escape',
 );
 

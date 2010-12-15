@@ -107,22 +107,11 @@ eval 'no Foo';
 
 #-----------------------------------------------------------------------------
 
-## name Eval a comment (RT #60179)
-## failures 1
-## parms { allow_includes => 1 }
-## cut
-
-# Note that absent the desired fix, the following is a fatal error.
-
-eval("#" . substr($^X, 0, 0));
-
-#-----------------------------------------------------------------------------
-
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/ProhibitStringyEval.run $
-#     $Date: 2010-08-08 14:42:39 -0500 (Sun, 08 Aug 2010) $
-#   $Author: wyant $
-# $Revision: 3887 $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/BuiltinFunctions/ProhibitStringyEval.run $
+#     $Date: 2008-12-31 19:59:19 -0600 (Wed, 31 Dec 2008) $
+#   $Author: clonezone $
+# $Revision: 2931 $
 ##############################################################################
 
 # Local Variables:

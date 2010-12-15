@@ -1,6 +1,6 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Build.PL $
-#     $Date: 2010-06-21 10:10:33 -0400 (Mon, 21 Jun 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/Build.PL $
+#     $Date: 2010-06-21 09:10:33 -0500 (Mon, 21 Jun 2010) $
 #   $Author: clonezone $
 # $Revision: 3840 $
 ########################################################################

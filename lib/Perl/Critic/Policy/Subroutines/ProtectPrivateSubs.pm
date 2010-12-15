@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProtectPrivateSubs.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/Subroutines/ProtectPrivateSubs.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProtectPrivateSubs;
@@ -20,7 +20,7 @@ use Perl::Critic::Utils qw<
 >;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ sub supported_parameters {
         {
             name            => 'private_name_regex',
             description     => 'Pattern that determines what a private subroutine is.',
-            default_string  => '\b_\w+\b',  ## no critic (RequireInterpolationOfMetachars)
+            default_string  => '\b_\w+\b',
             behavior        => 'string',
             parser          => \& _parse_private_name_regex,
         },

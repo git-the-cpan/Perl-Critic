@@ -144,7 +144,7 @@ state ( $foo );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/CodeLayout/ProhibitParensWithBuiltins.run $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/CodeLayout/ProhibitParensWithBuiltins.run $
 #     $Date: 2010-01-19 19:44:15 -0600 (Tue, 19 Jan 2010) $
 #   $Author: wyant $
 # $Revision: 3752 $

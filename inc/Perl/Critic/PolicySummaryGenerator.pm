@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/PolicySummaryGenerator.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/inc/Perl/Critic/PolicySummaryGenerator.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::PolicySummaryGenerator;
@@ -27,7 +27,7 @@ use Exception::Class ();  # Must be after P::C::Exception::*
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -59,16 +59,16 @@ Perl::Critic::PolicySummary - Descriptions of the Policy modules included with L
 
 =head1 DESCRIPTION
 
-The following Policy modules are distributed with Perl::Critic. (There are
-additional Policies that can be found in add-on distributions.)  The Policy
-modules have been categorized according to the table of contents in Damian
-Conway's book B<Perl Best Practices>. Since most coding standards take the
-form "do this..." or "don't do that...", I have adopted the convention of
-naming each module C<RequireSomething> or C<ProhibitSomething>.  Each Policy
-is listed here with its default severity.  If you don't agree with the default
-severity, you can change it in your F<.perlcriticrc> file (try C<perlcritic
---profile-proto> for a starting version).  See the documentation of each
-module for its specific details.
+The following Policy modules are distributed with Perl::Critic.
+(There are additional Policies that can be found in add-on
+distributions.)  The Policy modules have been categorized according to
+the table of contents in Damian Conway's book B<Perl Best Practices>.
+Since most coding standards take the form "do this..." or "don't do
+that...", I have adopted the convention of naming each module
+C<RequireSomething> or C<ProhibitSomething>.  Each Policy is listed
+here with its default severity.  If you don't agree with the default
+severity, you can change it in your F<.perlcriticrc> file.  See the
+documentation of each module for its specific details.
 
 
 =head1 POLICIES
@@ -79,7 +79,7 @@ END_HEADER
 my $format = <<'END_POLICY';
 =head2 L<%s|%s>
 
-%s [Default severity %d]
+%s [Severity %d]
 
 END_POLICY
 
@@ -87,11 +87,13 @@ eval {
     foreach my $policy (@policies) {
         my $module_abstract = $policy->get_raw_abstract();
 
+        my $long_name = $policy->get_long_name();
+
         printf
             {$pod_file}
             $format,
-            $policy->get_short_name(),
-            $policy->get_long_name(),
+            $long_name,
+            $long_name,
             $module_abstract,
             $policy->default_severity();
     }
@@ -119,7 +121,7 @@ print {$pod_file} <<'END_FOOTER';
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.110_001.
+This is part of L<Perl::Critic|Perl::Critic> version 1.111.
 
 
 =head1 AUTHOR

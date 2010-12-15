@@ -183,64 +183,12 @@ sub _Foo::_foo {}
 
 #-----------------------------------------------------------------------------
 
-## name Subroutine called in replacement portion of s/.../.../e
-## failures 0
-## cut
-
-s/ ( foo ) / _bar( $1 ) /smxe;
-
-sub _bar {
-    my ( $foo ) = @_;
-    return $foo x 3;
-}
-
-#-----------------------------------------------------------------------------
-
-## name Subroutine called in regexp interpolation
-## failures 0
-## cut
-
-s/ ( foo ) /@{[ _bar( $1 ) ]}/smx;
-
-sub _bar {
-    my ( $foo ) = @_;
-    return $foo x 3;
-}
-
-#-----------------------------------------------------------------------------
-
-## name Subroutine called in regexp embedded code
-## failures 0
-## cut
-
-m/ (?{ _foo() }) /smx;
-
-sub _foo {
-    return 'bar';
-}
-
-#-----------------------------------------------------------------------------
-
-## name RT 61311: dies on "&_name" call
-## failures 0
-## cut
-
-sub first {
-    &_second();
-}
-
-sub _second {
-    print "A private sub\n";
-}
-
-#-----------------------------------------------------------------------------
-
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitUnusedPrivateSubroutines.run $
-#     $Date: 2010-09-14 00:25:14 -0500 (Tue, 14 Sep 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/Subroutines/ProhibitUnusedPrivateSubroutines.run $
+#     $Date: 2009-10-31 15:19:11 -0500 (Sat, 31 Oct 2009) $
 #   $Author: wyant $
-# $Revision: 3922 $
+# $Revision: 3698 $
 ##############################################################################
 
 # Local Variables:

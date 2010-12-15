@@ -1,17 +1,17 @@
 #!/usr/bin/perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/examples/generatestats $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/examples/generatestats $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 use 5.008001;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv('1.110_001');
+use version; our $VERSION = qv('1.111');
 
 use Carp qw{ croak };
 use English qw{ -no_match_vars };

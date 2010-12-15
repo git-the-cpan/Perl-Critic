@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Documentation/RequirePodSections.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/Documentation/RequirePodSections.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::RequirePodSections;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :characters :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
@@ -326,11 +326,8 @@ sub violates {
     return if not $pods_ref;
 
     # Round up the names of all the =head1 sections
-    my $pod_of_record;
     for my $pod ( @{ $pods_ref } ) {
         for my $found ( $pod =~ m{ ^ =head1 \s+ ( .+? ) \s* $ }gxms ) {
-            # Use first matching POD as POD of record (RT #59268)
-            $pod_of_record ||= $pod;
             #Leading/trailing whitespace is already removed
             $found_sections{ uc $found } = 1;
         }
@@ -340,9 +337,7 @@ sub violates {
     for my $required ( @required_sections ) {
         if ( not exists $found_sections{$required} ) {
             my $desc = qq{Missing "$required" section in POD};
-            # Report any violations against POD of record rather than whole
-            # document (the point of RT #59268)
-            push @violations, $self->violation( $desc, $EXPL, $pod_of_record );
+            push @violations, $self->violation( $desc, $EXPL, $doc );
         }
     }
 
@@ -465,12 +460,6 @@ in a F<.perlcriticrc> file:
 Currently, this Policy does not look for the required POD sections
 below the C<=head1> level.  Also, it does not require the sections to
 appear in any particular order.
-
-This Policy applies to the entire document, but can be disabled for a
-particular document by a C<## no critic (RequirePodSections)> annotation
-anywhere between the beginning of the document and the first POD section
-containing a C<=head1>, the C<__END__> (if any), or the C<__DATA__> (if any),
-whichever comes first.
 
 
 =head1 AUTHOR

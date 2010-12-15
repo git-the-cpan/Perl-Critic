@@ -603,10 +603,6 @@ PREREQUISITES
 
     Module::Pluggable
 
-    Perl::Tidy
-
-    Pod::Spell
-
     PPI
 
     Pod::PlainText
@@ -623,7 +619,7 @@ PREREQUISITES
 
     Task::Weaken
 
-    Text::ParseWords
+    Test::Builder
 
     version
 
@@ -633,6 +629,20 @@ PREREQUISITES
     File::HomeDir
 
     File::Which
+
+    IO::String
+
+    IPC::Open2
+
+    Perl::Tidy
+
+    Pod::Spell
+
+    Test::Pod
+
+    Test::Pod::Coverage
+
+    Text::ParseWords
 
 CONTACTING THE DEVELOPMENT TEAM
     You are encouraged to subscribe to the mailing list; send a message to

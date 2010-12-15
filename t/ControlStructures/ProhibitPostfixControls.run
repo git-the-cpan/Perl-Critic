@@ -1,5 +1,5 @@
 ## name Basic failure
-## failures 7
+## failures 6
 ## cut
 
 do_something() if $condition;
@@ -8,13 +8,12 @@ do_something() until $condition;
 do_something() unless $condition;
 do_something() for @list;
 do_something() foreach @list;
-do_something() when @list;
 
 #-----------------------------------------------------------------------------
 
 ## name Configured to allow all
 ## failures 0
-## parms {allow => 'if while until unless for foreach when'}
+## parms {allow => 'if while until unless for foreach'}
 ## cut
 
 do_something() if $condition;
@@ -23,20 +22,18 @@ do_something() until $condition;
 do_something() unless $condition;
 do_something() for @list;
 do_something() foreach @list;
-do_something() when @list;
 
 #-----------------------------------------------------------------------------
 
 ## name Configured to allow all, all regular control structures
 ## failures 0
-## parms {allow => 'if unless until while when'}
+## parms {allow => 'if unless until while'}
 ## cut
 
 if($condition){ do_something() }
 while($condition){ do_something() }
 until($condition){ do_something() }
 unless($condition){ do_something() }
-when($smart_match){ do_something() }
 
 #-----------------------------------------------------------------------------
 
@@ -44,7 +41,7 @@ when($smart_match){ do_something() }
 ## failures 0
 ## cut
 
-# PPI versions < 1.03 had problems with this
+#PPI versions < 1.03 had problems with this
 for my $element (@list){ do_something() }
 for (@list){ do_something_else() }
 foreach my $element (@list){ do_something() }
@@ -52,7 +49,7 @@ foreach (@list){ do_something_else() }
 
 #-----------------------------------------------------------------------------
 
-## name Legal postfix if usage
+## name Legal postfix usage
 ## failures 0
 ## cut
 
@@ -87,44 +84,6 @@ confess if $condition;
 
 exit 0 if $condition;
 exit if $condition;
-
-#-----------------------------------------------------------------------------
-
-## name Legal postfix when usage
-## failures 0
-## cut
-
-use Carp;
-
-while ($condition) {
-    next when $smart_match;
-    last when $smart_match;
-    redo when $smart_match;
-    return when $smart_match;
-    goto HELL when $smart_match;
-    exit when $smart_match;
-}
-
-die 'message' when $smart_match;
-die when $smart_match;
-
-warn 'message' when $smart_match;
-warn when $smart_match;
-
-carp 'message' when $smart_match;
-carp when $smart_match;
-
-croak 'message' when $smart_match;
-croak when $smart_match;
-
-cluck 'message' when $smart_match;
-cluck when $smart_match;
-
-confess 'message' when $smart_match;
-confess when $smart_match;
-
-exit 0 when $smart_match;
-exit when $smart_match;
 
 #-----------------------------------------------------------------------------
 
@@ -169,7 +128,6 @@ $hash{until} = 1;
 $hash{while} = 1;
 $hash{for} = 1;
 $hash{foreach} = 1;
-$hash{when} = 1;
 
 #-----------------------------------------------------------------------------
 
@@ -178,13 +136,12 @@ $hash{when} = 1;
 ## cut
 
 my %hash = (
-    if      => 1,
-    unless  => 1,
-    until   => 1,
-    while   => 1,
-    for     => 1,
+    if => 1,
+    unless => 1,
+    until => 1,
+    while => 1,
+    for => 1,
     foreach => 1,
-    when    => 1,
 );
 
 #-----------------------------------------------------------------------------
@@ -200,10 +157,10 @@ Exception::Class->throw($arg1, $arg2) unless not $error;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ControlStructures/ProhibitPostfixControls.run $
-#     $Date: 2010-09-04 15:38:08 -0500 (Sat, 04 Sep 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/t/ControlStructures/ProhibitPostfixControls.run $
+#     $Date: 2009-08-09 16:56:10 -0500 (Sun, 09 Aug 2009) $
 #   $Author: clonezone $
-# $Revision: 3918 $
+# $Revision: 3552 $
 ##############################################################################
 
 # Local Variables:

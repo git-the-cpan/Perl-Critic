@@ -1,29 +1,26 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm $
-#     $Date: 2010-11-30 21:05:15 -0600 (Tue, 30 Nov 2010) $
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/branches/Perl-Critic-1.111/lib/Perl/Critic/Policy/Documentation/RequirePackageMatchesPodName.pm $
+#     $Date: 2010-12-14 20:07:55 -0600 (Tue, 14 Dec 2010) $
 #   $Author: clonezone $
-# $Revision: 3998 $
+# $Revision: 4008 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::RequirePackageMatchesPodName;
 
 use 5.006001;
-
 use strict;
 use warnings;
-
 use Readonly;
-use English qw{ -no_match_vars };
+
 use Perl::Critic::Utils qw{ :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.110_001';
+our $VERSION = '1.111';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $PKG_RX => qr{ [[:alpha:]](?:[\w:\']*\w)? }xms;
-Readonly::Scalar my $DESC =>
-    q{Pod NAME on line %d does not match the package declaration};
+Readonly::Scalar my $DESC => q{Pod NAME does not match the package declaration};
 Readonly::Scalar my $EXPL => q{};
 
 #-----------------------------------------------------------------------------
@@ -54,14 +51,10 @@ sub violates {
 
         next if $content !~ m{^=head1 [ \t]+ NAME [ \t]*$ \s*}cgxms;
 
-        my $line_number = $pod->line_number() + (
-            substr( $content, 0, $LAST_MATCH_START[0] + 1 ) =~ tr/\n/\n/ );
-
         my ($pod_pkg) = $content =~ m{\G (\S+) }cgxms;
 
         if (!$pod_pkg) {
-            return $self->violation( sprintf( $DESC, $line_number ),
-                q{Empty name declaration}, $pod );
+            return $self->violation( $DESC, q{Empty name declaration}, $elem );
         }
 
         # idea: worry about POD escapes?
@@ -74,8 +67,7 @@ sub violates {
             return if $pkg eq $pod_pkg;
         }
 
-        return $self->violation( sprintf( $DESC, $line_number ),
-            $EXPL, $pod );
+        return $self->violation( $DESC, $EXPL, $pod );
     }
 
     return;  # no NAME section found
