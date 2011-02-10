@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Document.pm $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -29,7 +29,7 @@ use PPIx::Regexp 0.010 qw< >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -73,7 +73,6 @@ sub _new_for_parent_document {
 
 sub _init_common {
     my ($self) = @_;
-    my %args;
 
     $self->{_annotations} = [];
     $self->{_suppressed_violations} = [];
@@ -777,7 +776,7 @@ Chris Dolan <cdolan@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2010 Chris Dolan.
+Copyright (c) 2006-2011 Chris Dolan.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

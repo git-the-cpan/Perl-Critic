@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/PolicySummaryGenerator.pm $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 package Perl::Critic::PolicySummaryGenerator;
@@ -27,7 +27,7 @@ use Exception::Class ();  # Must be after P::C::Exception::*
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -119,7 +119,7 @@ print {$pod_file} <<'END_FOOTER';
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.112_001.
+This is part of L<Perl::Critic|Perl::Critic> version 1.112_002.
 
 
 =head1 AUTHOR
@@ -129,7 +129,7 @@ Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2011 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license
@@ -198,7 +198,7 @@ Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2009-2011 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

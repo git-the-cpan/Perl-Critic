@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Miscellanea/RequireRcsKeywords.pm $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 package Perl::Critic::Policy::Miscellanea::RequireRcsKeywords;
@@ -20,7 +20,7 @@ use Perl::Critic::Utils qw{
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -152,13 +152,13 @@ file helps the reader know where the file comes from, in case he or
 she needs to modify it.  This Policy scans your file for comments that
 look like this:
 
-    # $Revision: 4011 $
+    # $Revision: 4037 $
     # $Source: /myproject/lib/foo.pm $
 
 A common practice is to use the C<Revision> keyword to automatically
 define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 4011 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 4037 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION
@@ -184,7 +184,7 @@ Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2011 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

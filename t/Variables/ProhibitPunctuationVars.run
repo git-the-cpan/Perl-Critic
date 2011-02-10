@@ -356,7 +356,7 @@ print "$^ foovar";
 print "$^(foovar";
 
 # sneakier combos
-print "$::foo then $' followed by $'3"; # violates for $' 
+print "$::foo then $' followed by $'3"; # violates for $'
 
 #-----------------------------------------------------------------------------
 
@@ -414,9 +414,9 @@ qr/foo$/
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitPunctuationVars.run $
-#     $Date: 2010-10-31 20:07:54 -0500 (Sun, 31 Oct 2010) $
+#     $Date: 2011-01-31 06:30:57 -0600 (Mon, 31 Jan 2011) $
 #   $Author: clonezone $
-# $Revision: 3984 $
+# $Revision: 4024 $
 ##############################################################################
 
 # Local Variables:

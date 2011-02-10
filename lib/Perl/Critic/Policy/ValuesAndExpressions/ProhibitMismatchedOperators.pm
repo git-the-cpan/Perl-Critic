@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/ProhibitMismatchedOperators.pm $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators;
@@ -14,7 +14,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -208,7 +208,7 @@ Peter Guzis <pguzis@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2006-2010 Peter Guzis.  All rights reserved.
+Copyright (c) 2006-2011 Peter Guzis.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

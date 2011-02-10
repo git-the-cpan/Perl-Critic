@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/01_config.t $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 use 5.006001;
@@ -30,7 +30,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -172,7 +172,6 @@ my $total_policies   = scalar @names_of_policies_willing_to_work;
 
 {
     my %profile = ();
-    my $last_policy_count = 0;
     my $severity = $SEVERITY_HIGHEST;
     for my $index ( 0 .. $#names_of_policies_willing_to_work ) {
         if ($index and $index % 10 == 0) {

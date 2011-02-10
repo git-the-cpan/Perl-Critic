@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Test/Perl/Critic/Policy.pm $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 package Test::Perl::Critic::Policy;
@@ -29,7 +29,7 @@ use Perl::Critic::TestUtils qw<
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -55,7 +55,6 @@ sub all_policies_ok {
     my $test_dir        = $args{'-test-directory'} || 't';
 
     my $subtests_with_extras =  subtests_in_tree( $test_dir, 'include extras' );
-    my @all_testable_policies = %{ $subtests_with_extras };
 
     if ($wanted_policies) {
         _validate_wanted_policy_names($wanted_policies, $subtests_with_extras);
@@ -424,7 +423,7 @@ Andy Lester, Jeffrey Ryan Thalhammer <thaljef@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009-2010 Andy Lester.  All rights reserved.
+Copyright (c) 2009-2011 Andy Lester.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

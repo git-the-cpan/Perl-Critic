@@ -897,10 +897,10 @@ use Foo::Bar;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
+#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/ProhibitConditionalUseStatements.run $
+#     $Date: 2011-01-04 19:34:54 -0600 (Tue, 04 Jan 2011) $
+#   $Author: wyant $
+# $Revision: 4013 $
 ##############################################################################
 
 # Local Variables:

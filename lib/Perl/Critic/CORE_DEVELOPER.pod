@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/CORE_DEVELOPER.pod $
-#     $Date: 2010-06-27 11:16:18 -0500 (Sun, 27 Jun 2010) $
+#     $Date: 2011-01-31 06:09:54 -0600 (Mon, 31 Jan 2011) $
 #   $Author: clonezone $
-# $Revision: 3860 $
+# $Revision: 4022 $
 ##############################################################################
 
 =pod
@@ -358,7 +358,7 @@ Thomas R. Wyant, III F<wyant at cpan dot org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009-2010 Thomas R. Wyant, III
+Copyright (c) 2009-2011 Thomas R. Wyant, III
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

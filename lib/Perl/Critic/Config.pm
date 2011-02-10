@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Config.pm $
-#     $Date: 2010-12-14 20:31:40 -0600 (Tue, 14 Dec 2010) $
+#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4011 $
+# $Revision: 4037 $
 ##############################################################################
 
 package Perl::Critic::Config;
@@ -36,7 +36,7 @@ use Perl::Critic::Utils::DataConversion qw< boolean_to_number dor >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.112_001';
+our $VERSION = '1.112_002';
 
 #-----------------------------------------------------------------------------
 
@@ -393,7 +393,7 @@ sub _validate_and_save_regex {
 
     my $found_errors;
     foreach my $regex (@regexes) {
-        eval { my $test = qr/$regex/ixms; }
+        eval { qr/$regex/ixms }
             or do {
                 my $cleaned_error = $EVAL_ERROR || '<unknown reason>';
                 $cleaned_error =~
@@ -1380,7 +1380,7 @@ Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2010 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2011 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

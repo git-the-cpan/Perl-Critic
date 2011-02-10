@@ -11,6 +11,7 @@ inc/Devel/AssertOS/Solaris.pm
 inc/Devel/CheckOS.pm
 inc/Perl/Critic/BuildUtilities.pm
 inc/Perl/Critic/Module/Build.pm
+inc/Perl/Critic/Module/Build/Standard.pm
 inc/Perl/Critic/PolicySummaryGenerator.pm
 INSTALL
 lib/Perl/Critic.pm
