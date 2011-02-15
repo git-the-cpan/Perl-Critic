@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/PolicyConfig.pm $
-#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
+#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4037 $
+# $Revision: 4040 $
 ##############################################################################
 
 package Perl::Critic::PolicyConfig;
@@ -13,7 +13,7 @@ use warnings;
 
 use Readonly;
 
-our $VERSION = '1.112_002';
+our $VERSION = '1.113';
 
 use Perl::Critic::Exception::AggregateConfiguration;
 use Perl::Critic::Exception::Configuration::Option::Policy::ParameterValue;

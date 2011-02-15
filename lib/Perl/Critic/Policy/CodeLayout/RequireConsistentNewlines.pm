@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/CodeLayout/RequireConsistentNewlines.pm $
-#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
+#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4037 $
+# $Revision: 4040 $
 ##############################################################################
 
 package Perl::Critic::Policy::CodeLayout::RequireConsistentNewlines;
@@ -17,7 +17,7 @@ use PPI::Token::Whitespace;
 use English qw(-no_match_vars);
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.112_002';
+our $VERSION = '1.113';
 
 Readonly::Scalar my $LINE_END => qr/\015{1,2}\012|[\012\015]/mxs;
 
@@ -57,7 +57,10 @@ sub violates {
         $newline ||= $nl;
         if ( $nl ne $newline ) {
             my $token = PPI::Token::Whitespace->new( $nl );
-            $token->{_location} = [$line, $col, $col];
+            # TODO this is a terrible violation of encapsulation, but absent a
+            # mechanism to override the line numbers in the violation, I do
+            # not know what to do about it.
+            $token->{_location} = [$line, $col, $col, $line, $filename];
             push @v, $self->violation( $DESC, $EXPL, $token );
         }
         $line++;

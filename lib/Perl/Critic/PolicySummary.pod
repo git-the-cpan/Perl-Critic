@@ -587,7 +587,7 @@ Negative array index should be used. [Default severity 4]
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.112_002.
+This is part of L<Perl::Critic|Perl::Critic> version 1.113.
 
 
 =head1 AUTHOR

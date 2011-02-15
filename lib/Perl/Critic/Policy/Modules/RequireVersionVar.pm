@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm $
-#     $Date: 2011-02-09 20:31:08 -0600 (Wed, 09 Feb 2011) $
+#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
 #   $Author: clonezone $
-# $Revision: 4037 $
+# $Revision: 4040 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireVersionVar;
@@ -17,7 +17,7 @@ use List::MoreUtils qw(any);
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.112_002';
+our $VERSION = '1.113';
 
 #-----------------------------------------------------------------------------
 
@@ -143,10 +143,10 @@ Perl's version system does not recognize lexical variables such as
 
 so they are not accepted by this policy.
 
-A common practice is to use the C<$Revision: 4037 $> keyword to
+A common practice is to use the C<$Revision: 4040 $> keyword to
 automatically define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 4037 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 4040 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION
