@@ -128,11 +128,25 @@ L<critique()/critique> critiques a file, returning any violations found.
 
 =cut
 
+#-----------------------------------------------------------------------------
+
+## name Handle nested format codes RT 65569.
+## failures 0
+## cut
+
+=pod
+
+See L<C<perldiag>|perldiag> for the gory details.
+
+=cut
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Documentation/RequirePodLinksIncludeText.run $
-#     $Date: 2009-11-08 02:10:37 -0600 (Sun, 08 Nov 2009) $
-#   $Author: thaljef $
-# $Revision: 3718 $
+#     $Date: 2011-02-15 18:51:40 -0600 (Tue, 15 Feb 2011) $
+#   $Author: wyant $
+# $Revision: 4042 $
 ##############################################################################
 
 # Local Variables:

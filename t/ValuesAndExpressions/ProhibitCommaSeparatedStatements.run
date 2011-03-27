@@ -274,11 +274,31 @@ func( @{ $href }{'1', '2'} );
 
 #-----------------------------------------------------------------------------
 
+## name RT #61301 (requires PPI 1.215)
+## failures 0
+## cut
+
+sub foo {
+    return { bar => 1, answer => 42 };
+}
+
+#-----------------------------------------------------------------------------
+
+## name RT #64132 (requires PPI 1.215)
+## failures 0
+## cut
+
+sub new {
+    return bless { foo => 1, bar => 2 }, __PACKAGE__;
+}
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
-#     $Date: 2010-02-14 14:31:47 -0600 (Sun, 14 Feb 2010) $
+#     $Date: 2011-03-01 15:09:32 -0600 (Tue, 01 Mar 2011) $
 #   $Author: wyant $
-# $Revision: 3768 $
+# $Revision: 4048 $
 ##############################################################################
 
 # Local Variables:

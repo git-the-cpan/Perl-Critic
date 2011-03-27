@@ -1,3 +1,30 @@
+[1.114] Released on 2011-03-26
+
+    Policy Changes:
+    * Documentation::RequirePodLinksIncludeText now handles nested POD
+      formatting. RT #65569
+    * Clarified relation of severity numbers to names in Perl::Critic
+      POD. RT #66017
+    * Removed caveats from Variables::RequireLocalizedPunctuationVars,
+      no longer necessary with PPI 1.208. RT #65514
+    * Have InputOutput::RequireBriefOpen attempt to expand scope as
+      necessary to deal with the case where the open() and the
+      corresponding close() are not in the same scope. RT #64437
+    * RegularExpressions::ProhibitUnusedCapture now looks inside
+      double-quotish things. RT #38942.
+    * RegularExpressions::ProhibitUnusedCapture now takes logical
+      alternation into account, so that (e.g.)
+          if ( /(a)/ || /(b)/ ) {
+              say $1;
+          }
+      is not a violation. RT #38942.
+    * ValuesAndExpressions::ProhibitCommaSeparatedStatements now
+      recognizes 'return { foo => 1, bar => 2 }' as containing a hash
+      constructor, not a block. This was fixed by PPI 1.215. RT #61301.
+    * ValuesAndExpressions::ProhibitCommaSeparatedStatements now
+      recognizes 'bless { foo => 1, bar => 2 }' as containing a hash
+      constructor, not a block. This was fixed by PPI 1.215. RT #64132.
+
 [1.113] Released on 2011-02-14
 
     New Policies:
@@ -1947,9 +1974,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
+#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4040 $
+# $Revision: 4051 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

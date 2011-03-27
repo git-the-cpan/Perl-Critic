@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/01_config_bad_perlcriticrc.t $
-#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
+#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4040 $
+# $Revision: 4051 $
 ##############################################################################
 
 
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::Constants qw< $_MODULE_VERSION_TERM_ANSICOLOR >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.113';
+our $VERSION = '1.114';
 
 #-----------------------------------------------------------------------------
 

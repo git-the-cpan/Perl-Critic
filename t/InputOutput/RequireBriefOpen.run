@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/InputOutput/RequireBriefOpen.run $
-#     $Date: 2009-12-03 07:52:50 -0600 (Thu, 03 Dec 2009) $
-#   $Author: clonezone $
-# $Revision: 3730 $
+#     $Date: 2011-02-25 15:58:41 -0600 (Fri, 25 Feb 2011) $
+#   $Author: wyant $
+# $Revision: 4045 $
 ##############################################################################
 
 ## name open .. close
@@ -99,8 +99,8 @@ close $fh1;
 
 #-----------------------------------------------------------------------------
 
-## name glob scope failure
-## failures 1
+## name glob scope failure; no longer fails w/ RT #64437 applied.
+## failures 0
 ## cut
 
 {
@@ -363,13 +363,30 @@ CORE::open my $fh, '<', $filename;
 
 #-----------------------------------------------------------------------------
 
-# Local Variables:
-
 ## name CORE::GLOBAL::open()
 ## failures 1
 ## cut
 
 CORE::GLOBAL::open(my $fh, '<', $filename);
+
+#-----------------------------------------------------------------------------
+
+## name Handle declared in outer scope RT #64437
+## failures 0
+## cut
+
+#!/usr/bin/perl
+
+my $file = 'fubar';
+my ($fh, @lines);
+
+if (! open $fh, '<', $file) {
+    croak "Error opening $file for reading: $!";
+}
+@lines = <$fh>;
+if (! close $fh) {
+    croak "Error closing $file after reading: $!";
+}
 
 #-----------------------------------------------------------------------------
 

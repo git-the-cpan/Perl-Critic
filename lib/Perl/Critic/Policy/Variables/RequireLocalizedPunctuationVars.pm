@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/RequireLocalizedPunctuationVars.pm $
-#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
+#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4040 $
+# $Revision: 4051 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::RequireLocalizedPunctuationVars;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification $EMPTY hashify};
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.113';
+our $VERSION = '1.114';
 
 #-----------------------------------------------------------------------------
 
@@ -104,7 +104,11 @@ sub _is_magic_var {
 
     my $variable_name = $elem->symbol();
     return if $self->{_allow}{$variable_name};
-    return 1 if $elem->isa('PPI::Token::Magic'); # optimization(?), and helps with PPI 1.118 carat bug
+    return 1 if $elem->isa('PPI::Token::Magic'); # optimization(?), and
+                                        # helps with PPI 1.118 carat
+                                        # bug. This bug is gone as of
+                                        # 1.208, which is required for
+                                        # P::C 1.113. RT 65514
     return if not is_perl_global( $elem );
 
     return 1;
@@ -173,18 +177,6 @@ You can configure your own exemptions using the C<allow> option:
     allow = @ARGV $ARGV
 
 These are added to the default exemptions.
-
-
-=head1 CAVEATS
-
-The current PPI (v1.118) has a bug where $^ variables absorb following
-whitespace by mistake.  This makes it harder to spot those as magic
-variables.  Hopefully this will be fixed by PPI 1.200.  In the
-meantime, we have a workaround in this module.
-
-Additionally, PPI v1.118 fails to recognize %! and %^H as magic
-variables.  PPI instead sees the "%" as a modulus operator.  We have
-no workaround for that bug right now.
 
 
 =head1 CREDITS

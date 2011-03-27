@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2011-02-14 19:31:57 -0600 (Mon, 14 Feb 2011) $
+#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4040 $
+# $Revision: 4051 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -13,7 +13,7 @@ use warnings;
 
 use English q<-no_match_vars>;
 
-our $VERSION = '1.113';
+our $VERSION = '1.114';
 
 use base qw{ Exporter };
 
@@ -52,16 +52,17 @@ sub required_module_versions {
         'List::MoreUtils'               => 0.19,
         'List::Util'                    => 0,
         'Module::Pluggable'             => 3.1,
-        'PPI'                           => '1.208',
-        'PPI::Document'                 => '1.208',
-        'PPI::Document::File'           => '1.208',
-        'PPI::Node'                     => '1.208',
-        'PPI::Token::Quote::Single'     => '1.208',
-        'PPI::Token::Whitespace'        => '1.208',
+        'PPI'                           => '1.215', # RT 61301
+        'PPI::Document'                 => '1.215',
+        'PPI::Document::File'           => '1.215',
+        'PPI::Node'                     => '1.215',
+        'PPI::Token::Quote::Single'     => '1.215',
+        'PPI::Token::Whitespace'        => '1.215',
         'PPIx::Regexp'                  => 0.010,
         'PPIx::Utilities::Node'         => '1.001',
         'PPIx::Utilities::Statement'    => '1.001',
         'Perl::Tidy'                    => 0,
+        'Pod::Parser'                   => 0,
         'Pod::PlainText'                => 0,
         'Pod::Select'                   => 0,
         'Pod::Spell'                    => 1,
