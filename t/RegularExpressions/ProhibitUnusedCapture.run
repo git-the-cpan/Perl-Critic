@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitUnusedCapture.run $
-#     $Date: 2011-03-05 22:11:17 -0600 (Sat, 05 Mar 2011) $
+#     $Date: 2011-03-31 10:31:33 -0500 (Thu, 31 Mar 2011) $
 #   $Author: wyant $
-# $Revision: 4049 $
+# $Revision: 4058 $
 ##############################################################################
 
 ## name non-captures
@@ -533,6 +533,19 @@ if ( /(a)/ or /(b)/ and /(c)/ ) {
 if ( /(a)/ || /(b)/ and /(c)/ ) {
     say $1;
 }
+
+#-----------------------------------------------------------------------------
+
+## name RT #67116 - Incorrect check of here document.
+## failures 1
+## cut
+
+$x !~ /()/;
+<<X;
+.
+.
+.
+X
 
 #-----------------------------------------------------------------------------
 

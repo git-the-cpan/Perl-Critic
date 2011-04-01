@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/20_policies.t $
-#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
+#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4051 $
+# $Revision: 4059 $
 ##############################################################################
 
 use 5.006001;
@@ -16,7 +16,7 @@ use Test::Perl::Critic::Policy qw< all_policies_ok >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.114';
+our $VERSION = '1.115';
 
 #-----------------------------------------------------------------------------
 # Notice that you can pass arguments to this test, which limit the testing to

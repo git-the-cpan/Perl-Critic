@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
-#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
+#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4051 $
+# $Revision: 4059 $
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitUnusedCapture;
@@ -19,11 +19,12 @@ use Scalar::Util qw(refaddr);
 
 use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Utils qw{
-    :booleans :severities hashify precedence_of split_nodes_on_comma
+    :booleans :characters :severities hashify precedence_of
+    split_nodes_on_comma
 };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.114';
+our $VERSION = '1.115';
 
 #-----------------------------------------------------------------------------
 
@@ -515,7 +516,8 @@ sub _mark_magic {
     if ( $elem->isa( 'PPI::Token::HereDoc' ) ) {
         $elem->content() =~ m/ \A << \s* ' /sxm
             or _mark_magic_in_content(
-            $elem->heredoc(), $re, $captures, $named_captures, $doc );
+            join( $EMPTY, $elem->heredoc() ), $re, $captures,
+            $named_captures, $doc );
         return;
     }
 

@@ -1,8 +1,8 @@
 #######################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Build.PL $
-#     $Date: 2010-06-21 10:10:33 -0400 (Mon, 21 Jun 2010) $
+#     $Date: 2011-03-31 19:00:29 -0500 (Thu, 31 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 3840 $
+# $Revision: 4060 $
 ########################################################################
 
 use 5.006001;
@@ -82,6 +82,7 @@ my $builder = Perl::Critic::Module::Build->new(
             Makefile.old
             MANIFEST
             MANIFEST.bak
+            META.json
             META.yml
             pm_to_blib
             README

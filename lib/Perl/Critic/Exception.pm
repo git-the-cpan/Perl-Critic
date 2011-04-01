@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Exception.pm $
-#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
+#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4051 $
+# $Revision: 4059 $
 ##############################################################################
 
 package Perl::Critic::Exception;
@@ -11,7 +11,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '1.114';
+our $VERSION = '1.115';
 
 #-----------------------------------------------------------------------------
 

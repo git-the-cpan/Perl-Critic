@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ErrorHandling/RequireCarping.pm $
-#     $Date: 2011-03-26 16:16:47 -0500 (Sat, 26 Mar 2011) $
+#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
 #   $Author: clonezone $
-# $Revision: 4051 $
+# $Revision: 4059 $
 ##############################################################################
 
 package Perl::Critic::Policy::ErrorHandling::RequireCarping;
@@ -18,7 +18,7 @@ use Perl::Critic::Utils qw{
 use Perl::Critic::Utils::PPI qw{ is_ppi_expression_or_generic_statement };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.114';
+our $VERSION = '1.115';
 
 #-----------------------------------------------------------------------------
 
