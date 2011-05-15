@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Documentation/RequirePodSections.pm $
-#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
+#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
 #   $Author: clonezone $
-# $Revision: 4059 $
+# $Revision: 4078 $
 ##############################################################################
 
 package Perl::Critic::Policy::Documentation::RequirePodSections;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :characters :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.115';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
@@ -342,7 +342,10 @@ sub violates {
             my $desc = qq{Missing "$required" section in POD};
             # Report any violations against POD of record rather than whole
             # document (the point of RT #59268)
-            push @violations, $self->violation( $desc, $EXPL, $pod_of_record );
+            # But if there are no =head1 records at all, rat out the
+            # first pod found, as being better than blowing up. RT #67231
+            push @violations, $self->violation( $desc, $EXPL,
+                $pod_of_record || $pods_ref->[0] );
         }
     }
 

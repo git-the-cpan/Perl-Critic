@@ -46,11 +46,21 @@ $foo{substr};
 
 #-----------------------------------------------------------------------------
 
+## name allow under really old Perl. RT #59112
+## failures 0
+## cut
+
+use 5.004;
+
+substr( $foo, 0, 0 ) = 'bar';
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/ProhibitLvalueSubstr.run $
-#     $Date: 2010-05-22 17:48:12 -0500 (Sat, 22 May 2010) $
+#     $Date: 2011-04-27 09:59:08 -0500 (Wed, 27 Apr 2011) $
 #   $Author: wyant $
-# $Revision: 3816 $
+# $Revision: 4075 $
 ##############################################################################
 
 # Local Variables:

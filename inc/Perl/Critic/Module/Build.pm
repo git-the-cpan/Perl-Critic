@@ -1,8 +1,8 @@
 #######################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/Module/Build.pm $
-#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
+#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
 #   $Author: clonezone $
-# $Revision: 4059 $
+# $Revision: 4078 $
 ########################################################################
 
 package Perl::Critic::Module::Build;
@@ -12,7 +12,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '1.115';
+our $VERSION = '1.116';
 
 use Carp;
 use English qw< $OS_ERROR $EXECUTABLE_NAME -no_match_vars >;

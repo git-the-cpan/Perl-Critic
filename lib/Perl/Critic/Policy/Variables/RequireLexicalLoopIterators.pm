@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Variables/RequireLexicalLoopIterators.pm $
-#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
+#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
 #   $Author: clonezone $
-# $Revision: 4059 $
+# $Revision: 4078 $
 ##############################################################################
 
 package Perl::Critic::Policy::Variables::RequireLexicalLoopIterators;
@@ -11,16 +11,19 @@ use 5.006001;
 use strict;
 use warnings;
 use Readonly;
+use version ();
 
-use Perl::Critic::Utils qw{ :severities };
+use Perl::Critic::Utils qw{ :booleans :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.115';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Scalar my $DESC => q{Loop iterator is not lexical};
 Readonly::Scalar my $EXPL => [ 108 ];
+
+Readonly::Scalar my $MINIMUM_PERL_VERSION => version->new( 5.004 );
 
 #-----------------------------------------------------------------------------
 
@@ -28,6 +31,16 @@ sub supported_parameters { return ()                         }
 sub default_severity     { return $SEVERITY_HIGHEST          }
 sub default_themes       { return qw(core pbp bugs)          }
 sub applies_to           { return 'PPI::Statement::Compound' }
+
+#-----------------------------------------------------------------------------
+
+sub prepare_to_scan_document {
+    my ( $self, $document ) = @_;
+    # perl5004delta says that is when lexical iterators were introduced,
+    # so ... (RT 67760)
+    my $version = $document->highest_explicit_perl_version();
+    return ! $version || $version >= $MINIMUM_PERL_VERSION;
+}
 
 #-----------------------------------------------------------------------------
 
@@ -60,6 +73,8 @@ __END__
 
 =pod
 
+=for stopwords foreach perlsyn
+
 =head1 NAME
 
 Perl::Critic::Policy::Variables::RequireLexicalLoopIterators - Write C<for my $element (@list) {...}> instead of C<for $element (@list) {...}>.
@@ -73,17 +88,26 @@ distribution.
 
 =head1 DESCRIPTION
 
-C<for>/C<foreach> loops I<always> create new lexical variables for
-named iterators.  In other words
+This policy asks you to use C<my>-style lexical loop iterator variables:
 
-    for $zed (...) {
+    foreach my $zed (...) {
         ...
     }
 
-is equivalent to
+Unless you use C<my>, C<for>/C<foreach> loops use a global variable with
+its value C<local> to the block. In other words,
 
-    for my $zed (...) {
+    foreach $zed (...) {
         ...
+    }
+
+is more-or-less equivalent to
+
+    {
+        local $zed
+        foreach $zed (...) {
+            ...
+        }
     }
 
 This may not seem like a big deal until you see code like
@@ -106,14 +130,25 @@ This may not seem like a big deal until you see code like
     }
 
 which is not going to allow you to arrive in time for dinner with your
-family because the C<$bicycle> outside the loop is different from the
-C<$bicycle> inside the loop.  You may have freed your bicycle, but you
-can't remember which one it was.
+family because the C<$bicycle> outside the loop is not changed by the
+loop. You may have unlocked your bicycle, but you can't remember which
+one it was.
+
+Lexical loop variables were introduced in Perl 5.004. This policy does
+not report violations on code which explicitly specifies an earlier
+version of Perl (e.g. C<require 5.002;>).
 
 
 =head1 CONFIGURATION
 
 This Policy is not configurable except for the standard options.
+
+
+=head1 SEE ALSO
+
+L<"Foreach Loops" in perlsyn|perlsyn/Foreach Loops>
+
+L<"my() in Control Structures" in perl5004delta|perl5004delta/my() in control structures>
 
 
 =head1 AUTHOR

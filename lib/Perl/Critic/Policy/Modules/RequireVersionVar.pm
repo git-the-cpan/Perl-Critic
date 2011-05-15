@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Modules/RequireVersionVar.pm $
-#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
+#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
 #   $Author: clonezone $
-# $Revision: 4059 $
+# $Revision: 4078 $
 ##############################################################################
 
 package Perl::Critic::Policy::Modules::RequireVersionVar;
@@ -17,7 +17,7 @@ use List::MoreUtils qw(any);
 use Perl::Critic::Utils qw{ :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.115';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
@@ -49,6 +49,7 @@ sub _is_version_declaration {  ## no critic (ArgUnpacking)
     return 1 if _is_vars_version(@_);
     return 1 if _is_package_version(@_);
     return 1 if _is_readonly_version(@_);
+    return 1 if _is_package_argument_version(@_);
     return 0;
 }
 
@@ -101,6 +102,19 @@ sub _is_readonly_version {
     return $ppsib eq 'Readonly' || $ppsib eq 'Readonly::Scalar';
 }
 
+#-----------------------------------------------------------------------------
+
+sub _is_package_argument_version {
+    my (undef, $elem) = @_;
+    $elem->isa( 'PPI::Statement::Package' ) or return 0;
+    # Perldoc for 5.12.3 documents the statement as
+    # package NAMESPACE VERSION
+    # with no comma, and the compiler in fact does not accept one.
+    my $ver = $elem->schild( 2 )
+        or return 0;
+    return $ver->isa( 'PPI::Token::Number' );
+}
+
 1;
 
 __END__
@@ -143,10 +157,10 @@ Perl's version system does not recognize lexical variables such as
 
 so they are not accepted by this policy.
 
-A common practice is to use the C<$Revision: 4059 $> keyword to
+A common practice is to use the C<$Revision: 4078 $> keyword to
 automatically define the C<$VERSION> variable like this:
 
-    our ($VERSION) = '$Revision: 4059 $' =~ m{ \$Revision: \s+ (\S+) }x;
+    our ($VERSION) = '$Revision: 4078 $' =~ m{ \$Revision: \s+ (\S+) }x;
 
 
 =head1 CONFIGURATION

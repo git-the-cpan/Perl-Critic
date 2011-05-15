@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/BuiltinFunctions/ProhibitLvalueSubstr.pm $
-#     $Date: 2011-03-31 18:57:08 -0500 (Thu, 31 Mar 2011) $
+#     $Date: 2011-05-15 16:43:26 -0500 (Sun, 15 May 2011) $
 #   $Author: clonezone $
-# $Revision: 4059 $
+# $Revision: 4079 $
 ##############################################################################
 
 package Perl::Critic::Policy::BuiltinFunctions::ProhibitLvalueSubstr;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification :language };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.115';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
@@ -23,6 +23,7 @@ Readonly::Scalar my $DESC => q{Lvalue form of "substr" used};
 Readonly::Scalar my $EXPL => [ 165 ];
 
 Readonly::Scalar my $ASSIGNMENT_PRECEDENCE => precedence_of( q{=} );
+Readonly::Scalar my $MINIMUM_PERL_VERSION => version->new( 5.005 );
 
 #-----------------------------------------------------------------------------
 
@@ -30,6 +31,16 @@ sub supported_parameters { return ()                         }
 sub default_severity     { return $SEVERITY_MEDIUM           }
 sub default_themes       { return qw( core maintenance pbp ) }
 sub applies_to           { return 'PPI::Token::Word'         }
+
+#-----------------------------------------------------------------------------
+
+sub prepare_to_scan_document {
+    my ( $self, $document ) = @_;
+    # perl5005delta says that is when the fourth argument to substr()
+    # was introduced, so ... (RT #59112)
+    my $version = $document->highest_explicit_perl_version();
+    return ! $version || $version >= $MINIMUM_PERL_VERSION;
+}
 
 #-----------------------------------------------------------------------------
 
@@ -59,6 +70,8 @@ __END__
 
 =pod
 
+=for stopwords perlfunc substr 4th
+
 =head1 NAME
 
 Perl::Critic::Policy::BuiltinFunctions::ProhibitLvalueSubstr - Use 4-argument C<substr> instead of writing C<substr($foo, 2, 6) = $bar>.
@@ -79,10 +92,20 @@ instead.
     substr($something, 1, 2) = $newvalue;     # not ok
     substr($something, 1, 2, $newvalue);      # ok
 
+The four-argument form of C<substr()> was introduced in Perl 5.005.
+This policy does not report violations on code which explicitly
+specifies an earlier version of Perl (e.g. C<use 5.004;>).
 
 =head1 CONFIGURATION
 
 This Policy is not configurable except for the standard options.
+
+
+=head1 SEE ALSO
+
+L<"substr" in perlfunc|perlfunc/substr> (or C<perldoc -f substr>).
+
+L<"4th argument to substr" in perl5005delta|perl5005delta/4th argument to substr>
 
 
 =head1 AUTHOR

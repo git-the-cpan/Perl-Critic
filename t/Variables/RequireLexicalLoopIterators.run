@@ -56,11 +56,24 @@ until ( $condition ) {}
 
 #-----------------------------------------------------------------------------
 
+## name Ignore really, really old Perls. RT #67760
+## failures 0
+## cut
+
+require 5.003;
+
+foreach $foo ( @list ) {
+    bar( $foo );
+}
+
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/RequireLexicalLoopIterators.run $
-#     $Date: 2009-07-20 19:59:30 -0700 (Mon, 20 Jul 2009) $
-#   $Author: clonezone $
-# $Revision: 3402 $
+#     $Date: 2011-04-27 19:45:39 -0500 (Wed, 27 Apr 2011) $
+#   $Author: wyant $
+# $Revision: 4076 $
 ##############################################################################
 
 # Local Variables:
