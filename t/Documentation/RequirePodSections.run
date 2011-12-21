@@ -173,7 +173,7 @@ Fubar
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Documentation/RequirePodSections.run $
-#     $Date: 2011-04-04 19:22:51 -0500 (Mon, 04 Apr 2011) $
+#     $Date: 2011-04-04 17:22:51 -0700 (Mon, 04 Apr 2011) $
 #   $Author: wyant $
 # $Revision: 4063 $
 ##############################################################################

@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitUnusedCapture.run $
-#     $Date: 2011-03-31 10:31:33 -0500 (Thu, 31 Mar 2011) $
+#     $Date: 2011-11-01 08:48:42 -0700 (Tue, 01 Nov 2011) $
 #   $Author: wyant $
-# $Revision: 4058 $
+# $Revision: 4092 $
 ##############################################################################
 
 ## name non-captures
@@ -546,6 +546,27 @@ $x !~ /()/;
 .
 .
 X
+
+#-----------------------------------------------------------------------------
+
+## name RT #69867 - Incorrect check of if() statement if regexp negated
+## failures 0
+## cut
+
+if ( $ip !~ /^(.*?)::(.*)\z/sx ) {
+    @fields = split /:/x, $ip;
+} else {
+    my ( $before, $after ) = ( $1, $2 );
+}
+
+#-----------------------------------------------------------------------------
+
+## name RT #72086 - False positive with /e and parens
+## failures 0
+## cut
+
+s/(.)/($1)/e;
+s/(.)/ { $1 } /e;
 
 #-----------------------------------------------------------------------------
 

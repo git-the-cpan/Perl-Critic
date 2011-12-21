@@ -412,11 +412,20 @@ qr/foo$/
 
 #-----------------------------------------------------------------------------
 
+## name detect bracketed punctuation variables - RT #72910
+## failures 0
+## parms { allow => '$$' }
+## cut
+
+"${$}";
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitPunctuationVars.run $
-#     $Date: 2011-01-31 06:30:57 -0600 (Mon, 31 Jan 2011) $
-#   $Author: clonezone $
-# $Revision: 4024 $
+#     $Date: 2011-12-03 12:48:10 -0800 (Sat, 03 Dec 2011) $
+#   $Author: wyant $
+# $Revision: 4097 $
 ##############################################################################
 
 # Local Variables:

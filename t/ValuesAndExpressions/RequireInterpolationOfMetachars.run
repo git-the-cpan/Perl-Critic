@@ -309,7 +309,7 @@ send_email_to('$some_var: foo@bar.com', ...);
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
-#     $Date: 2010-10-31 20:07:54 -0500 (Sun, 31 Oct 2010) $
+#     $Date: 2010-10-31 18:07:54 -0700 (Sun, 31 Oct 2010) $
 #   $Author: clonezone $
 # $Revision: 3984 $
 ##############################################################################

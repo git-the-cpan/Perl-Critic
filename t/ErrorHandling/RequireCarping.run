@@ -410,7 +410,7 @@ my $foo = sub {
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ErrorHandling/RequireCarping.run $
-#     $Date: 2010-04-21 14:11:17 -0500 (Wed, 21 Apr 2010) $
+#     $Date: 2010-04-21 12:11:17 -0700 (Wed, 21 Apr 2010) $
 #   $Author: wyant $
 # $Revision: 3801 $
 ##############################################################################

@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitManyArgs.pm $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitManyArgs;
@@ -21,7 +21,7 @@ use Carp;
 use Perl::Critic::Utils qw{ :booleans :severities split_nodes_on_comma };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 #-----------------------------------------------------------------------------
 
@@ -62,7 +62,7 @@ sub violates {
     if ($elem->prototype) {
         my $prototype = $elem->prototype();
         $prototype =~ s/ \\ [[] .*? []] /*/smxg;    # Allow for grouping
-        $num_args = $prototype =~ tr/$@%&*_/$@%&*_/;    # RT 56627
+        $num_args = $prototype =~ tr/$@%&*_+/$@%&*_+/;    # RT 56627
     } else {
        $num_args = _count_args($elem->block->schildren);
     }

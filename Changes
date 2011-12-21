@@ -1,3 +1,49 @@
+[1.117] Released on 2011-12-21
+
+    HAPPY HOLIDAYS!
+
+    New Policies:
+    * Variables::ProhibitAugmentedAssignmentInDeclaration reports
+      constructs like 'my $x += 1'. Contributed by Mike O'Regan
+
+    Policy Changes:
+    * BuiltinFunctions::ProhibitLvalueSubstr: Add explicit 'use version'.
+      RT #68498.
+    * CodeLayout::ProhibitHardTabs: Add 'pbp' to the default_themes list.
+      RT #71093.
+    * ControlStructures::ProhibitMutatingListFunctions now understands that
+      tr///r (introduced in 5.13.7) does not change its operand.
+    * ControlStructures::ProhibitMutatingListFunctions now understands that
+      '//=', '<<=', and '>>=' are assignment operators. RT #70901.
+    * ErrorHandling::RequireCheckingReturnValueOfEval now allows things
+      like grep { eval $_ }. RT #69489.
+    * Modules::RequireExplicitPackage now has configuraion option
+      allow_import_of, to allow the import of specified modules before
+      the package statement. RT #72660.
+    * RegularExpressions::ProhibitEnumeratedClasses no longer thinks
+      that [A-Za-z_] matches \w. RT #69322.
+    * RegularExpressions::ProhibitUnusedCaptures now skips the first
+      block of an 'if' or 'elsif' if the regular expression is bound to
+      its operand with the '!~' operator. RT #69867.
+    * RegularExpressions::ProhibitUnusedCaptures now looks into lists
+      and blocks in the replacement portion of the regular expression if
+      /e is asserted. RT #72086.
+    * RegularExpressions::RequireDotMatchAnything,
+      RegularExpressions::RequireExtendedFormatting and
+      RegularExpressions::RequireLineBoundaryMatching now honor defaults
+      set with 'use re "/modifiers"'. RT #72151.
+    * Subroutines::ProhibitManyArgs now recognizes '+' as a prototype
+      character.
+    * Variables::ProhibitPunctuationVars now recognizes bracketed
+      variables embedded in interpolated strings (e.g. "${$}"). For the
+      purpose of the 'allow' configuration, these are considered
+      equivalent to the unbracketed form. RT #72910.
+    Other Changes:
+    * Corrected POD in Perl::Critic::PPI::Utils. RT #68898.
+    * Perl::Critic::Violation source() method now returns the line
+      containing the violation (not the first line) when the statement
+      containing the violation spans multiple lines.
+
 [1.116] Released on 2011-05-15
 
     Policy Changes:
@@ -2001,9 +2047,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2011-05-15 16:28:51 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4077 $
+#     $Date: 2011-12-21 14:41:54 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4107 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

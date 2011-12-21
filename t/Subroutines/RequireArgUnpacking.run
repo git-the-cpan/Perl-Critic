@@ -308,7 +308,7 @@ sub foo {
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/RequireArgUnpacking.run $
-#     $Date: 2011-02-02 22:26:57 -0600 (Wed, 02 Feb 2011) $
+#     $Date: 2011-02-02 20:26:57 -0800 (Wed, 02 Feb 2011) $
 #   $Author: wyant $
 # $Revision: 4027 $
 ##############################################################################

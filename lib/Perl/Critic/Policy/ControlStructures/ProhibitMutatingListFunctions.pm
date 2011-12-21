@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitMutatingListFunctions.pm $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitMutatingListFunctions;
@@ -20,7 +20,7 @@ use Perl::Critic::Utils qw{
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 #-----------------------------------------------------------------------------
 
@@ -103,7 +103,7 @@ sub violates {
     # Only the block form of list functions can be analyzed.
     return if not my $first_arg = first_arg( $elem );
     return if not $first_arg->isa('PPI::Structure::Block');
-    return if not _has_topic_side_effect( $first_arg );
+    return if not $self->_has_topic_side_effect( $first_arg, $doc );
 
     # Must be a violation
     return $self->violation( $DESC, $EXPL, $elem );
@@ -112,7 +112,7 @@ sub violates {
 #-----------------------------------------------------------------------------
 
 sub _has_topic_side_effect {
-    my $node = shift;
+    my ( $self, $node, $doc ) = @_;
 
     # Search through all significant elements in the block,
     # testing each element to see if it mutates the topic.
@@ -120,7 +120,7 @@ sub _has_topic_side_effect {
     for my $elem ( @{ $tokens } ) {
         next if not $elem->significant();
         return 1 if _is_assignment_to_topic( $elem );
-        return 1 if _is_topic_mutating_regex( $elem );
+        return 1 if $self->_is_topic_mutating_regex( $elem, $doc );
         return 1 if _is_topic_mutating_func( $elem );
         return 1 if _is_topic_mutating_substr( $elem );
     }
@@ -149,7 +149,7 @@ sub _is_assignment_to_topic {
 #-----------------------------------------------------------------------------
 
 sub _is_topic_mutating_regex {
-    my $elem = shift;
+    my ( $self, $elem, $doc ) = @_;
     return if ! ( $elem->isa('PPI::Token::Regexp::Substitute')
                   || $elem->isa('PPI::Token::Regexp::Transliterate') );
 
@@ -157,13 +157,18 @@ sub _is_topic_mutating_regex {
     # string is empty AND neither the /d or /s flags are specified, OR the
     # replacement string equals the match string AND neither the /c or /s
     # flags are specified. RT 44515.
+    #
+    # NOTE that, at least as of 5.14.2, tr/// does _not_ participate in the
+    # 'use re /modifiers' mechanism. And a good thing, too, since the
+    # modifiers that _are_ common (/s and /d) mean something completely
+    # different in tr///.
     if ( $elem->isa( 'PPI::Token::Regexp::Transliterate') ) {
         my $subs = $elem->get_substitute_string();
+        my %mods = $elem->get_modifiers();
+        $mods{r} and return;    # Introduced in Perl 5.13.7
         if ( $EMPTY eq $subs ) {
-            my %mods = $elem->get_modifiers();
             $mods{d} or $mods{s} or return;
         } elsif ( $elem->get_match_string() eq $subs ) {
-            my %mods = $elem->get_modifiers();
             $mods{c} or $mods{s} or return;
         }
     }
@@ -174,8 +179,10 @@ sub _is_topic_mutating_regex {
     # is no version check.
 
     if ( $elem->isa( 'PPI::Token::Regexp::Substitute' ) ) {
-        my %mods = $elem->get_modifiers();
-        $mods{r} and return;
+        my $re = $doc->ppix_regexp_from_element( $elem )
+            or return;
+        $re->modifier_asserted( 'r' )
+            and return;
     }
 
     # If the previous sibling does not exist, then
@@ -232,7 +239,9 @@ sub _is_topic_mutating_substr {
 {
     ##no critic(ArgUnpacking)
 
-    my %assignment_ops = hashify qw( = *= /= += -= %= **= x= .= &= |= ^=  &&= ||= ++ -- );
+    my %assignment_ops = hashify qw(
+        = *= /= += -= %= **= x= .= &= |= ^=  &&= ||= <<= >>= //= ++ --
+    );
     sub _is_assignment_operator { return exists $assignment_ops{$_[0]} }
 
     my %increment_ops = hashify qw( ++ -- );

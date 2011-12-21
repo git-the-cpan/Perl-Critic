@@ -238,7 +238,7 @@ sub _second {
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitUnusedPrivateSubroutines.run $
-#     $Date: 2010-09-14 00:25:14 -0500 (Tue, 14 Sep 2010) $
+#     $Date: 2010-09-13 22:25:14 -0700 (Mon, 13 Sep 2010) $
 #   $Author: wyant $
 # $Revision: 3922 $
 ##############################################################################

@@ -69,11 +69,52 @@ my $string =~ y{[A-Z]}{[a-z]};
 my $string =~ tr/[A-Z]/[a-z]/cd;
 my $string =~ y/[A-Z]/[a-z]/cd;
 
+#-----------------------------------------------------------------------------
+
+## name use re '/s' - RT #72151
+## failures 0
+## cut
+
+use re '/s';
+my $string =~ m{pattern.};
+
+#-----------------------------------------------------------------------------
+
+## name use re qw{ /s } - RT #72151
+## failures 0
+## cut
+
+use re qw{ /s };
+my $string =~ m{pattern.};
+
+#-----------------------------------------------------------------------------
+
+## name use re qw{ /s } not in scope - RT #72151
+## failures 1
+## cut
+
+{
+    use re qw{ /s };
+}
+my $string =~ m{pattern.};
+
+#-----------------------------------------------------------------------------
+
+## name no re qw{ /s } - RT #72151
+## failures 1
+## cut
+
+use re qw{ /smx };
+{
+    no re qw{ /s };
+    my $string =~ m{pattern.};
+}
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/RequireDotMatchAnything.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#     $Date: 2011-11-26 15:54:50 -0800 (Sat, 26 Nov 2011) $
+#   $Author: wyant $
+# $Revision: 4095 $
 ##############################################################################
 
 #-----------------------------------------------------------------------------

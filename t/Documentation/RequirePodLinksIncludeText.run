@@ -144,7 +144,7 @@ See L<C<perldiag>|perldiag> for the gory details.
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Documentation/RequirePodLinksIncludeText.run $
-#     $Date: 2011-02-15 18:51:40 -0600 (Tue, 15 Feb 2011) $
+#     $Date: 2011-02-15 16:51:40 -0800 (Tue, 15 Feb 2011) $
 #   $Author: wyant $
 # $Revision: 4042 $
 ##############################################################################

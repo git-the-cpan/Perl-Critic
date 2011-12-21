@@ -30,9 +30,9 @@ for($i=0; $i<=$max; $i++){
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ControlStructures/ProhibitCStyleForLoops.run $
-#     $Date: 2008-12-21 13:50:35 -0600 (Sun, 21 Dec 2008) $
+#     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
 #   $Author: clonezone $
-# $Revision: 2921 $
+# $Revision: 2187 $
 ##############################################################################
 
 # Local Variables:

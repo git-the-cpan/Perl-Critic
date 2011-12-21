@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Exception/Configuration/Option/Policy.pm $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 package Perl::Critic::Exception::Configuration::Option::Policy;
@@ -13,7 +13,7 @@ use warnings;
 
 use Perl::Critic::Utils qw{ &policy_short_name };
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 #-----------------------------------------------------------------------------
 

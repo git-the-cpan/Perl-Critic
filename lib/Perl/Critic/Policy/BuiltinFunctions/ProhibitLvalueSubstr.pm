@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/BuiltinFunctions/ProhibitLvalueSubstr.pm $
-#     $Date: 2011-05-15 16:43:26 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4079 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 package Perl::Critic::Policy::BuiltinFunctions::ProhibitLvalueSubstr;
@@ -11,11 +11,12 @@ use 5.006001;
 use strict;
 use warnings;
 use Readonly;
+use version 0.77 ();
 
 use Perl::Critic::Utils qw{ :severities :classification :language };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 #-----------------------------------------------------------------------------
 

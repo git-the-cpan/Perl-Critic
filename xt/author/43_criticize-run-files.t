@@ -2,7 +2,7 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/43_criticize-run-files.t $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
+#     $Date: 2011-05-15 14:34:46 -0700 (Sun, 15 May 2011) $
 #   $Author: clonezone $
 # $Revision: 4078 $
 ##############################################################################

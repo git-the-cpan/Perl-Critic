@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Utils.pm $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 # NOTE: This module is way too large.  Please think about adding new
@@ -27,7 +27,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use base 'Exporter';
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -307,6 +307,7 @@ Readonly::Hash my %PRECEDENCE_OF => (
     '^='   => 19,
     '<<='  => 19,
     '>>='  => 19,
+    '//='  => 19,
     ','    => 20,
     '=>'   => 20,
     'not'  => 22,

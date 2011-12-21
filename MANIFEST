@@ -168,6 +168,7 @@ lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireNumberSeparators.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireQuotedHeredocTerminator.pm
 lib/Perl/Critic/Policy/ValuesAndExpressions/RequireUpperCaseHeredocTerminator.pm
+lib/Perl/Critic/Policy/Variables/ProhibitAugmentedAssignmentInDeclaration.pm
 lib/Perl/Critic/Policy/Variables/ProhibitConditionalDeclarations.pm
 lib/Perl/Critic/Policy/Variables/ProhibitEvilVariables.pm
 lib/Perl/Critic/Policy/Variables/ProhibitLocalVars.pm
@@ -379,6 +380,7 @@ t/ValuesAndExpressions/RequireInterpolationOfMetachars.run
 t/ValuesAndExpressions/RequireNumberSeparators.run
 t/ValuesAndExpressions/RequireQuotedHeredocTerminator.run
 t/ValuesAndExpressions/RequireUpperCaseHeredocTerminator.run
+t/Variables/ProhibitAugmentedAssignmentInDeclaration.run
 t/Variables/ProhibitConditionalDeclarations.run
 t/Variables/ProhibitEvilVariables.d/variables-no-regular-expressions.txt
 t/Variables/ProhibitEvilVariables.d/variables-regular-expressions.txt

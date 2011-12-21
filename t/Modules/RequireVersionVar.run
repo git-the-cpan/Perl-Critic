@@ -1,6 +1,6 @@
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/RequireVersionVar.run $
-#    $Date: 2011-04-01 17:24:20 -0500 (Fri, 01 Apr 2011) $
+#    $Date: 2011-04-01 15:24:20 -0700 (Fri, 01 Apr 2011) $
 #   $Author: wyant $
 # $Revision: 4062 $
 ##############################################################################

@@ -385,11 +385,25 @@ eval "something_else" && die;
 
 #-----------------------------------------------------------------------------
 
+## name A grep is a check -- RT #69489
+## failures 0
+## cut
+
+foreach ( grep { eval $_ } @bar ) { say }
+foreach ( grep { ! eval $_ } @bar ) { say }
+foreach ( grep eval $_, @bar ) { say }
+foreach ( grep ! eval $_, @bar ) { say }
+
+# grep $_, map eval $_, @foo;   # Should this be accepted?
+grep { $_ } map { eval $_ } @foo;   # Should this be rejected?
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ErrorHandling/RequireCheckingReturnValueOfEval.run $
-#     $Date: 2009-03-07 09:14:51 -0600 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#     $Date: 2011-07-15 14:09:27 -0700 (Fri, 15 Jul 2011) $
+#   $Author: wyant $
+# $Revision: 4088 $
 ##############################################################################
 
 # Local Variables:

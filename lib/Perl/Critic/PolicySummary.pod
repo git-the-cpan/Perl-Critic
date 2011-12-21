@@ -528,6 +528,10 @@ Write C< print <<'THE_END' > or C< print <<"THE_END" >. [Default severity 3]
 
 Write C< <<'THE_END'; > instead of C< <<'theEnd'; >. [Default severity 2]
 
+=head2 L<Variables::ProhibitAugmentedAssignmentInDeclaration|Perl::Critic::Policy::Variables::ProhibitAugmentedAssignmentInDeclaration>
+
+Do not write C< my $foo .= 'bar'; >. [Default severity 4]
+
 =head2 L<Variables::ProhibitConditionalDeclarations|Perl::Critic::Policy::Variables::ProhibitConditionalDeclarations>
 
 Do not write C< my $foo = $bar if $baz; >. [Default severity 5]

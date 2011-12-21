@@ -898,7 +898,7 @@ use Foo::Bar;
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/ProhibitConditionalUseStatements.run $
-#     $Date: 2011-01-04 19:34:54 -0600 (Tue, 04 Jan 2011) $
+#     $Date: 2011-01-04 17:34:54 -0800 (Tue, 04 Jan 2011) $
 #   $Author: wyant $
 # $Revision: 4013 $
 ##############################################################################

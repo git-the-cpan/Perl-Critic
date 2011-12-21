@@ -1,6 +1,6 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/InputOutput/RequireBriefOpen.run $
-#     $Date: 2011-02-25 15:58:41 -0600 (Fri, 25 Feb 2011) $
+#     $Date: 2011-02-25 13:58:41 -0800 (Fri, 25 Feb 2011) $
 #   $Author: wyant $
 # $Revision: 4045 $
 ##############################################################################

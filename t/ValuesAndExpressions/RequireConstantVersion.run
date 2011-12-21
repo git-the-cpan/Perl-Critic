@@ -141,7 +141,7 @@ our $VERSION = $SomeOtherModule::VERSION;
 # the policy is designed to prevent.
 our $VERSION = $VERSION = (qw($Revision: 3792 $))[1];
 our $VERSION = $local_variable;
-our $VERSION = '$Date: 2010-03-19 21:27:04 -0500 (Fri, 19 Mar 2010) $'; $VERSION =~ s|^\$Date:\s*([0-9]{4})/([0-9]{2})/([0-9]{2})\s.*|\1.\2.\3| ;
+our $VERSION = '$Date: 2010-03-19 19:27:04 -0700 (Fri, 19 Mar 2010) $'; $VERSION =~ s|^\$Date:\s*([0-9]{4})/([0-9]{2})/([0-9]{2})\s.*|\1.\2.\3| ;
 our $VERSION = '$Revision: 3792 $' =~ /\$Revision:\s+([^\s]+)/;
 our $VERSION = '1.' . qw $Revision: 3792 $[1];
 our $VERSION = '1.' . sprintf "%d", (qw($Revision: 3792 $))[1];
@@ -288,7 +288,7 @@ sprintf( q{%s/%s}, __PACKAGE__, $VERSION ) =~ s{ o \z }{}xms;
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireConstantVersion.run $
-#     $Date: 2010-03-19 21:27:04 -0500 (Fri, 19 Mar 2010) $
+#     $Date: 2010-03-19 19:27:04 -0700 (Fri, 19 Mar 2010) $
 #   $Author: wyant $
 # $Revision: 3792 $
 ##############################################################################

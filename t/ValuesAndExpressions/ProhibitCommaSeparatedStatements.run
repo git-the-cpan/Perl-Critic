@@ -296,7 +296,7 @@ sub new {
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
-#     $Date: 2011-03-01 15:09:32 -0600 (Tue, 01 Mar 2011) $
+#     $Date: 2011-03-01 13:09:32 -0800 (Tue, 01 Mar 2011) $
 #   $Author: wyant $
 # $Revision: 4048 $
 ##############################################################################

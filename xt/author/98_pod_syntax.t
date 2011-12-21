@@ -2,9 +2,9 @@
 
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/98_pod_syntax.t $
-#    $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#    $Date: 2011-05-18 20:15:29 -0700 (Wed, 18 May 2011) $
+#   $Author: thaljef $
+# $Revision: 4082 $
 ##############################################################################
 
 use 5.006001;
@@ -13,7 +13,7 @@ use warnings;
 
 use Perl::Critic::TestUtils qw{ starting_points_including_examples };
 
-use Test::More;
+use Test::More;# 1.41;  # Need 1.41 or newer for correct support of L<text|scheme:...> links.
 
 #-----------------------------------------------------------------------------
 

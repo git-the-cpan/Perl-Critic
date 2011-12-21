@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitManyArgs.run $
-#     $Date: 2010-09-01 10:14:24 -0500 (Wed, 01 Sep 2010) $
+#     $Date: 2011-05-29 10:46:11 -0700 (Sun, 29 May 2011) $
 #   $Author: wyant $
-# $Revision: 3916 $
+# $Revision: 4084 $
 ##############################################################################
 
 ## name basic passes
@@ -113,6 +113,24 @@ sub bar ( $ ; $ ) { return 1 }
 
 sub foo (\[$@%]@) { return 1 }
 sub bar ( \[$@%] $ \[$@%] ) { return 1 }
+
+#-----------------------------------------------------------------------------
+
+## name single term prototype (Perl 5.14)
+## failures 0
+## parms {max_arguments => 2}
+## cut
+
+sub foo ($+) { return 1 }
+
+#-----------------------------------------------------------------------------
+
+## name single term prototype (Perl 5.14)
+## failures 1
+## parms {max_arguments => 2}
+## cut
+
+sub foo ($$+) { return 1 }
 
 #-----------------------------------------------------------------------------
 # Local Variables:

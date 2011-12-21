@@ -1,6 +1,6 @@
 #######################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/common/inc/Perl/Critic/Module/Build/Standard.pm $
-#     $Date: 2011-01-30 16:13:17 -0600 (Sun, 30 Jan 2011) $
+#     $Date: 2011-01-30 14:13:17 -0800 (Sun, 30 Jan 2011) $
 #   $Author: clonezone $
 # $Revision: 4016 $
 ########################################################################

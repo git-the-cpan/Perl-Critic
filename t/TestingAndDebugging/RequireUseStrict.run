@@ -204,7 +204,7 @@ $this_is_not_strict
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/TestingAndDebugging/RequireUseStrict.run $
-#     $Date: 2010-05-22 13:56:41 -0500 (Sat, 22 May 2010) $
+#     $Date: 2010-05-22 11:56:41 -0700 (Sat, 22 May 2010) $
 #   $Author: wyant $
 # $Revision: 3815 $
 ##############################################################################

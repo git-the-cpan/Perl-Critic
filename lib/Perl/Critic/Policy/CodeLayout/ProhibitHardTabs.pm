@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/CodeLayout/ProhibitHardTabs.pm $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 package Perl::Critic::Policy::CodeLayout::ProhibitHardTabs;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :severities };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 #-----------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ sub supported_parameters {
 }
 
 sub default_severity { return $SEVERITY_MEDIUM    }
-sub default_themes   { return qw( core cosmetic ) }
+sub default_themes   { return qw( core cosmetic pbp )   }
 sub applies_to       { return 'PPI::Token'        }
 
 #-----------------------------------------------------------------------------

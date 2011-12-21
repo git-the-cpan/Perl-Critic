@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Violation.pm $
-#     $Date: 2011-05-15 16:34:46 -0500 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#   $Author: thaljef $
+# $Revision: 4106 $
 ##############################################################################
 
 package Perl::Critic::Violation;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils::POD qw<
 >;
 use Perl::Critic::Exception::Fatal::Internal qw< throw_internal >;
 
-our $VERSION = '1.116';
+our $VERSION = '1.117';
 
 
 Readonly::Scalar my $LOCATION_LINE_NUMBER               => 0;
@@ -84,7 +84,7 @@ sub new {
 
     my $top = $elem->top();
     $self->{_filename} = $top->can('filename') ? $top->filename() : undef;
-    $self->{_source}   = _first_line_of_source( $elem );
+    $self->{_source}   = _line_containing_violation( $elem );
     $self->{_location} =
         $elem->location() || [ 0, 0, 0, 0, $self->filename() ];
 
@@ -297,15 +297,20 @@ sub _compare { return "$_[0]" cmp "$_[1]" }
 
 #-----------------------------------------------------------------------------
 
-sub _first_line_of_source {
-    my $elem = shift;
+sub _line_containing_violation {
+    my ( $elem ) = @_;
 
     my $stmnt = $elem->statement() || $elem;
     my $code_string = $stmnt->content() || $EMPTY;
 
-    # Chop everything but the first line (without newline);
-    $code_string =~ s{ \n.* }{}smx;
-    return $code_string;
+    # Split into individual lines
+    my @lines = split qr{ \n\s* }xms, $code_string;
+
+    # Take the line containing the element that is in violation
+    my $inx = ( $elem->line_number() || 0 ) -
+        ( $stmnt->line_number() || 0 );
+    $inx > @lines and return $EMPTY;
+    return $lines[$inx];
 }
 
 #-----------------------------------------------------------------------------
@@ -485,7 +490,8 @@ that created this Violation.
 
 Returns the string of source code that caused this exception.  If the
 code spans multiple lines (e.g. multi-line statements, subroutines or
-other blocks), then only the first line will be returned.
+other blocks), then only the line containing the violation will be
+returned.
 
 
 =item C<element_class()>
