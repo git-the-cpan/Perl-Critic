@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2011-11-26 15:54:50 -0800 (Sat, 26 Nov 2011) $
-#   $Author: wyant $
-# $Revision: 4095 $
+#     $Date: 2012-07-02 22:28:04 -0700 (Mon, 02 Jul 2012) $
+#   $Author: thaljef $
+# $Revision: 4129 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -58,7 +58,7 @@ sub required_module_versions {
         'PPI::Node'                     => '1.215',
         'PPI::Token::Quote::Single'     => '1.215',
         'PPI::Token::Whitespace'        => '1.215',
-        'PPIx::Regexp'                  => '0.022', # RT 72151
+        'PPIx::Regexp'                  => '0.027', # Literal { deprecated in re
         'PPIx::Utilities::Node'         => '1.001',
         'PPIx::Utilities::Statement'    => '1.001',
         'Perl::Tidy'                    => 0,

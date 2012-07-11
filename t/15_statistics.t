@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/15_statistics.t $
-#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#     $Date: 2012-07-10 21:33:28 -0700 (Tue, 10 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4136 $
 ##############################################################################
 
 use 5.006001;
@@ -21,7 +21,7 @@ use Test::More tests => 24;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 #-----------------------------------------------------------------------------
 
@@ -83,10 +83,10 @@ my %expected_stats = (
     statements                    => 6,
     statements_other_than_subs    => 5,
     subs                          => 1,
-    total_violations              => 10,
-    violations_per_file           => 10,
-    violations_per_line_of_code   => 2,
-    violations_per_statement      => 2,
+    total_violations              => 7,
+    violations_per_file           => 7,
+    violations_per_line_of_code   => 1.4, # 7 violations / 5 lines
+    violations_per_statement      => 1.4, # 7 violations / 5 lines
 );
 
 my $stats = $critic->statistics();

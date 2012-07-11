@@ -2,9 +2,9 @@
 
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/03_pragmas.t $
-#    $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#    $Date: 2012-07-03 12:21:34 -0700 (Tue, 03 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4133 $
 ##############################################################################
 
 use 5.006001;
@@ -19,7 +19,7 @@ use Perl::Critic::TestUtils qw(critique);
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 #-----------------------------------------------------------------------------
 
@@ -33,7 +33,6 @@ my $profile = {
     '-ErrorHandling::RequireCheckingReturnValueOfEval'           => {},
     '-Miscellanea::ProhibitUnrestrictedNoCritic'                 => {},
     '-Miscellanea::ProhibitUselessNoCritic'                      => {},
-    '-Miscellanea::RequireRcsKeywords'                           => {},
     '-ValuesAndExpressions::ProhibitMagicNumbers'                => {},
     '-Variables::ProhibitReusedNames'                            => {},
 };

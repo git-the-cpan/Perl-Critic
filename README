@@ -38,16 +38,16 @@ DESCRIPTION
     does. You can also invoke the perlcritic web-service from the
     command-line by doing an HTTP-post, such as one of these:
 
-        $> POST http://perlcritic.com/perl/critic.pl < MyModule.pm
         $> lwp-request -m POST http://perlcritic.com/perl/critic.pl < MyModule.pm
         $> wget -q -O - --post-file=MyModule.pm http://perlcritic.com/perl/critic.pl
+        $> curl --data @MyModule.pm http://perlcritic.com/perl/critic.pl
 
     Please note that the perlcritic web-service is still alpha code. The URL
     and interface to the service are subject to change.
 
-    Also, the Perl Development Kit (PDK 8.0) from ActiveState includes a
-    very slick graphical interface to Perl-Critic. For details, go to
-    <http://www.activestate.com/perl_dev_kit>
+    Also, ActivePerl includes a very slick graphical interface to
+    Perl-Critic called "perlcritic-gui". You can get a free community
+    edition of ActivePerl from <http://www.activestate.com>.
 
 INTERFACE SUPPORT
     This is considered to be a public class. Any changes to its interface

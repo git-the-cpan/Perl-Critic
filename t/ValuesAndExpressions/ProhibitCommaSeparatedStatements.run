@@ -225,7 +225,6 @@ my @arr1;
 
 ## name RT #27654 - NKH example 1
 ## failures 0
-## TODO PPI parses this code as a block and not a hash constructor.
 ## cut
 
 return
@@ -296,9 +295,9 @@ sub new {
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
-#     $Date: 2011-03-01 13:09:32 -0800 (Tue, 01 Mar 2011) $
-#   $Author: wyant $
-# $Revision: 4048 $
+#     $Date: 2012-07-02 23:28:32 -0700 (Mon, 02 Jul 2012) $
+#   $Author: thaljef $
+# $Revision: 4130 $
 ##############################################################################
 
 # Local Variables:

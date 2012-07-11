@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitBuiltinHomonyms.pm $
-#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4126 $
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::ProhibitBuiltinHomonyms;
@@ -17,13 +17,13 @@ use Perl::Critic::Utils qw{ :severities :data_conversion
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 #-----------------------------------------------------------------------------
 
 Readonly::Array my @ALLOW => qw( import AUTOLOAD DESTROY );
 Readonly::Hash my %ALLOW => hashify( @ALLOW );
-Readonly::Scalar my $DESC  => q{Subroutine name is a homonym for builtin %s};
+Readonly::Scalar my $DESC  => q{Subroutine name is a homonym for builtin %s %s};
 Readonly::Scalar my $EXPL  => [177];
 
 #-----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ sub violates {
         return;    #ok!
     }
 
-    my $desc = sprintf $DESC, $homonym_type;
+    my $desc = sprintf $DESC, $homonym_type, $elem->name();
     return $self->violation($desc, $EXPL, $elem);
 }
 

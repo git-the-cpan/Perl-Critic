@@ -1,3 +1,19 @@
+[1.118] Released on 2012-07-10
+
+    Policy Changes:
+    * CodeLayout::RequireTidyCode: Revise to work with incompatible
+      changes in Perl::Tidy 20120619. RT #77977.
+    * TestingAndDebugging::ProhibitNoWarnings: Correct the parse of the
+      'no warnings' statement, so that 'no warnings "qw"' is recognized
+      as supressing just 'qw' warnings. RT #74647.
+    * Miscellanea::RequireRcsKeywords has been moved to the Perl-Critic-More
+      distribution,  RT #69546
+
+    Other Changes:
+    * Make all unescaped literal "{" characters in regexps into
+      character classes. These are deprecated, and became noisy with
+      Perl 5.17.0.  RT #77510.
+
 [1.117] Released on 2011-12-21
 
     HAPPY HOLIDAYS!
@@ -2047,9 +2063,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Changes $
-#     $Date: 2011-12-21 14:41:54 -0800 (Wed, 21 Dec 2011) $
+#     $Date: 2012-07-10 23:48:36 -0700 (Tue, 10 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4107 $
+# $Revision: 4144 $
 ##############################################################################
 
 # ex: set ts=8 sts=4 sw=4 tw=78 ft= expandtab shiftround :

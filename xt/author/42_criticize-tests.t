@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/42_criticize-tests.t $
-#     $Date: 2011-05-15 14:34:46 -0700 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2012-07-10 23:29:58 -0700 (Tue, 10 Jul 2012) $
+#   $Author: thaljef $
+# $Revision: 4140 $
 ##############################################################################
 
 # Self-compliance tests
@@ -21,7 +21,11 @@ use Perl::Critic::TestUtils qw{ starting_points_including_examples };
 
 # Note: "use PolicyFactory" *must* appear after "use TestUtils" for the
 # -extra-test-policies option to work.
-use Perl::Critic::PolicyFactory ( '-test' => 1 );
+use Perl::Critic::PolicyFactory (
+    '-test' => 1,
+    '-extra-test-policies' => [ qw{ ErrorHandling::RequireUseOfExceptions
+                                    Miscellanea::RequireRcsKeywords } ],
+);
 
 use Test::More;
 

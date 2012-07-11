@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/CodeLayout/RequireConsistentNewlines.pm $
-#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4126 $
 ##############################################################################
 
 package Perl::Critic::Policy::CodeLayout::RequireConsistentNewlines;
@@ -17,7 +17,7 @@ use PPI::Token::Whitespace;
 use English qw(-no_match_vars);
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 Readonly::Scalar my $LINE_END => qr/\015{1,2}\012|[\012\015]/mxs;
 

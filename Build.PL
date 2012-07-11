@@ -1,8 +1,8 @@
 #######################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Build.PL $
-#     $Date: 2011-03-31 17:00:29 -0700 (Thu, 31 Mar 2011) $
-#   $Author: clonezone $
-# $Revision: 4060 $
+#     $Date: 2012-02-25 22:25:46 -0800 (Sat, 25 Feb 2012) $
+#   $Author: thaljef $
+# $Revision: 4116 $
 ########################################################################
 
 use 5.006001;
@@ -80,7 +80,6 @@ my $builder = Perl::Critic::Module::Build->new(
             Debian_CPANTS.txt
             Makefile
             Makefile.old
-            MANIFEST
             MANIFEST.bak
             META.json
             META.yml

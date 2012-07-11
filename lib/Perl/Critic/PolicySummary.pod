@@ -260,10 +260,6 @@ Forbid a bare C<## no critic> [Default severity 3]
 
 Remove ineffective "## no critic" annotations. [Default severity 2]
 
-=head2 L<Miscellanea::RequireRcsKeywords|Perl::Critic::Policy::Miscellanea::RequireRcsKeywords>
-
-Put source-control keywords in every file. [Default severity 2]
-
 =head2 L<Modules::ProhibitAutomaticExportation|Perl::Critic::Policy::Modules::ProhibitAutomaticExportation>
 
 Export symbols via C<@EXPORT_OK> or C<%EXPORT_TAGS> instead of C<@EXPORT>. [Default severity 4]

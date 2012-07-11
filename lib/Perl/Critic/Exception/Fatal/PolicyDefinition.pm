@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Exception/Fatal/PolicyDefinition.pm $
-#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4126 $
 ##############################################################################
 
 package Perl::Critic::Exception::Fatal::PolicyDefinition;
@@ -13,7 +13,7 @@ use warnings;
 
 use Readonly;
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 #-----------------------------------------------------------------------------
 

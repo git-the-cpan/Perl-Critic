@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Document.pm $
-#     $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4126 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -29,7 +29,7 @@ use PPIx::Regexp 0.010 qw< >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 #-----------------------------------------------------------------------------
 
@@ -548,7 +548,7 @@ sub _disable_shebang_fix {
     # fixing strings.  This matches most of the ones I've found in my own Perl
     # distribution, but it may not be bullet-proof.
 
-    my $fixin_rx = qr<^eval 'exec .* \$0 \${1[+]"\$@"}'\s*[\r\n]\s*if.+;>ms; ## no critic (ExtendedFormatting)
+    my $fixin_rx = qr<^eval 'exec .* \$0 \$[{]1[+]"\$@"}'\s*[\r\n]\s*if.+;>ms; ## no critic (ExtendedFormatting)
     if ( $first_stmnt =~ $fixin_rx ) {
         my $line = $first_stmnt->location->[0];
         $self->{_disabled_line_map}->{$line}->{ALL} = 1;

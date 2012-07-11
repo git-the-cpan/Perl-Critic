@@ -2,9 +2,9 @@
 
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/10_user_profile.t $
-#    $Date: 2011-12-21 14:40:10 -0800 (Wed, 21 Dec 2011) $
+#    $Date: 2012-07-03 13:16:50 -0700 (Tue, 03 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4106 $
+# $Revision: 4135 $
 ##############################################################################
 
 use 5.006001;
@@ -19,24 +19,24 @@ use Test::More tests => 41;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.117';
+our $VERSION = '1.118';
 
 #-----------------------------------------------------------------------------
 
 # Create profile from hash
 
 {
-    my %policy_params = (keywords => 'Revision');
+    my %policy_params = (min_elements => 4);
     my %profile_hash = ( '-NamingConventions::Capitalization' => {},
-                         'Miscellanea::RequireRcsKeywords' => \%policy_params );
+                         'CodeLayout::ProhibitQuotedWordLists' => \%policy_params );
 
     my $up = Perl::Critic::UserProfile->new( -profile => \%profile_hash );
 
     # Using short policy names
     is(
-        $up->policy_is_enabled('Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Miscellanea::RequireRcsKeywords is enabled.',
+        'CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('NamingConventions::Capitalization'),
@@ -44,16 +44,16 @@ our $VERSION = '1.117';
         'NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords is enabled.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
@@ -61,9 +61,9 @@ our $VERSION = '1.117';
         'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus policy names
@@ -88,10 +88,10 @@ our $VERSION = '1.117';
 # Create profile from array
 
 {
-    my %policy_params = (keywords => 'Revision');
+    my %policy_params = (min_elements => 4);
     my @profile_array = ( q{ [-NamingConventions::Capitalization] },
-                          q{ [Miscellanea::RequireRcsKeywords]           },
-                          q{ keywords = Revision                         },
+                          q{ [CodeLayout::ProhibitQuotedWordLists]           },
+                          q{ min_elements = 4                         },
     );
 
 
@@ -99,9 +99,9 @@ our $VERSION = '1.117';
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Miscellanea::RequireRcsKeywords is enabled.',
+        'CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('NamingConventions::Capitalization'),
@@ -109,16 +109,16 @@ our $VERSION = '1.117';
         'NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords is enabled.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
@@ -126,9 +126,9 @@ our $VERSION = '1.117';
         'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus policy names
@@ -153,20 +153,20 @@ our $VERSION = '1.117';
 # Create profile from string
 
 {
-    my %policy_params = (keywords => 'Revision');
+    my %policy_params = (min_elements => 4);
     my $profile_string = <<'END_PROFILE';
 [-NamingConventions::Capitalization]
-[Miscellanea::RequireRcsKeywords]
-keywords = Revision
+[CodeLayout::ProhibitQuotedWordLists]
+min_elements = 4
 END_PROFILE
 
     my $up = Perl::Critic::UserProfile->new( -profile => \$profile_string );
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Miscellanea::RequireRcsKeywords is enabled.',
+        'CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('NamingConventions::Capitalization'),
@@ -174,16 +174,16 @@ END_PROFILE
         'NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords is enabled.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
@@ -191,9 +191,9 @@ END_PROFILE
         'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus policy names
@@ -218,20 +218,20 @@ END_PROFILE
 # Test long policy names
 
 {
-    my %policy_params = (keywords => 'Revision');
+    my %policy_params = (min_elements => 4);
     my $long_profile_string = <<'END_PROFILE';
 [-Perl::Critic::Policy::NamingConventions::Capitalization]
-[Perl::Critic::Policy::Miscellanea::RequireRcsKeywords]
-keywords = Revision
+[Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists]
+min_elements = 4
 END_PROFILE
 
     my $up = Perl::Critic::UserProfile->new( -profile => \$long_profile_string );
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Miscellanea::RequireRcsKeywords is enabled.',
+        'CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('NamingConventions::Capitalization'),
@@ -239,16 +239,16 @@ END_PROFILE
         'NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Now using long policy names
     is(
-        $up->policy_is_enabled('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->policy_is_enabled('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         1,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords is enabled.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists is enabled.',
     );
     is(
         $up->policy_is_disabled('Perl::Critic::Policy::NamingConventions::Capitalization'),
@@ -256,9 +256,9 @@ END_PROFILE
         'Perl::Critic::Policy::NamingConventions::Capitalization is disabled.',
     );
     is_deeply(
-        $up->raw_policy_params('Perl::Critic::Policy::Miscellanea::RequireRcsKeywords'),
+        $up->raw_policy_params('Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists'),
         \%policy_params,
-        'Perl::Critic::Policy::Miscellanea::RequireRcsKeywords got the correct configuration.',
+        'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists got the correct configuration.',
     );
 
     # Using bogus policy names

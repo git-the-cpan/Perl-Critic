@@ -117,11 +117,21 @@ no warnings qw< uninitialized glob >;
 
 #-----------------------------------------------------------------------------
 
+## name allow_with_category_restriction, category qw. RT #74647,
+## failures 0
+## parms { allow_with_category_restriction => 1 }
+## cut
+
+no warnings 'qw';   # Yes, 'qw' is an actual warnings category.
+no warnings ( foo => "bar" );
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/TestingAndDebugging/ProhibitNoWarnings.run $
-#     $Date: 2009-02-15 09:10:42 -0800 (Sun, 15 Feb 2009) $
-#   $Author: clonezone $
-# $Revision: 3116 $
+#     $Date: 2012-02-03 12:11:27 -0800 (Fri, 03 Feb 2012) $
+#   $Author: wyant $
+# $Revision: 4115 $
 ##############################################################################
 
 # Local Variables:

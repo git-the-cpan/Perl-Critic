@@ -2,12 +2,14 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/41_criticize-policies.t $
-#     $Date: 2011-05-15 14:34:46 -0700 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2012-07-10 23:17:12 -0700 (Tue, 10 Jul 2012) $
+#   $Author: thaljef $
+# $Revision: 4139 $
 ##############################################################################
 
-# Extra self-compliance tests for Policies.
+# Extra self-compliance tests for Policy classes.  This just checks for
+# additional POD sections that we want in every Policy module.  See the
+# 41_perlcriticrc-policies file for the precise configuration.
 
 use strict;
 use warnings;
