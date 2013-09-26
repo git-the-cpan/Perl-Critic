@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Test/Perl/Critic/Policy.pm $
-#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4126 $
+# $Revision: 4171 $
 ##############################################################################
 
 package Test::Perl::Critic::Policy;
@@ -29,11 +29,11 @@ use Perl::Critic::TestUtils qw<
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.118';
+our $VERSION = '1.119';
 
 #-----------------------------------------------------------------------------
 
-use base 'Exporter';
+use Exporter 'import';
 
 Readonly::Array our @EXPORT_OK      => qw< all_policies_ok >;
 Readonly::Hash  our %EXPORT_TAGS    => (all => \@EXPORT_OK);

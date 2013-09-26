@@ -2,9 +2,9 @@
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4126 $
+# $Revision: 4171 $
 ##############################################################################
 
 use 5.006001;
@@ -17,7 +17,7 @@ use Carp qw< confess >;
 use Carp qw< confess >;
 use Fatal qw< open close >;
 
-our $VERSION = '1.118';
+our $VERSION = '1.119';
 
 
 
@@ -837,9 +837,9 @@ our @THING;
 
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/NamingConventions/Capitalization.run.PL $
-#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4126 $
+# $Revision: 4171 $
 ##############################################################################
 
 # Local Variables:

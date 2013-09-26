@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Document.pm $
-#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4126 $
+# $Revision: 4171 $
 ##############################################################################
 
 package Perl::Critic::Document;
@@ -29,7 +29,7 @@ use PPIx::Regexp 0.010 qw< >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.118';
+our $VERSION = '1.119';
 
 #-----------------------------------------------------------------------------
 
@@ -318,7 +318,7 @@ sub element_is_in_lexical_scope_after_statement_containing {
 
     my $parent = $stmt;
     while ( ! $parent->scope() ) {
-        $parent = $stmt->parent()
+        $parent = $parent->parent()
             or return;
     }
 

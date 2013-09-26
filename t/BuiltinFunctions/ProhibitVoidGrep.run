@@ -48,11 +48,24 @@ grep { spam($_) }
 
 #-----------------------------------------------------------------------------
 
+## name Subscript grep (RT #79289)
+## failures 0
+## cut
+
+my %hash;
+
+delete @hash{ grep { m/ foo /smx } keys %hash };
+delete @hash{ grep m/ foo /smx, keys %hash };
+# The following is the form that was actually failing.
+delete @hash{ grep ( m/ foo /smx, keys %hash ) };
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/ProhibitVoidGrep.run $
-#     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
-#   $Author: clonezone $
-# $Revision: 2187 $
+#     $Date: 2012-09-02 14:17:16 -0700 (Sun, 02 Sep 2012) $
+#   $Author: wyant $
+# $Revision: 4153 $
 ##############################################################################
 
 # Local Variables:

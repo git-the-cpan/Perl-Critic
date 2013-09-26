@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic.pm $
-#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4126 $
+# $Revision: 4171 $
 ##############################################################################
 
 package Perl::Critic;
@@ -14,7 +14,7 @@ use warnings;
 use English qw(-no_match_vars);
 use Readonly;
 
-use base qw(Exporter);
+use Exporter 'import';
 
 use File::Spec;
 use List::MoreUtils qw< firstidx >;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils qw< :characters hashify shebang_line >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.118';
+our $VERSION = '1.119';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 

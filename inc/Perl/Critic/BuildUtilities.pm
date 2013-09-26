@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/BuildUtilities.pm $
-#     $Date: 2012-07-02 22:28:04 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2012-07-26 12:03:43 -0700 (Thu, 26 Jul 2012) $
 #   $Author: thaljef $
-# $Revision: 4129 $
+# $Revision: 4148 $
 ##############################################################################
 
 package Perl::Critic::BuildUtilities;
@@ -15,7 +15,7 @@ use English q<-no_match_vars>;
 
 our $VERSION = '1.116';
 
-use base qw{ Exporter };
+use Exporter 'import';
 
 our @EXPORT_OK = qw<
     required_module_versions

@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/PolicyParameter/Behavior/Enumeration.pm $
-#     $Date: 2012-07-02 22:16:39 -0700 (Mon, 02 Jul 2012) $
+#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4126 $
+# $Revision: 4171 $
 ##############################################################################
 
 package Perl::Critic::PolicyParameter::Behavior::Enumeration;
@@ -17,7 +17,7 @@ use Perl::Critic::Utils qw{ :characters &words_from_string &hashify };
 
 use base qw{ Perl::Critic::PolicyParameter::Behavior };
 
-our $VERSION = '1.118';
+our $VERSION = '1.119';
 
 #-----------------------------------------------------------------------------
 

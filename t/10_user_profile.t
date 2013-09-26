@@ -2,9 +2,9 @@
 
 ##############################################################################
 #     $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/10_user_profile.t $
-#    $Date: 2012-07-03 13:16:50 -0700 (Tue, 03 Jul 2012) $
+#    $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
 #   $Author: thaljef $
-# $Revision: 4135 $
+# $Revision: 4171 $
 ##############################################################################
 
 use 5.006001;
@@ -19,7 +19,7 @@ use Test::More tests => 41;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.118';
+our $VERSION = '1.119';
 
 #-----------------------------------------------------------------------------
 
@@ -294,7 +294,7 @@ END_PROFILE
     eval { Perl::Critic::UserProfile->new( -profile => 'bogus' ) };
     like(
         $EVAL_ERROR,
-        qr/File [ ] 'bogus' [ ] does [ ] not [ ] exist/xms,
+        qr/Could [ ] not [ ] parse [ ] profile [ ] "bogus"/xms,
         'Invalid profile path',
     );
 

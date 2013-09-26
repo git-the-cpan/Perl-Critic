@@ -47,11 +47,24 @@ $self->map('Pennsylvania Ave, Washington, DC');
 
 #-----------------------------------------------------------------------------
 
+## name Subscript map (derived from RT #79289)
+## failures 0
+## cut
+
+my %hash;
+
+delete @hash{ map { uc $_ } keys %hash };
+delete @hash{ map uc( $_ ), keys %hash };
+# This is the form analogous to what failed under RT #79289.
+delete @hash{ map ( uc( $_ ), keys %hash ) };
+
+#-----------------------------------------------------------------------------
+
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/ProhibitVoidMap.run $
-#     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
-#   $Author: clonezone $
-# $Revision: 2187 $
+#     $Date: 2012-09-02 14:17:16 -0700 (Sun, 02 Sep 2012) $
+#   $Author: wyant $
+# $Revision: 4153 $
 ##############################################################################
 
 # Local Variables:

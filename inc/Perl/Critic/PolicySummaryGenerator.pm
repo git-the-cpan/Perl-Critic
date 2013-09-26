@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/inc/Perl/Critic/PolicySummaryGenerator.pm $
-#     $Date: 2011-05-15 14:34:46 -0700 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#     $Date: 2012-07-26 12:03:43 -0700 (Thu, 26 Jul 2012) $
+#   $Author: thaljef $
+# $Revision: 4148 $
 ##############################################################################
 
 package Perl::Critic::PolicySummaryGenerator;
@@ -11,7 +11,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use base qw< Exporter >;
+use Exporter 'import';
 
 use lib qw< blib lib >;
 use Carp qw< confess >;
