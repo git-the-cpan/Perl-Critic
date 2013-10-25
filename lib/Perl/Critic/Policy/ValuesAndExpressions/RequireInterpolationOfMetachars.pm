@@ -1,8 +1,8 @@
 ##############################################################################
 #      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm $
-#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
+#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
 #   $Author: thaljef $
-# $Revision: 4171 $
+# $Revision: 4174 $
 ##############################################################################
 
 package Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars;
@@ -20,7 +20,7 @@ use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.119';
+our $VERSION = '1.120';
 
 #-----------------------------------------------------------------------------
 
@@ -198,7 +198,7 @@ C<$VERSION> variables.
 
 For example, if you've got code like
 
-    our ($VERSION) = (q<$Revision: 4171 $> =~ m/(\d+)/mx);
+    our ($VERSION) = (q<$Revision: 4174 $> =~ m/(\d+)/mx);
 
 You can specify
 
