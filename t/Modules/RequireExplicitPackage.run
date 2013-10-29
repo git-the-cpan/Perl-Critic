@@ -121,10 +121,10 @@ package Foo::Bar;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/RequireExplicitPackage.run $
-#     $Date: 2011-12-17 15:24:12 -0800 (Sat, 17 Dec 2011) $
-#   $Author: wyant $
-# $Revision: 4101 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

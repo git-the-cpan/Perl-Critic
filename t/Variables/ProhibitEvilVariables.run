@@ -156,10 +156,10 @@ print $^S ? 'Executing eval' : defined $^S ? 'Otherwise' : 'Parsing';
 
 #-----------------------------------------------------------------------------
 
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitEvilVariables.run $
-#     $Date: 2010-10-31 18:07:54 -0700 (Sun, 31 Oct 2010) $
-#   $Author: clonezone $
-# $Revision: 3984 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 
 ##############################################################################
 # Local Variables:

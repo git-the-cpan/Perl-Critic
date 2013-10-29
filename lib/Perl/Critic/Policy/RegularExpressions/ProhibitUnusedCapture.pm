@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/RegularExpressions/ProhibitUnusedCapture.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic::Policy::RegularExpressions::ProhibitUnusedCapture;
@@ -24,7 +24,7 @@ use Perl::Critic::Utils qw{
 };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 
@@ -240,7 +240,7 @@ sub _is_in_slurpy_array_context {
     # return true is the result of the regexp is passed to a subroutine.
     # doesn't check for array context due to assignment.
 
-    # look backward for explict regex operator
+    # look backward for explicit regex operator
     my $psib = $elem->sprevious_sibling;
     if ($psib && $psib eq q{=~}) {
         # Track back through value

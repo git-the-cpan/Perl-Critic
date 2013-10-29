@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/ControlStructures/ProhibitUnreachableCode.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic::Policy::ControlStructures::ProhibitUnreachableCode;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :data_conversion :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 Readonly::Array my @TERMINALS => qw( die exit croak confess );
 Readonly::Hash  my %TERMINALS => hashify( @TERMINALS );
@@ -35,7 +35,7 @@ Readonly::Scalar my $EXPL => q{Consider removing it};
 
 sub supported_parameters { return ()                 }
 sub default_severity     { return $SEVERITY_HIGH     }
-sub default_themes       { return qw( core bugs )    }
+sub default_themes       { return qw( core bugs certrec )    }
 sub applies_to           { return 'PPI::Token::Word' }
 
 #-----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ sub violates {
     return if not is_function_call($elem);
 
     # Scan the enclosing statement for conditional keywords or logical
-    # operators.  If any are found, then this the folowing statements
+    # operators.  If any are found, then this the following statements
     # could _potentially_ be executed, so this policy is satisfied.
 
     # NOTE: When the first operand in an boolean expression is

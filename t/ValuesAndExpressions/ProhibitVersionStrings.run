@@ -57,10 +57,10 @@ plugh => 1;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitVersionStrings.run $
-#     $Date: 2009-08-08 17:15:22 -0700 (Sat, 08 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3513 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

@@ -127,15 +127,15 @@ $sigil_as_delimiter = q    @blah@;
 ## failures 7
 ## cut
 
-$VERSION = q<$Revision: 3984 $>;
-($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
-our $VERSION = substr(q/$Revision: 3984 $/, 10);
-our ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
-our ($VERSION) = (q<$Revision: 3984 $> =~ m/(\d+)/mx);
-our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3984 $>;
+$VERSION = q<$Revision$>;
+($VERSION) = q<$Revision$> =~ m/(\d+)/mx;
+our $VERSION = substr(q/$Revision$/, 10);
+our ($VERSION) = q<$Revision$> =~ m/(\d+)/mx;
+our ($VERSION) = (q<$Revision$> =~ m/(\d+)/mx);
+our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author$ $Revision$>;
 
 # Yes, silly example, but still need to check it.
-if ( ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx ) {}
+if ( ($VERSION) = q<$Revision$> =~ m/(\d+)/mx ) {}
 
 #-----------------------------------------------------------------------------
 
@@ -144,15 +144,15 @@ if ( ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx ) {}
 ## parms { rcs_keywords => 'Revision Author' }
 ## cut
 
-$VERSION = q<$Revision: 3984 $>;
-($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
-our $VERSION = substr(q/$Revision: 3984 $/, 10);
-our ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx;
-our ($VERSION) = (q<$Revision: 3984 $> =~ m/(\d+)/mx);
-our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author: clonezone $ $Revision: 3984 $>;
+$VERSION = q<$Revision$>;
+($VERSION) = q<$Revision$> =~ m/(\d+)/mx;
+our $VERSION = substr(q/$Revision$/, 10);
+our ($VERSION) = q<$Revision$> =~ m/(\d+)/mx;
+our ($VERSION) = (q<$Revision$> =~ m/(\d+)/mx);
+our (undef, $AUTHOR, undef, undef, $VERSION) = split m/\s+/, q<$Author$ $Revision$>;
 
 # Yes, silly example, but still need to check it.
-if ( ($VERSION) = q<$Revision: 3984 $> =~ m/(\d+)/mx ) {}
+if ( ($VERSION) = q<$Revision$> =~ m/(\d+)/mx ) {}
 
 #-----------------------------------------------------------------------------
 
@@ -308,10 +308,10 @@ send_email_to('$some_var: foo@bar.com', ...);
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/RequireInterpolationOfMetachars.run $
-#     $Date: 2010-10-31 18:07:54 -0700 (Sun, 31 Oct 2010) $
-#   $Author: clonezone $
-# $Revision: 3984 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

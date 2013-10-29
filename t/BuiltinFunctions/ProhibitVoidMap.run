@@ -61,10 +61,10 @@ delete @hash{ map ( uc( $_ ), keys %hash ) };
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/ProhibitVoidMap.run $
-#     $Date: 2012-09-02 14:17:16 -0700 (Sun, 02 Sep 2012) $
-#   $Author: wyant $
-# $Revision: 4153 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

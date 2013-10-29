@@ -294,10 +294,10 @@ sub new {
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitCommaSeparatedStatements.run $
-#     $Date: 2012-07-02 23:28:32 -0700 (Mon, 02 Jul 2012) $
-#   $Author: thaljef $
-# $Revision: 4130 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

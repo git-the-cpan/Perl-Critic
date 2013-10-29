@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Utils/POD/ParseInteriorSequence.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic::Utils::POD::ParseInteriorSequence;
@@ -15,7 +15,7 @@ use base qw{ Pod::Parser };
 
 use IO::String;
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 

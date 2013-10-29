@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/NamingConventions/Capitalization.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic::Policy::NamingConventions::Capitalization;
@@ -32,7 +32,7 @@ use PPIx::Utilities::Statement qw<
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 
@@ -387,7 +387,7 @@ sub _variable_capitalization {
     for my $name ( map { $_->symbol() } $elem->symbols() ) {
         if ($elem->type() eq 'local') {
             # Fully qualified names are exempt because we can't be responsible
-            # for other people's sybols.
+            # for other people's symbols.
             next NAME if $name =~ m/$PACKAGE_REGEX/xms;
             next NAME if is_perl_global($name);
 
@@ -511,7 +511,7 @@ sub _foreach_variable_capitalization {
 
     if ($type eq 'local') {
         # Fully qualified names are exempt because we can't be responsible
-        # for other people's sybols.
+        # for other people's symbols.
         return if $name =~ m/$PACKAGE_REGEX/xms;
         return if is_perl_global($name);
 

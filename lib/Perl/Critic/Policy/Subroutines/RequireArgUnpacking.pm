@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/RequireArgUnpacking.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic::Policy::Subroutines::RequireArgUnpacking;
@@ -24,7 +24,7 @@ use Perl::Critic::Utils qw<
 >;
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 
@@ -125,7 +125,7 @@ sub violates {
             next MAGIC
                 if $self->_is_delegation( $magic );
 
-            # If we make it this far, it is a violaton
+            # If we make it this far, it is a violation
             return $self->violation( $DESC, $EXPL, $elem );
         }
         if (not $saw_unpack) {

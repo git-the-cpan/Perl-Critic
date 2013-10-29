@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic;
@@ -29,7 +29,7 @@ use Perl::Critic::Utils qw< :characters hashify shebang_line >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -712,6 +712,8 @@ needs.
     core              All policies that ship with Perl::Critic
     pbp               Policies that come directly from "Perl Best Practices"
     bugs              Policies that that prevent or reveal bugs
+    certrec           Policies that CERT recommends
+    certrule          Policies that CERT considers rules
     maintenance       Policies that affect the long-term health of the code
     cosmetic          Policies that only have a superficial effect
     complexity        Policies that specificaly relate to code complexity

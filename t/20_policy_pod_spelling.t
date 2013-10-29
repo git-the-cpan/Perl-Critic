@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/20_policy_pod_spelling.t $
-#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
-#   $Author: thaljef $
-# $Revision: 4171 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 =for stopwords arglbargl
@@ -25,7 +25,7 @@ plan( tests => $NUMBER_OF_TESTS );
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.119';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 

@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/41_criticize-policies.t $
-#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
-#   $Author: thaljef $
-# $Revision: 4171 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Extra self-compliance tests for Policy classes.  This just checks for
@@ -24,7 +24,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.119';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 

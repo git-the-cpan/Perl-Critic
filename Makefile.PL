@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Makefile.PL $
-#     $Date: 2009-09-30 17:35:26 -0700 (Wed, 30 Sep 2009) $
-#   $Author: clonezone $
-# $Revision: 3661 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ########################################################################
 
 use 5.006001;
@@ -49,6 +49,11 @@ WriteMakefile(
                 q< >,
                 (map { (ref $_ eq 'ARRAY') ? @{$_} : $_ } values %{ get_PL_files() }),
                 test_wrappers_to_generate(),
+    },
+    META_MERGE     => {
+        resources => {
+            repository => 'https://github.com/Perl-Critic/Perl-Critic',
+        },
     },
 );
 

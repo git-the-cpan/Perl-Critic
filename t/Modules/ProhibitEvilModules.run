@@ -135,10 +135,10 @@ use Getopt::Std;
 
 #-----------------------------------------------------------------------------
 
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/ProhibitEvilModules.run $
-#     $Date: 2010-06-13 12:20:19 -0700 (Sun, 13 Jun 2010) $
-#   $Author: clonezone $
-# $Revision: 3820 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 
 ##############################################################################
 # Local Variables:

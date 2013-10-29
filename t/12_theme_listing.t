@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/12_theme_listing.t $
-#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
-#   $Author: thaljef $
-# $Revision: 4171 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 use 5.006001;
@@ -21,7 +21,7 @@ use Test::More tests => 1;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.119';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 
@@ -33,6 +33,8 @@ my $listing = Perl::Critic::ThemeListing->new( -policies => \@policies );
 
 my $expected = <<'END_EXPECTED';
 bugs
+certrec
+certrule
 complexity
 core
 cosmetic

@@ -312,10 +312,10 @@ package Baz;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/RequireFilenameMatchesPackage.run $
-#     $Date: 2009-08-16 20:05:53 -0700 (Sun, 16 Aug 2009) $
-#   $Author: clonezone $
-# $Revision: 3566 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

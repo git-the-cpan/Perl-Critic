@@ -400,10 +400,10 @@ grep { $_ } map { eval $_ } @foo;   # Should this be rejected?
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ErrorHandling/RequireCheckingReturnValueOfEval.run $
-#     $Date: 2011-07-15 14:09:27 -0700 (Fri, 15 Jul 2011) $
-#   $Author: wyant $
-# $Revision: 4088 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

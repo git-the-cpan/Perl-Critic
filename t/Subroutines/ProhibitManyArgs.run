@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitManyArgs.run $
-#     $Date: 2011-05-29 10:46:11 -0700 (Sun, 29 May 2011) $
-#   $Author: wyant $
-# $Revision: 4084 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 ## name basic passes

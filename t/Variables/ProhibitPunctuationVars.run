@@ -422,10 +422,10 @@ qr/foo$/
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitPunctuationVars.run $
-#     $Date: 2011-12-03 12:48:10 -0800 (Sat, 03 Dec 2011) $
-#   $Author: wyant $
-# $Revision: 4097 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

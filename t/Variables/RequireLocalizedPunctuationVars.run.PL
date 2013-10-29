@@ -1,9 +1,9 @@
 #!perl
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/RequireLocalizedPunctuationVars.run.PL $
-#     $Date: 2009-03-07 07:14:51 -0800 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 use 5.006001;
@@ -344,10 +344,10 @@ for my $entry (
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/RequireLocalizedPunctuationVars.run.PL $
-#     $Date: 2009-03-07 07:14:51 -0800 (Sat, 07 Mar 2009) $
-#   $Author: clonezone $
-# $Revision: 3231 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

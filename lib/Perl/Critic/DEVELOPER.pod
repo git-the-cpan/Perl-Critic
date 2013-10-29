@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/DEVELOPER.pod $
-#     $Date: 2011-05-15 14:34:46 -0700 (Sun, 15 May 2011) $
-#   $Author: clonezone $
-# $Revision: 4078 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 =pod
@@ -46,7 +46,7 @@ L<PPI::Document|PPI::Document> tree and invokes each of the
 L<Perl::Critic::Policy|Perl::Critic::Policy> subclasses at the
 appropriate node.  The Policy can inspect the node, look at the
 surrounding nodes, and do whatever else it wants.  If the Policy
-decides that that a coding standard has been violated, it returns one
+decides that a coding standard has been violated, it returns one
 or more L<Perl::Critic::Violation|Perl::Critic::Violation> objects.
 If there are no violations, then the Policy returns nothing.
 

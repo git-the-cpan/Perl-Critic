@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/42_perlcriticrc-tests $
-#     $Date: 2009-02-15 14:42:21 -0800 (Sun, 15 Feb 2009) $
-#   $Author: clonezone $
-# $Revision: 3142 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 profile-strictness = fatal

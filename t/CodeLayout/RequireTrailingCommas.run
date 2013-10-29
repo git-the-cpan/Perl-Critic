@@ -106,10 +106,10 @@ $median = ( $times[ int $array_size / 2 ] +
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/CodeLayout/RequireTrailingCommas.run $
-#     $Date: 2009-02-15 08:57:40 -0800 (Sun, 15 Feb 2009) $
-#   $Author: clonezone $
-# $Revision: 3115 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

@@ -36,10 +36,10 @@ $var = "other";
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitEmptyQuotes.run $
-#     $Date: 2009-01-24 17:44:43 -0800 (Sat, 24 Jan 2009) $
-#   $Author: clonezone $
-# $Revision: 3059 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

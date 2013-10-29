@@ -1,10 +1,10 @@
 #!perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/43_criticize-run-files.t $
-#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
-#   $Author: thaljef $
-# $Revision: 4171 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Simple self-compliance tests for .run files.
@@ -20,7 +20,7 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.119';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 

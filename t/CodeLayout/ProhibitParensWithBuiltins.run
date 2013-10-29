@@ -144,10 +144,10 @@ state ( $foo );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/CodeLayout/ProhibitParensWithBuiltins.run $
-#     $Date: 2010-01-19 17:44:15 -0800 (Tue, 19 Jan 2010) $
-#   $Author: wyant $
-# $Revision: 3752 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

@@ -120,10 +120,10 @@ my $data .= &stripzerobytes(inet_aton($self->address()));
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitAugmentedAssignmentInDeclaration.run $
-#     $Date: 2011-12-21 14:30:04 -0800 (Wed, 21 Dec 2011) $
-#   $Author: thaljef $
-# $Revision: 4105 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

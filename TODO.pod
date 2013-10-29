@@ -10,10 +10,10 @@ Perl::Critic::TODO - Things for Perl::Critic developers to do
 
 =head1 SOURCE
 
-         $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/TODO.pod $
-        $Date: 2011-05-30 09:21:47 -0700 (Mon, 30 May 2011) $
-      $Author: wyant $
-    $Revision: 4085 $
+         $URL$
+        $Date$
+      $Author$
+    $Revision$
 
 
 =head1 SEE ALSO

@@ -128,10 +128,10 @@ no warnings ( foo => "bar" );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/TestingAndDebugging/ProhibitNoWarnings.run $
-#     $Date: 2012-02-03 12:11:27 -0800 (Fri, 03 Feb 2012) $
-#   $Author: wyant $
-# $Revision: 4115 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/lib/Perl/Critic/Policy/BuiltinFunctions/ProhibitStringySplit.pm $
-#     $Date: 2013-10-25 11:55:34 -0700 (Fri, 25 Oct 2013) $
-#   $Author: thaljef $
-# $Revision: 4174 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 package Perl::Critic::Policy::BuiltinFunctions::ProhibitStringySplit;
@@ -15,7 +15,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :characters :severities :classification :ppi };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.120';
+our $VERSION = '1.120_01';
 
 #-----------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ Readonly::Scalar my $EXPL => q{Express it as a regex instead};
 
 sub supported_parameters { return ()                    }
 sub default_severity     { return $SEVERITY_LOW         }
-sub default_themes       { return qw(core pbp cosmetic) }
+sub default_themes       { return qw(core pbp cosmetic certrule ) }
 sub applies_to           { return 'PPI::Token::Word'    }
 
 #-----------------------------------------------------------------------------

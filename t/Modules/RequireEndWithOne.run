@@ -119,10 +119,10 @@ DESTROY { warn 'DEAD'; }
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Modules/RequireEndWithOne.run $
-#     $Date: 2008-09-07 02:22:09 -0700 (Sun, 07 Sep 2008) $
-#   $Author: clonezone $
-# $Revision: 2726 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

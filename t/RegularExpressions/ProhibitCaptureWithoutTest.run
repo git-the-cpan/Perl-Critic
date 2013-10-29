@@ -324,10 +324,10 @@ given ( 'abc' ) {
 }
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitCaptureWithoutTest.run $
-#     $Date: 2010-01-21 21:10:25 -0800 (Thu, 21 Jan 2010) $
-#   $Author: wyant $
-# $Revision: 3755 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

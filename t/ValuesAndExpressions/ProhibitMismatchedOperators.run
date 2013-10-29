@@ -117,10 +117,10 @@ $a .= 1;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitMismatchedOperators.run $
-#     $Date: 2010-06-27 11:23:36 -0700 (Sun, 27 Jun 2010) $
-#   $Author: clonezone $
-# $Revision: 3864 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

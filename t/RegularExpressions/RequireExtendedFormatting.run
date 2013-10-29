@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/RequireExtendedFormatting.run $
-#     $Date: 2011-11-26 15:54:50 -0800 (Sat, 26 Nov 2011) $
-#   $Author: wyant $
-# $Revision: 4095 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 ## name basic passes

@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/xt/author/95_kwalitee.t $
-#     $Date: 2013-09-25 22:21:28 -0700 (Wed, 25 Sep 2013) $
-#   $Author: thaljef $
-# $Revision: 4171 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 use strict;
@@ -16,11 +16,11 @@ use Test::More;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.119';
+our $VERSION = '1.116';
 
 #-----------------------------------------------------------------------------
 
-use Test::Kwalitee tests => [ qw{ -no_symlinks } ];
+use Test::Kwalitee 1.15 tests => [ qw{ -no_symlinks } ];
 
 # Local Variables:
 #   mode: cperl

@@ -119,10 +119,10 @@ eval("#" . substr($^X, 0, 0));
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/ProhibitStringyEval.run $
-#     $Date: 2010-08-08 12:42:39 -0700 (Sun, 08 Aug 2010) $
-#   $Author: wyant $
-# $Revision: 3887 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

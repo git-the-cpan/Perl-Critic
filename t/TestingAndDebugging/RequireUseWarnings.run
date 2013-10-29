@@ -218,10 +218,10 @@ $this_is_not_covered_by_warnings;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/TestingAndDebugging/RequireUseWarnings.run $
-#     $Date: 2009-01-19 20:59:21 -0800 (Mon, 19 Jan 2009) $
-#   $Author: thaljef $
-# $Revision: 3019 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

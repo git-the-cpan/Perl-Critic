@@ -116,10 +116,10 @@ $text = "Here we do not have\\\\ta tab";
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/ValuesAndExpressions/ProhibitInterpolationOfLiterals.run $
-#     $Date: 2009-01-25 15:50:12 -0800 (Sun, 25 Jan 2009) $
-#   $Author: wyant $
-# $Revision: 3074 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

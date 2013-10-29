@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitEscapedMetacharacters.run $
-#     $Date: 2010-08-22 18:25:02 -0700 (Sun, 22 Aug 2010) $
-#   $Author: clonezone $
-# $Revision: 3897 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 ## name basic passes

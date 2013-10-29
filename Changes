@@ -1,3 +1,17 @@
+[1.120_01] Released on 2013-10-29
+
+      * DEVELOPER RELEASE *
+
+      Added new themes based on CERT guidelines. Thanks Kirk Kimmel.
+
+      First release from the new GitHub repository.
+
+[1.120] Released on 2013-10-25
+
+     Bug Fixes:
+     * Corrected "Possible precedence issue with control flow operator" 
+       warning.  This fixes RT #88866
+
 [1.119] Released on 2013-09-25
 
      Bug Fixes:

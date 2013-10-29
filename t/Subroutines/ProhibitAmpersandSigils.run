@@ -67,10 +67,10 @@ sort &foo($x)
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitAmpersandSigils.run $
-#     $Date: 2010-10-10 23:32:23 -0700 (Sun, 10 Oct 2010) $
-#   $Author: wyant $
-# $Revision: 3964 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

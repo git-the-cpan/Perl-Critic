@@ -237,10 +237,10 @@ sub _second {
 
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Subroutines/ProhibitUnusedPrivateSubroutines.run $
-#     $Date: 2010-09-13 22:25:14 -0700 (Mon, 13 Sep 2010) $
-#   $Author: wyant $
-# $Revision: 3922 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

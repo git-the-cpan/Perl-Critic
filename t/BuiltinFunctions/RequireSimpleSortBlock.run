@@ -43,10 +43,10 @@ sort { -M $b <=> -M $a} @entries;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/BuiltinFunctions/RequireSimpleSortBlock.run $
-#     $Date: 2008-03-16 15:40:45 -0700 (Sun, 16 Mar 2008) $
-#   $Author: clonezone $
-# $Revision: 2187 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

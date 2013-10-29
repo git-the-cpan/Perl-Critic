@@ -229,10 +229,10 @@ say( { $fh } "foo" );
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/InputOutput/RequireBracedFileHandleWithPrint.run $
-#     $Date: 2009-10-02 14:45:26 -0700 (Fri, 02 Oct 2009) $
-#   $Author: clonezone $
-# $Revision: 3671 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

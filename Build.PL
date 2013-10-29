@@ -1,8 +1,8 @@
 #######################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/Build.PL $
-#     $Date: 2012-02-25 22:25:46 -0800 (Sat, 25 Feb 2012) $
-#   $Author: thaljef $
-# $Revision: 4116 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ########################################################################
 
 use 5.006001;
@@ -52,11 +52,12 @@ my $builder = Perl::Critic::Module::Build->new(
     script_files        => ['bin/perlcritic'],
 
     meta_merge          => {
-        resources   => {
+        resources => {
+            bugtracker  => 'https://github.com/Perl-Critic/Perl-Critic/issues',
             homepage    => 'http://perlcritic.com',
-            license     => 'http://dev.perl.org/licenses/',
-            repository  => 'http://guest@perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/',
+            license     => 'http://dev.perl.org/licenses',
             MailingList => 'http://perlcritic.tigris.org/servlets/SummarizeList?listName=users',
+            repository  => 'git://github.com/Perl-Critic/Perl-Critic.git',
         },
         no_index        => {
             file        => [

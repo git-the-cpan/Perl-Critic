@@ -33,10 +33,10 @@ $object->format();
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Miscellanea/ProhibitFormats.run $
-#     $Date: 2009-02-15 09:10:42 -0800 (Sun, 15 Feb 2009) $
-#   $Author: clonezone $
-# $Revision: 3116 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:

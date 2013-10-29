@@ -1,8 +1,8 @@
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/RegularExpressions/ProhibitUnusedCapture.run $
-#     $Date: 2011-11-01 08:48:42 -0700 (Tue, 01 Nov 2011) $
-#   $Author: wyant $
-# $Revision: 4092 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 ## name non-captures

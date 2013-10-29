@@ -163,10 +163,10 @@ m/ (?{ $foo{bar} }) /smx;
 #-----------------------------------------------------------------------------
 
 ##############################################################################
-#      $URL: http://perlcritic.tigris.org/svn/perlcritic/trunk/distributions/Perl-Critic/t/Variables/ProhibitUnusedVariables.run $
-#     $Date: 2010-08-23 11:08:06 -0700 (Mon, 23 Aug 2010) $
-#   $Author: wyant $
-# $Revision: 3903 $
+#      $URL$
+#     $Date$
+#   $Author$
+# $Revision$
 ##############################################################################
 
 # Local Variables:
