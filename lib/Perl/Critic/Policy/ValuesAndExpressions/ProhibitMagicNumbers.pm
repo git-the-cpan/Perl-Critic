@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers;
 
 use 5.006001;
@@ -17,7 +10,7 @@ use Perl::Critic::Utils qw{ :booleans :characters :severities :data_conversion }
 
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 
 #----------------------------------------------------------------------------
 
@@ -170,7 +163,7 @@ sub _determine_allowed_values {
         }
 
         if ($all_integers_allowed) {
-            @allowed_values = grep { $_ != int $_ } @potential_allowed_values;
+            @allowed_values = grep { $_ != int $_ } @potential_allowed_values; ## no critic ( BuiltinFunctions::ProhibitUselessTopic )
         } else {
             @allowed_values = @potential_allowed_values;
         }

@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Policy::Documentation::RequirePodSections;
 
 use 5.006001;
@@ -15,7 +8,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :booleans :characters :severities :classification };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 
 #-----------------------------------------------------------------------------
 
@@ -241,7 +234,7 @@ sub _parse_sections {
 
     my @sections = split m{ \s* [|] \s* }xms, $config_string;
 
-    return map { uc $_ } @sections;  # Normalize CaSe!
+    return map { uc } @sections;  # Normalize CaSe!
 }
 
 sub _parse_lib_sections {

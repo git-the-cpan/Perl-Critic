@@ -1,12 +1,5 @@
 #!perl
 
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 use 5.006001;
 use strict;
 use warnings;
@@ -29,7 +22,7 @@ Perl::Critic::TestUtils::block_perlcriticrc();
 
 my $profile = Perl::Critic::UserProfile->new();
 my $factory = Perl::Critic::PolicyFactory->new( -profile => $profile );
-my @found_policies = sort map { ref $_ } $factory->create_all_policies();
+my @found_policies = sort map { ref } $factory->create_all_policies();
 my $test_label = 'successfully loaded policies matches MANIFEST';
 is_deeply( \@found_policies, [bundled_policy_names()], $test_label );
 

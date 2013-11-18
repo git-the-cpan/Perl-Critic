@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Policy::ValuesAndExpressions::ProhibitMixedBooleanOperators;
 
 use 5.006001;
@@ -18,7 +11,7 @@ use base 'Perl::Critic::Policy';
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 #-----------------------------------------------------------------------------
 
 Readonly::Hash my %LOW_BOOLEANS  => hashify( qw( not or and ) );

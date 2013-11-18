@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 profile-strictness = fatal
 severity = 1
 theme = core
@@ -37,8 +30,7 @@ lines = 20
 [InputOutput::RequireCheckedSyscalls]
 functions = open close
 
-[Miscellanea::RequireRcsKeywords]
-keywords = URL Date Author Revision
+[-Miscellanea::RequireRcsKeywords]
 
 [RegularExpressions::ProhibitUnusualDelimiters]
 allow_all_brackets = 1

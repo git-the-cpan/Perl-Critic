@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Violation;
 
 use 5.006001;
@@ -29,7 +22,7 @@ use Perl::Critic::Utils::POD qw<
 >;
 use Perl::Critic::Exception::Fatal::Internal qw< throw_internal >;
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 
 
 Readonly::Scalar my $LOCATION_LINE_NUMBER               => 0;

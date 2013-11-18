@@ -1,12 +1,3 @@
-#!perl
-
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Test::Perl::Critic::Policy;
 
 use 5.006001;
@@ -29,7 +20,7 @@ use Perl::Critic::TestUtils qw<
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 
 #-----------------------------------------------------------------------------
 
@@ -96,7 +87,7 @@ sub _validate_wanted_policy_names {
     my @wanted_policies = @{ $wanted_policies };
 
 
-    my @invalid = grep {my $p = $_; none {$_ =~ $p} @all_testable_policies}  @wanted_policies;
+    my @invalid = grep {my $p = $_; none { $_ =~ $p } @all_testable_policies}  @wanted_policies;
     croak( q{No tests found for policies matching: } . join q{, }, @invalid ) if @invalid;
     return 1;
 }

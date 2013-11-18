@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Utils::DataConversion;
 
 use 5.006001;
@@ -16,7 +9,7 @@ use Perl::Critic::Utils qw{ :characters :booleans };
 
 use Exporter 'import';
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 
 #-----------------------------------------------------------------------------
 
@@ -36,7 +29,7 @@ sub boolean_to_number {  ## no critic (RequireArgUnpacking)
 
 sub dor {  ## no critic (RequireArgUnpacking)
     foreach (@_) {
-        defined $_ and return $_;
+        return $_ if defined;
     }
     return;
 }

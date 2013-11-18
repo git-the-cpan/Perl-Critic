@@ -56,6 +56,10 @@ Write C<< eval { $foo->can($name) } >> instead of C<UNIVERSAL::can($foo, $name)>
 
 Write C<< eval { $foo->isa($pkg) } >> instead of C<UNIVERSAL::isa($foo, $pkg)>. [Default severity 3]
 
+=head2 L<BuiltinFunctions::ProhibitUselessTopic|Perl::Critic::Policy::BuiltinFunctions::ProhibitUselessTopic>
+
+Don't pass $_ to built-in functions that assume it, or to most filetest operators. [Default severity 2]
+
 =head2 L<BuiltinFunctions::ProhibitVoidGrep|Perl::Critic::Policy::BuiltinFunctions::ProhibitVoidGrep>
 
 Don't use C<grep> in void contexts. [Default severity 3]
@@ -66,11 +70,11 @@ Don't use C<map> in void contexts. [Default severity 3]
 
 =head2 L<BuiltinFunctions::RequireBlockGrep|Perl::Critic::Policy::BuiltinFunctions::RequireBlockGrep>
 
-Write C<grep { $_ =~ /$pattern/ } @list> instead of C<grep /$pattern/, @list>. [Default severity 4]
+Write C<grep { /$pattern/ } @list> instead of C<grep /$pattern/, @list>. [Default severity 4]
 
 =head2 L<BuiltinFunctions::RequireBlockMap|Perl::Critic::Policy::BuiltinFunctions::RequireBlockMap>
 
-Write C<map { $_ =~ /$pattern/ } @list> instead of C<map /$pattern/, @list>. [Default severity 4]
+Write C<map { /$pattern/ } @list> instead of C<map /$pattern/, @list>. [Default severity 4]
 
 =head2 L<BuiltinFunctions::RequireGlobFunction|Perl::Critic::Policy::BuiltinFunctions::RequireGlobFunction>
 
@@ -351,6 +355,10 @@ Only use a capturing group if you plan to use the captured value. [Default sever
 =head2 L<RegularExpressions::ProhibitUnusualDelimiters|Perl::Critic::Policy::RegularExpressions::ProhibitUnusualDelimiters>
 
 Use only C<//> or C<{}> to delimit regexps. [Default severity 1]
+
+=head2 L<RegularExpressions::ProhibitUselessTopic|Perl::Critic::Policy::RegularExpressions::ProhibitUselessTopic>
+
+Don't use $_ to match against regexes. [Default severity 2]
 
 =head2 L<RegularExpressions::RequireBracesForMultiline|Perl::Critic::Policy::RegularExpressions::RequireBracesForMultiline>
 

@@ -1,10 +1,3 @@
-##############################################################################
-#      $URL$
-#     $Date$
-#   $Author$
-# $Revision$
-##############################################################################
-
 package Perl::Critic::Policy::CodeLayout::RequireConsistentNewlines;
 
 use 5.006001;
@@ -17,7 +10,7 @@ use PPI::Token::Whitespace;
 use English qw(-no_match_vars);
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.121';
+our $VERSION = '1.121_01';
 
 Readonly::Scalar my $LINE_END => qr/\015{1,2}\012|[\012\015]/mxs;
 
