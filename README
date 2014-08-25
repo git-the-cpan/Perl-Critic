@@ -601,9 +601,13 @@ PREREQUISITES
 
     Exception::Class
 
+    File::HomeDir
+
     File::Spec
 
     File::Spec::Unix
+
+    File::Which
 
     IO::String
 
@@ -633,16 +637,11 @@ PREREQUISITES
 
     Task::Weaken
 
+    Term::ANSIColor
+
     Text::ParseWords
 
     version
-
-    The following modules are optional, but recommended for complete
-    functionality:
-
-    File::HomeDir
-
-    File::Which
 
 CONTACTING THE DEVELOPMENT TEAM
     You are encouraged to subscribe to the mailing list; send a message to
@@ -720,7 +719,7 @@ AUTHOR
     Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 COPYRIGHT
-    Copyright (c) 2005-2011 Imaginative Software Systems. All rights
+    Copyright (c) 2005-2013 Imaginative Software Systems. All rights
     reserved.
 
     This program is free software; you can redistribute it and/or modify it

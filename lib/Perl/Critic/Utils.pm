@@ -20,7 +20,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use Exporter 'import';
 
-our $VERSION = '1.121_01';
+our $VERSION = '1.122';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -63,6 +63,7 @@ Readonly::Array our @EXPORT_OK => qw(
     first_arg
     hashify
     interpolate
+    is_assignment_operator
     is_class_name
     is_function_call
     is_hash_key
@@ -139,6 +140,7 @@ Readonly::Hash our %EXPORT_TAGS => (
     ],
     classification  => [
         qw{
+            is_assignment_operator
             is_class_name
             is_function_call
             is_hash_key
@@ -819,18 +821,17 @@ sub is_subroutine_name {
 #-----------------------------------------------------------------------------
 
 sub is_function_call {
-    my $elem  = shift;
-    return if !$elem;
+    my $elem = shift or return;
 
-    return if is_hash_key($elem);
+    return if is_perl_bareword($elem);
+    return if is_perl_filehandle($elem);
+    return if is_package_declaration($elem);
+    return if is_included_module_name($elem);
     return if is_method_call($elem);
     return if is_class_name($elem);
     return if is_subroutine_name($elem);
-    return if is_included_module_name($elem);
-    return if is_package_declaration($elem);
-    return if is_perl_bareword($elem);
-    return if is_perl_filehandle($elem);
     return if is_label_pointer($elem);
+    return if is_hash_key($elem);
 
     return 1;
 }
@@ -1168,6 +1169,16 @@ sub words_from_string {
 
 #-----------------------------------------------------------------------------
 
+sub is_assignment_operator {
+    my $elem = shift;
+
+    return if $elem !~ m/= \Z/xms;
+    return if $elem =~ m/\A [=<>] = \Z/xms;  # Exclude == >= <=
+    return 1;
+}
+
+#-----------------------------------------------------------------------------
+
 sub is_unchecked_call {
     my $elem = shift;
 
@@ -1416,6 +1427,11 @@ will not match variables, subroutine names, literal strings, numbers,
 or symbols.  If the document doesn't contain any matches, returns
 undef.
 
+=item C<is_assignment_operator( $element )>
+
+Given a L<PPI::Token::Operator|PPI::Token::Operator> or a string,
+returns true if that token represents one of the assignment operators
+(e.g. C<= &&= ||= //= += -=> etc.).
 
 =item C<is_perl_global( $element )>
 

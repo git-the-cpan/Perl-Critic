@@ -22,7 +22,7 @@ use Perl::Critic::Utils qw< :characters hashify shebang_line >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.121_01';
+our $VERSION = '1.122';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -876,9 +876,13 @@ L<Email::Address|Email::Address>
 
 L<Exception::Class|Exception::Class>
 
+L<File::HomeDir|File::HomeDir>
+
 L<File::Spec|File::Spec>
 
 L<File::Spec::Unix|File::Spec::Unix>
+
+L<File::Which|File::Which>
 
 L<IO::String|IO::String>
 
@@ -908,17 +912,11 @@ L<String::Format|String::Format>
 
 L<Task::Weaken|Task::Weaken>
 
+L<Term::ANSIColor|Term::ANSIColor>
+
 L<Text::ParseWords|Text::ParseWords>
 
 L<version|version>
-
-
-The following modules are optional, but recommended for complete
-functionality:
-
-L<File::HomeDir|File::HomeDir>
-
-L<File::Which|File::Which>
 
 
 =head1 CONTACTING THE DEVELOPMENT TEAM
@@ -1008,7 +1006,7 @@ Jeffrey Ryan Thalhammer <jeff@imaginative-software.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005-2011 Imaginative Software Systems.  All rights reserved.
+Copyright (c) 2005-2013 Imaginative Software Systems.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.  The full text of this license

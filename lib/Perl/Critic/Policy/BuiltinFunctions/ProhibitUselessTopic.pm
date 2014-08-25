@@ -7,7 +7,7 @@ use Readonly;
 use Perl::Critic::Utils qw{ :severities :classification :ppi };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.121_01';
+our $VERSION = '1.122';
 
 ## no critic ( ValuesAndExpressions::RequireInterpolationOfMetachars )
 ## The numerous $_ variables make false positives.
@@ -96,9 +96,7 @@ __END__
 
 =pod
 
-=for stopwords
-
-filetest
+=for stopwords filetest
 
 =head1 NAME
 
@@ -152,9 +150,8 @@ is better written as:
     for ( @list ) {
         my $backwards = reverse;
 
-However, it is difficult for Perl::Critic to determine scalar vs.
-list context, so I have decided to leave C<reverse> unchecked rather
-than giving false positives.
+However, the distinction for scalar vs. list context on C<reverse>
+is not yet working.  See L<KNOWN BUGS|KNOWN BUGS> below.
 
 =head2 Topic unnecessary for most filetest operators
 

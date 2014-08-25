@@ -18,7 +18,7 @@ use Perl::Critic::PolicyFactory;
 use Perl::Critic::TestUtils qw(bundled_policy_names);
 use Perl::Critic::Utils;
 
-use Test::More tests => 124;
+use Test::More tests => 141;
 
 #-----------------------------------------------------------------------------
 
@@ -28,6 +28,7 @@ our $VERSION = '1.121';
 
 test_export();
 test_find_keywords();
+test_is_assignment_operator();
 test_is_hash_key();
 test_is_script();
 test_is_script_with_PL_files();
@@ -102,6 +103,22 @@ sub test_find_keywords {
     $code = 'sub foo { return 0 if @_; return 1; }';
     $doc = make_doc( $code );
     is( count_matches( find_keywords($doc, 'return') ), 2, 'find_keywords, find 2');
+
+    return;
+}
+
+#-----------------------------------------------------------------------------
+
+sub test_is_assignment_operator {
+
+    for ( qw(||= &&= //= += *= -= >>= <<=) ) {
+        is( is_assignment_operator($_), 1, "$_ is an assignment operator" )
+    }
+
+
+    for ( qw(== =~ >= <= + - * / %) ) {
+        is( !!is_assignment_operator($_), q{}, "$_ is not an assignment operator" )
+    }
 
     return;
 }
