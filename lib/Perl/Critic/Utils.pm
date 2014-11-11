@@ -20,7 +20,7 @@ use Perl::Critic::Utils::PPI qw< is_ppi_expression_or_generic_statement >;
 
 use Exporter 'import';
 
-our $VERSION = '1.122';
+our $VERSION = '1.123';
 
 #-----------------------------------------------------------------------------
 # Exportable symbols here.
@@ -1169,12 +1169,12 @@ sub words_from_string {
 
 #-----------------------------------------------------------------------------
 
+Readonly::Hash my %ASSIGNMENT_OPERATORS => hashify( qw( = **= += -= .= *= /= %= x= &= |= ^= <<= >>= &&= ||= //= ) );
+
 sub is_assignment_operator {
     my $elem = shift;
 
-    return if $elem !~ m/= \Z/xms;
-    return if $elem =~ m/\A [=<>] = \Z/xms;  # Exclude == >= <=
-    return 1;
+    return $ASSIGNMENT_OPERATORS{ $elem };
 }
 
 #-----------------------------------------------------------------------------
