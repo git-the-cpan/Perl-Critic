@@ -9,7 +9,7 @@ use Perl::Critic::Exception::Fatal::Internal qw{ throw_internal };
 use Perl::Critic::Utils qw{ :characters :severities :data_conversion };
 use base 'Perl::Critic::Policy';
 
-our $VERSION = '1.123';
+our $VERSION = '1.124';
 
 #-----------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ sub supported_parameters {
             default_string  => $EMPTY,
             behavior        => 'string list',
             list_always_present_values =>
-                [ qw< croak confess die exec exit throw Carp::confess Carp::croak > ],
+                [ qw< croak confess die exec exit throw Carp::confess Carp::croak ...> ],
         },
     );
 }
