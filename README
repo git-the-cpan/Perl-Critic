@@ -27,23 +27,11 @@ DESCRIPTION
     convenience (at the expense of some flexibility) see the criticism
     pragma.
 
-    Win32 and ActivePerl users can find PPM distributions of Perl::Critic at
-    <http://theoryx5.uwinnipeg.ca/ppms/> and Alexandr Ciornii's downloadable
-    executable at <http://chorny.net/perl/perlcritic.html>.
-
     If you'd like to try Perl::Critic without installing anything, there is
     a web-service available at <http://perlcritic.com>. The web-service does
     not yet support all the configuration features that are available in the
     native Perl::Critic API, but it should give you a good idea of what it
-    does. You can also invoke the perlcritic web-service from the
-    command-line by doing an HTTP-post, such as one of these:
-
-        $> lwp-request -m POST http://perlcritic.com/perl/critic.pl < MyModule.pm
-        $> wget -q -O - --post-file=MyModule.pm http://perlcritic.com/perl/critic.pl
-        $> curl --data @MyModule.pm http://perlcritic.com/perl/critic.pl
-
-    Please note that the perlcritic web-service is still alpha code. The URL
-    and interface to the service are subject to change.
+    does.
 
     Also, ActivePerl includes a very slick graphical interface to
     Perl-Critic called "perlcritic-gui". You can get a free community
@@ -195,12 +183,11 @@ CONSTRUCTOR
         -criticism-fatal is not used by Perl::Critic but is provided for the
         benefit of criticism.
 
-        -color-severity-highest, -color-severity-high,
-        -color-severity-medium, -color-severity-low, and
-        -color-severity-lowest are not used by Perl::Critic, but are
-        provided for the benefit of perlcritic. Each is set to the
-        Term::ANSIColor color specification to be used to display violations
-        of the corresponding severity.
+        -color-severity-highest, -color-severity-high, -color-severity-
+        medium, -color-severity-low, and -color-severity-lowest are not used
+        by Perl::Critic, but are provided for the benefit of perlcritic.
+        Each is set to the Term::ANSIColor color specification to be used to
+        display violations of the corresponding severity.
 
         -files-with-violations and -files-without-violations are not used by
         Perl::Critic, but are provided for the benefit of perlcritic, to
@@ -253,8 +240,8 @@ FUNCTIONAL INTERFACE
     "critique" method can be exported on request and called as a static
     function. If the first argument is a hashref, its contents are used to
     construct a new Perl::Critic object internally. The keys of that hash
-    should be the same as those supported by the "Perl::Critic::new" method.
-    Here are some examples:
+    should be the same as those supported by the "Perl::Critic::new()"
+    method. Here are some examples:
 
         use Perl::Critic qw(critique);
 
@@ -345,8 +332,8 @@ CONFIGURATION
     more information.
 
     "add_themes" appends to the default themes for this Policy. The argument
-    is a string of one or more whitespace-delimited words. Themes are
-    case-insensitive. See "POLICY THEMES" for more information.
+    is a string of one or more whitespace-delimited words. Themes are case-
+    insensitive. See "POLICY THEMES" for more information.
 
     "maximum_violations_per_document" limits the number of Violations the
     Policy will return for a given document. Some Policies have a default
@@ -461,7 +448,7 @@ POLICY THEMES
     regular Perl code, and you can use parentheses to enforce precedence as
     well. Supported operators are:
 
-        Operator    Altertative    Example
+        Operator    Alternative    Example
         -----------------------------------------------------------------
         &&          and            'pbp && core'
         ||          or             'pbp || (bugs && security)'
@@ -505,7 +492,7 @@ BENDING THE RULES
 
     A bare "## no critic" annotation disables all the active Policies. If
     you wish to disable only specific Policies, add a list of Policy names
-    as arguments, just as you would for the "no strict" or ""no warnings""
+    as arguments, just as you would for the "no strict" or "no warnings"
     pragmas. For example, this would disable the "ProhibitEmptyQuotes" and
     "ProhibitPostfixControls" policies until the end of the block or until
     the next "## use critic" annotation (whichever comes first):
@@ -540,8 +527,8 @@ BENDING THE RULES
     annotation.
 
     Some Policies like "Subroutines::ProhibitExcessComplexity" apply to an
-    entire block of code. In those cases, "## no critic" must appear on the
-    line where the violation is reported. For example:
+    entire block of code. In those cases, the "## no critic" annotation must
+    appear on the line where the violation is reported. For example:
 
         sub complicated_function {  ## no critic (ProhibitExcessComplexity)
             # Your code here...
@@ -576,19 +563,17 @@ EXTENDING THE CRITIC
     create new Policy modules.
 
     If you develop any new Policy modules, feel free to send them to
-    "<jeff@imaginative-software.com>" and I'll be happy to put them into the
-    Perl::Critic distribution. Or if you would like to work on the
-    Perl::Critic project directly, check out our repository at
-    <http://perlcritic.tigris.org>. To subscribe to our mailing list, send a
-    message to <mailto:dev-subscribe@perlcritic.tigris.org>.
+    "<team@perlcritic.com>" and I'll be happy to consider adding them into
+    the Perl::Critic distribution. Or if you would like to work on the
+    Perl::Critic project directly, you can fork our repository at
+    "/github.com/Perl- Critic/Perl- Critic.git" in http:.
 
     The Perl::Critic team is also available for hire. If your organization
     has its own coding standards, we can create custom Policies to enforce
     your local guidelines. Or if your code base is prone to a particular
     defect pattern, we can design Policies that will help you catch those
     costly defects before they go into production. To discuss your needs
-    with the Perl::Critic team, just contact
-    "<jeff@imaginative-software.com>".
+    with the Perl::Critic team, just contact "<team@perlcritic.com>".
 
 PREREQUISITES
     Perl::Critic requires the following modules:
@@ -645,15 +630,14 @@ PREREQUISITES
 
 CONTACTING THE DEVELOPMENT TEAM
     You are encouraged to subscribe to the mailing list; send a message to
-    <mailto:users-subscribe@perlcritic.tigris.org>. See also the archives at
-    <http://perlcritic.tigris.org/servlets/SummarizeList?listName=users>.
-    You can also contact the author at "<jeff@imaginative-software.com>".
-
-    At least one member of the development team has started hanging around
-    in <irc://irc.perl.org/#perlcritic>.
-
-    You can also follow Perl::Critic on Twitter, at
-    <https://twitter.com/perlcritic>.
+    <mailto:users-subscribe@perlcritic.tigris.org>. To prevent spam, you may
+    be required to register for a user account with Tigris.org before being
+    allowed to post messages to the mailing list. See also the mailing list
+    archives at
+    <http://perlcritic.tigris.org/servlets/SummarizeList?listName=users>. At
+    least one member of the development team is usually hanging around in
+    <irc://irc.perl.org/#perlcritic> and you can follow Perl::Critic on
+    Twitter, at <https://twitter.com/perlcritic>.
 
 SEE ALSO
     There are a number of distributions of additional Policies available. A
@@ -682,19 +666,11 @@ SEE ALSO
 
     Task::Perl::Critic
 
-    If you want to make sure you have absolutely everything, you can use
-    this:
-
-    Task::Perl::Critic::IncludingOptionalDependencies
-
 BUGS
     Scrutinizing Perl code is hard for humans, let alone machines. If you
     find any bugs, particularly false-positives or false-negatives from a
-    Perl::Critic::Policy, please submit them to
-    <https://github.com/Perl-Critic/Perl-Critic/issues>. Thanks.
-
-    Most policies will produce false-negatives if they cannot understand a
-    particular block of code.
+    Perl::Critic::Policy, please submit them at "/github.com/Perl-Critic
+    /Perl-Critic/issues" in https:. Thanks.
 
 CREDITS
     Adam Kennedy - For creating PPI, the heart and soul of Perl::Critic.
