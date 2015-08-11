@@ -22,7 +22,7 @@ use Perl::Critic::Utils qw< :characters hashify shebang_line >;
 
 #-----------------------------------------------------------------------------
 
-our $VERSION = '1.125';
+our $VERSION = '1.126';
 
 Readonly::Array our @EXPORT_OK => qw(critique);
 
@@ -758,10 +758,11 @@ family of Policies in one shot like this:
     # Now exempt from NamingConventions::Capitalization
     sub camelHumpSub {}
 
-The argument list must be enclosed in parentheses and must contain one or more
-comma-separated barewords (e.g. don't use quotes).  The C<"## no critic">
-annotations can be nested, and Policies named by an inner annotation will be
-disabled along with those already disabled an outer annotation.
+The argument list must be enclosed in parentheses or brackets and must contain
+one or more comma-separated barewords (e.g. don't use quotes).
+The C<"## no critic"> annotations can be nested, and Policies named by an inner
+annotation will be disabled along with those already disabled an outer
+annotation.
 
 Some Policies like C<Subroutines::ProhibitExcessComplexity> apply to an entire
 block of code.  In those cases, the C<"## no critic"> annotation must appear
@@ -803,7 +804,7 @@ distribution for a step-by-step demonstration of how to create new Policy
 modules.
 
 If you develop any new Policy modules, feel free to send them to C<<
-<team@perlcritic.com> >> and I'll be happy to consider adding them into the
+<team@perlcritic.com> >> and I'll be happy to consider putting them into the
 Perl::Critic distribution.  Or if you would like to work on the Perl::Critic
 project directly, you can fork our repository at L<http://github.com/Perl-
 Critic/Perl- Critic.git>.

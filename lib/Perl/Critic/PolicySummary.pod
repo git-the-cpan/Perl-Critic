@@ -164,6 +164,10 @@ Don't write code after an unconditional C<die, exit, or next>. [Default severity
 
 Write C<while(! $condition)> instead of C<until($condition)>. [Default severity 2]
 
+=head2 L<ControlStructures::ProhibitYadaOperator|Perl::Critic::Policy::ControlStructures::ProhibitYadaOperator>
+
+Never use C<...> in production code. [Default severity 4]
+
 =head2 L<Documentation::PodSpelling|Perl::Critic::Policy::Documentation::PodSpelling>
 
 Check your spelling. [Default severity 1]
@@ -210,7 +214,7 @@ Use prompt() instead of -t. [Default severity 5]
 
 =head2 L<InputOutput::ProhibitJoinedReadline|Perl::Critic::Policy::InputOutput::ProhibitJoinedReadline>
 
-Use C<local $/ = undef> or L<File::Slurp|File::Slurp> instead of joined readline. [Default severity 3]
+Use C<local $/ = undef> or L<Path::Tiny|Path::Tiny> instead of joined readline. [Default severity 3]
 
 =head2 L<InputOutput::ProhibitOneArgSelect|Perl::Critic::Policy::InputOutput::ProhibitOneArgSelect>
 
@@ -246,7 +250,7 @@ Return value of flagged function ignored. [Default severity 1]
 
 =head2 L<InputOutput::RequireEncodingWithUTF8Layer|Perl::Critic::Policy::InputOutput::RequireEncodingWithUTF8Layer>
 
-Write C<< open $fh, q{<:encoding(UTF-8)}, $filename; >> instead of C<< open $fh, q{{<:utf8}, $filename; >>. [Default severity 5]
+Write C<< open $fh, q{<:encoding(UTF-8)}, $filename; >> instead of C<< open $fh, q{<:utf8}, $filename; >>. [Default severity 5]
 
 =head2 L<Miscellanea::ProhibitFormats|Perl::Critic::Policy::Miscellanea::ProhibitFormats>
 
@@ -595,7 +599,7 @@ Negative array index should be used. [Default severity 4]
 
 =head1 VERSION
 
-This is part of L<Perl::Critic|Perl::Critic> version 1.116.
+This is part of L<Perl::Critic|Perl::Critic> version 1.126.
 
 
 =head1 AUTHOR
